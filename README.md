@@ -1,24 +1,8 @@
-# README
+# Mid-way
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+http://www.mid-way.co.uk/
 
-Things you may want to cover:
+Midway is an exciting new website where you can find the midpoint between you and your friends!
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Midway find the location between the addressses that a user inputs and lists the activites around that area.
+User's can decide on which destination to visit and Midway redirects them to their preffered routes
