@@ -1,5 +1,5 @@
 {
-  "name": "Midway",
+  "name": "MidwayApplication",
   "private": true,
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
