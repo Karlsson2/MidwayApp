@@ -2,4 +2,7 @@
 
 <h1 class="btn btn-primary">hi from home page</h1>
 
+<%= link_to "Log in", new_user_session_path, class: "btn btn-danger btn-lg" %>
+<%= link_to "Log out", destroy_user_session_path, method: :delete, class: "btn btn-danger btn-lg" %>
+
 <%# link to user profile for later= link_to "current_user_show", user_profile_path(current_user.id) %>
