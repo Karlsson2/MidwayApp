@@ -26,9 +26,9 @@
     <% end %>
     </p>
   <% else %>
-   <p>Name: <%= @user.first_name %> <%= @user.last_name %></p>
+   <p>Default Location: <%= @user.location %></p>
   <% end %>
-    <p> Default Location: <%= @user.location %></p>
+
 
   <%= link_to edit_user_registration_path(current_user.id) do %>
   <p><i class="fas fa-user-edit"></i> Edit</p>
