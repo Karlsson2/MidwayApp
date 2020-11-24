@@ -1,0 +1,16 @@
+<h1><%= current_user.first_name %>'s friends </h1>
+
+<% @friends.each do |friendship| %>
+  <% if friendship.user_id == current_user.id %>
+    <%= friendship.friend.first_name %>
+  <% else friendship.friend_id == current_user.id %>
+    <%= friendship.user.first_name %>
+  <% end %>
+<% end %>
+
+<h1>Add a friend</h1>
+
+<% @not_friends.each do |stranger| %>
+  <%= stranger.first_name %>
+  <%= link_to "Add", user_friendships_path(stranger.id), method: :post %>
+<% end %>

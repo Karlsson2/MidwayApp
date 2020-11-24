@@ -2,16 +2,20 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   has_one_attached :photo
-  has_many :friendships
-  has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
   def friends
-   friends_array = friendships.map{|friendship| friendship.friend if friendship.confirmed}
-   friends_array + inverse_friendships.map{|friendship| friendship.user if friendship.confirmed}
-   friends_array.compact
+   Friendship.where("user_id = ? or friend_id = ?", self.id, self.id)
+   # friends_array = friendships.map{|friendship| friendship.friend if friendship.confirmed}
+   # friends_array + inverse_friendships.map{|friendship| friendship.user if friendship.confirmed}
+   # friends_array.compact
+  end
+
+  def not_friends_of_user
+    friends_ids = (self.friends.map(&:user_id) + self.friends.map(&:friend_id)).uniq
+    User.all.select { |user| !friends_ids.include?(user.id) }
   end
 
   # Users who have yet to confirme friend requests
