@@ -13,7 +13,7 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body style="background-image: url('assets/background.png')">
+  <body style="background-image: url( <%= image_path 'background.png'%>)">
     <% if @navbar_visible %>
       <%=render 'shared/navbar' %>
     <% end %>
