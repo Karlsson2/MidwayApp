@@ -1,36 +1,42 @@
-<div class="main-container">
-  <h2>Profile:</h2>
-  <% if @user.first_name.blank? || @user.last_name.blank? %>
-    <p>Name:<%= link_to edit_user_registration_path(current_user.id) do %>
-      <i class="fas fa-user-edit"></i> Add Name
+<div class="main-container" style="height 100vh">
+
+  <%# find CSS in pages/_profile %>
+  <div class="profile-container">
+
+    <h2>Profile:</h2>
+    <% if @user.first_name.blank? || @user.last_name.blank? %>
+      <p>Name:<%= link_to edit_user_registration_path(current_user.id) do %>
+        <i class="fas fa-user-edit"></i> Add Name
+      <% end %>
+      </p>
+    <% else %>
+    <p>Name: <%= @user.first_name %> <%= @user.last_name %></p>
     <% end %>
-    </p>
-  <% else %>
-   <p>Name: <%= @user.first_name %> <%= @user.last_name %></p>
-  <% end %>
 
-  <% if @user.username.blank? %>
-    <p>Username:<%= link_to edit_user_registration_path(current_user.id) do %>
-      <i class="fas fa-user-edit"></i> Add Username
+    <% if @user.username.blank? %>
+      <p>Username:<%= link_to edit_user_registration_path(current_user.id) do %>
+        <i class="fas fa-user-edit"></i> Add Username
+      <% end %>
+      </p>
+    <% else %>
+    <p>UserName: <%= @user.username %></p>
     <% end %>
-    </p>
-  <% else %>
-   <p>UserName: <%= @user.username %></p>
-  <% end %>
 
-    <p> Email: <%= @user.email %></p>
+      <p> Email: <%= @user.email %></p>
 
-  <% if @user.location.blank? %>
-    <p>Main Location: <%= link_to edit_user_registration_path(current_user.id) do %>
-      <i class="fas fa-user-edit"></i> Add Location
+    <% if @user.location.blank? %>
+      <p>Main Location: <%= link_to edit_user_registration_path(current_user.id) do %>
+        <i class="fas fa-user-edit"></i> Add Location
+      <% end %>
+      </p>
+    <% else %>
+    <p>Default Location: <%= @user.location %></p>
     <% end %>
-    </p>
-  <% else %>
-   <p>Default Location: <%= @user.location %></p>
-  <% end %>
 
 
-  <%= link_to edit_user_registration_path(current_user.id) do %>
-  <p><i class="fas fa-user-edit"></i> Edit</p>
-  <% end %>
+    <%= link_to edit_user_registration_path(current_user.id) do %>
+    <p><i class="fas fa-user-edit"></i> Edit</p>
+    <% end %>
+
+  </div>
 </div>
