@@ -1,3 +1,4 @@
+<div class="main-container">
 <h1><%= current_user.first_name %>'s friends </h1>
 
 <% @friends.each do |friendship| %>
@@ -14,3 +15,4 @@
   <%= stranger.first_name %>
   <%= link_to "Add", user_friendships_path(stranger.id), method: :post %>
 <% end %>
+</div>
