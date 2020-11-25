@@ -13,13 +13,15 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%=render 'shared/navbar' %>
+  <body style="background-image: url( <%= image_path 'background.png'%>)">
+    <% if @navbar_visible %>
+      <%=render 'shared/navbar' %>
+    <% end %>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <p class="notice mb-0"><%= notice %></p>
+    <p class="alert mb-0"><%= alert %></p>
 
     <%= yield %>
-
+    <%= render "shared/footer" %>
   </body>
 </html>
