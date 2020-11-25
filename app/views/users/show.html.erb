@@ -1,42 +1,45 @@
-<div class="main-container" style="height 100vh">
+<div class="main-container" style="height: 100vh;">
 
   <%# find CSS in pages/_profile %>
   <div class="profile-container">
 
-    <h2>Profile:</h2>
+    <h2>Profile</h2>
     <% if @user.first_name.blank? || @user.last_name.blank? %>
-      <p>Name:<%= link_to edit_user_registration_path(current_user.id) do %>
+      <p> <span style="text-decoration: underline;">Name</span>: <%= link_to edit_user_registration_path(current_user.id) do %>
         <i class="fas fa-user-edit"></i> Add Name
       <% end %>
       </p>
     <% else %>
-    <p>Name: <%= @user.first_name %> <%= @user.last_name %></p>
+    <p><span style="text-decoration: underline;">Name</span>: <%= @user.first_name %> <%= @user.last_name %></p>
     <% end %>
 
     <% if @user.username.blank? %>
-      <p>Username:<%= link_to edit_user_registration_path(current_user.id) do %>
+      <p style="margin-bottom: 2px"><span style="text-decoration: underline;">Username</span>: <%= link_to edit_user_registration_path(current_user.id) do %>
         <i class="fas fa-user-edit"></i> Add Username
       <% end %>
       </p>
+      <p style="font-size: 10px; color: red; font-style: italic;">Hint: Add a username so your friends to add you</p>
     <% else %>
-    <p>UserName: <%= @user.username %></p>
+    <p style="margin-bottom: 2px"><span style="text-decoration: underline;">Username</span>: <%= @user.username %></p>
+    <p style="font-size: 10px; font-style: italic;">Give this to your friends so they can find you!</p>
     <% end %>
 
-      <p> Email: <%= @user.email %></p>
+      <p> <span style="text-decoration: underline;">Email</span>: <%= @user.email %></p>
 
     <% if @user.location.blank? %>
-      <p>Main Location: <%= link_to edit_user_registration_path(current_user.id) do %>
+      <p><span style="text-decoration: underline;">Main Location</span>: <%= link_to edit_user_registration_path(current_user.id) do %>
         <i class="fas fa-user-edit"></i> Add Location
       <% end %>
       </p>
     <% else %>
-    <p>Default Location: <%= @user.location %></p>
+    <p><span style="text-decoration: underline;">Default Location</span>: <%= @user.location %></p>
     <% end %>
 
-
-    <%= link_to edit_user_registration_path(current_user.id) do %>
-    <p><i class="fas fa-user-edit"></i> Edit</p>
-    <% end %>
+    <div style="width: 60px; margin: 33px auto 0px auto;">
+      <%= link_to edit_user_registration_path(current_user.id) do %>
+      <p><i class="fas fa-user-edit"></i> Edit</p>
+      <% end %>
+    </div>
 
   </div>
 </div>
