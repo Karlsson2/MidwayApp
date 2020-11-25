@@ -1,4 +1,4 @@
-<div class="container">
+<div class="main-container">
   <h2>Profile:</h2>
   <% if @user.first_name.blank? || @user.last_name.blank? %>
     <p>Name:<%= link_to edit_user_registration_path(current_user.id) do %>

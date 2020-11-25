@@ -1,3 +1,6 @@
+
+<div class="d-flex justify-content-center p-5" style="background: white; margin-top: 90px;">
+<div class="login-container" style="width: 300px; background: white;">
 <h2>Log in</h2>
 
 <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -13,8 +16,13 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, "Log in" %>
+    <%= f.button :submit, "Log in", class: "btn btn-danger" %>
   </div>
 <% end %>
-
 <%= render "devise/shared/links" %>
+
+<br>
+<%= link_to 'Back', :back , class: "btn btn-primary" %>
+<br>
+</div>
+</div>
