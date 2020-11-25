@@ -1,0 +1,39 @@
+// Friends page
+.grid-friends {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 10px;
+}
+
+.current-friends {
+  padding: 20px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,.1);
+  border-radius: 4px;
+}
+
+.not-friends{
+  padding: 20px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,.1);
+  border-radius: 4px;
+}
+
+.main-container {
+  margin: 0 auto ;
+  width: 800px;
+}
+
+//comment
+.friend {
+  padding: 8px;
+  position: relative;
+}
+
+
+.add {
+  position: absolute;
+  top: 14px;
+  right: 160px;
+}
