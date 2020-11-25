@@ -1,0 +1,2 @@
+module MidwayHelper
+end

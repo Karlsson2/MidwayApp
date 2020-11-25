@@ -30,6 +30,7 @@ gem 'font-awesome-sass', '~> 5.6.1'
 gem 'simple_form'
 gem 'devise'
 gem 'rename'
+gem 'geocoder'
 
 # cloudinary stuff
 gem 'dotenv-rails', groups: [:development, :test]
