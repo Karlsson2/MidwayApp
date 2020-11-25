@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   # before_action :authenticate_user!
 
   # Adding first name and last name upon registration
+  before_action :set_navbar_visible
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -15,4 +16,8 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [:username, :first_name, :last_name, :location])
   end
 
+  def set_navbar_visible
+
+    @navbar_visible = true
+  end
 end
