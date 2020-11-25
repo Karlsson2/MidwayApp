@@ -1,0 +1,27 @@
+.banner {
+  background-size: cover;
+  background-position: center;
+  height: calc(100vh - 100px);
+  overflow: hidden;
+  top: 0; left: 0; right: 0; bottom: 0;
+  position: relative;
+}
+
+.home_video {
+  width: 100vw;
+  object-fit: center;
+}
+
+#overlay {
+  z-index: 2;
+  position: absolute;
+  top: 0; right: 0; left: 0; bottom: 0;
+}
+
+.content {
+  z-index: 3;
+  position: absolute;
+  top: 0; right: 0; left: 0; bottom: 0;
+  justify-content: center;
+  align-items: center;
+}
