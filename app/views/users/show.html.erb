@@ -1,36 +1,68 @@
-<div class="main-container">
-  <h2>Profile:</h2>
-  <% if @user.first_name.blank? || @user.last_name.blank? %>
-    <p>Name:<%= link_to edit_user_registration_path(current_user.id) do %>
-      <i class="fas fa-user-edit"></i> Add Name
+<div class="main-container" style="height: 100vh;">
+
+  <%# find CSS in pages/_profile %>
+  <div class="profile-container">
+
+    <h2>Profile</h2>
+
+    <%# NAME %>
+
+    <% if @user.first_name.blank? || @user.last_name.blank? %>
+      <p style="border: none; padding-top: 0px;"> <span style="text-decoration: underline;">Name</span> <%= link_to edit_user_registration_path(current_user.id) do %>
+        <i class="fas fa-user-edit"></i> Add Name
+      <% end %>
+      </p>
+    <% else %>
+      <p style="border: none; padding-top:0px;"><span style="text-decoration: underline;">Name</span> <span style="font-weight: bolder;"> <%= @user.first_name %> <%= @user.last_name %> </span> </p>
     <% end %>
-    </p>
-  <% else %>
-   <p>Name: <%= @user.first_name %> <%= @user.last_name %></p>
-  <% end %>
+    
+    <%# USERNAME %>
 
-  <% if @user.username.blank? %>
-    <p>Username:<%= link_to edit_user_registration_path(current_user.id) do %>
-      <i class="fas fa-user-edit"></i> Add Username
+    <%# NO USERNAME %>
+    <% if @user.username.blank? %>
+      <div class="d-flex justify-content-between" style="border-top: solid 1px grey">
+        <div>
+          <p style="margin-bottom: 2px; border: none !important;"><span style="text-decoration: underline;">Username</span> 
+          </p>
+          <p style="font-size: 10px; color: red; font-style: italic; border: none; padding-top: 0;">Hint: Add a username so your friends to add you</p>
+        </div>
+        <div style="margin: auto 0;">
+          <%= link_to edit_user_registration_path(current_user.id) do %>
+            <i class="fas fa-user-edit"></i> Add Username
+          <% end %>
+        </div>
+      </div>
+
+    <% else %>
+     <div class="d-flex justify-content-between" style="border-top: solid 1px grey">
+        <div>
+          <p style="margin-bottom: 2px; border: none !important;"><span style="text-decoration: underline;">Username</span> 
+          </p>
+          <p style="font-size: 10px; color: red; font-style: italic; border: none; padding-top: 0;">Share this with your friends so that they can find you!</p>
+        </div>
+        <div style="margin: auto 0;">
+          <span style="font-weight: bold;"><%= @user.username %></span>
+        </div>
+      </div>
     <% end %>
-    </p>
-  <% else %>
-   <p>UserName: <%= @user.username %></p>
-  <% end %>
 
-    <p> Email: <%= @user.email %></p>
+    <%# EMAIL %>
 
-  <% if @user.location.blank? %>
-    <p>Main Location: <%= link_to edit_user_registration_path(current_user.id) do %>
-      <i class="fas fa-user-edit"></i> Add Location
+    <p> <span style="text-decoration: underline;">Email</span> <span style="font-weight: bolder;"><%= @user.email %></span></p>
+
+    <%# LOCATION %>
+     <% if @user.location.blank? %>
+      <p><span style="text-decoration: underline;">Main Location</span> <%= link_to edit_user_registration_path(current_user.id) do %>
+        <i class="fas fa-user-edit"></i> Add Location
+      <% end %>
+      </p>
+    <% else %>
+      <p><span style="text-decoration: underline;">Default Location</span> <span style="font-weight: bolder;"><%= @user.location %></span></p>
     <% end %>
-    </p>
-  <% else %>
-   <p>Default Location: <%= @user.location %></p>
-  <% end %>
-
-
-  <%= link_to edit_user_registration_path(current_user.id) do %>
-  <p><i class="fas fa-user-edit"></i> Edit</p>
-  <% end %>
+    <div style="width: 60px; margin: 33px auto 0px auto;">
+      <%= link_to edit_user_registration_path(current_user.id) do %>
+      <p><i class="fas fa-user-edit"></i> Edit</p>
+      <% end %>
+    </div>
+    </div>
 </div>
