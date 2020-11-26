@@ -17,8 +17,10 @@ class FoursquareService
   def find_venues
 
     # find how to hide api key
+    client_id = ENV["FOURSQUARE_CLIENT_ID"]
+    client_secret = ENV["FOURSQUARE_CLIENT_SECRET"]
 
-    base_url = "https://api.foursquare.com/v2/venues/search?client_id=134CWXVHRK0JLFD0MX4DBFZI0K25FM0BTPIBQEB1P0ISMJXN&client_secret=VLPTGEZJTOCF4MQJOMQBZTS1AIJMLB3OKM0FXKOMLDOQKAEV"
+    base_url = "https://api.foursquare.com/v2/venues/search?client_id=#{client_id}&client_secret=#{client_secret}"
     
     # Location comes as a string => "51.492035164043834,-0.15026726093747364"
     longitude = @location.split(",")[0]
@@ -30,12 +32,12 @@ class FoursquareService
     # v for version, current date works
     url = base_url + "&near=#{longitude},#{latitude}&radius=#{radius}&categoryId=#{categoryid}&v=20201126"
     json = JSON.parse(open(url).read)
-    venues = json["response"]["venues"][0]
+    venues = json["response"]["venues"]
 
   end
 
   def venue_info
-    url = "https://api.foursquare.com/v2/venues/#{@venue_id}?client_id=134CWXVHRK0JLFD0MX4DBFZI0K25FM0BTPIBQEB1P0ISMJXN&client_secret=VLPTGEZJTOCF4MQJOMQBZTS1AIJMLB3OKM0FXKOMLDOQKAEV&v=20201126"
+    url = "https://api.foursquare.com/v2/venues/#{@venue_id}?client_id=#{ENV["FOURSQUARE_CLIENT_ID"]}&client_secret=#{ENV["FOURSQUARE_CLIENT_SECRET"]}&v=20201126"
     json = JSON.parse(open(url).read) 
     venue_info = json["response"]["venue"]
   end
