@@ -10,6 +10,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  include PgSearch::Model
+  pg_search_scope :search_by_username_and_first_name_and_last_name,
+    against: [ :username, :first_name, :last_name ],
+    using: {
+      tsearch: { prefix: true } # <-- now `superman batm` will return something!
+    }
+
+
   def friends
    Friendship.where("user_id = ? or friend_id = ?", self.id, self.id)
    # friends_array = friendships.map{|friendship| friendship.friend if friendship.confirmed}
@@ -19,7 +27,7 @@ class User < ApplicationRecord
 
   def not_friends_of_user
     friends_ids = (self.friends.map(&:user_id) + self.friends.map(&:friend_id)).uniq
-    User.all.select { |user| !friends_ids.include?(user.id) }
+    User.where.not(id: friends_ids)
   end
 
   # Users who have yet to confirme friend requests

@@ -49,23 +49,6 @@
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-// Button design
-
-.btn {
-  border: 2px solid white;
-  border-radius: 5px;
-  color: white;
-  background-image: linear-gradient(to right, #006067 0%, #009E99  51%, #03C5B8  100%);
-  transition: 0.5s;
-  background-size: 200% auto;
-  opacity: 0.8;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-}
-
-.btn:hover {
-  background-position: right center; /* change the direction of the change here */
-  color: white;
-  text-decoration: none;
-}
+// Button design is in components/button
 
 
