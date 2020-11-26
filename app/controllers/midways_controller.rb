@@ -19,18 +19,32 @@ class MidwaysController < ApplicationController
   end
 
   def create
-    midpoint_service = MidpointService.new(addresses: ["Putney UK", "Shoreditch UK", "Bethnal Green UK"], arrival_time: 1606327200)
-    midpoint_coordinates = midpoint_service.calculate
-    @midpoint = "#{midpoint_coordinates[:lat]},#{midpoint_coordinates[:lng]}"
-
+    #create the instance of the midway
     @midway = Midway.new(midway_params)
     @midway.user = current_user
-    @midway.midpoint = @midpoint
+    @midway.save
 
-    params[:users_id].each do |user_id|
-      MidwayParticipant.new(params[:user_id])
+    #access the friend IDs from the form and create array of their locations
+    friends = params[:midway][:friends][:participants].reject(&:blank?)
+    friends.each do |id|
+      MidwayParticipant.create!(user_id: id.to_i, midway_id: @midway.id)
+    end
+    participants = MidwayParticipant.where(midway_id: @midway.id)
+    participants_locations = []
+    participants_locations.push(@midway.user.location)
+    participants.each do |participant|
+      participants_locations.push(participant.user.location)
     end
 
+    #accesses the time_option and the future_time
+    time_option = params[:midway][:time_option].to_i
+    future_time = params[:midway][:future_time].to_datetime.to_i
+
+    #assigns the midpoint
+    midpoint_service = MidpointService.new(addresses: participants_locations, time_option: time_option, future_time: future_time)
+    midpoint_coordinates = midpoint_service.calculate
+    @midpoint = "#{midpoint_coordinates[:lat]},#{midpoint_coordinates[:lng]}"
+    @midway.midpoint = @midpoint
     @midway.save!
   end
 
@@ -50,6 +64,7 @@ class MidwaysController < ApplicationController
     private
 
   def midway_params
+    params.require(:midway).permit(:friends, :time_option, :future_time)
   end
 
 end

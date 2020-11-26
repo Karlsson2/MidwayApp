@@ -5,8 +5,8 @@ require 'open-uri'
 class MidpointService
   def initialize(attributes = {})
     @addresses = attributes[:addresses]
-    @arrival_time = attributes[:arrival_time]
-    @departure_time = attributes[:departure_time]
+    @time_option = attributes[:time_option]
+    @future_time = attributes[:future_time]
     convert_to_geocode
     @midpoint = { lat: 0, lng: 0 }
   end
@@ -23,7 +23,7 @@ class MidpointService
     # make the API calls to find the distances and duration between each user location and attempted midpoint
 
     @condition = false
-    url_time = !@arrival_time.nil? ? "arrival_time=#{@arrival_time}" : "departure_time=#{@departure_time}"
+    url_time = @time_option == 1 ? "arrival_time=#{@future_time}" : "departure_time=#{@future_time}"
 
     address_query=""
     @addresses.each do |address|
@@ -69,6 +69,8 @@ class MidpointService
     mcd_index = candidate_durations.index(minimum_candidate_duration)
     candidate_midpoints = candidates.map { |candidate| candidate[0] }
     @midpoint = candidate_midpoints[mcd_index]
+    p candidates
+    p candidate_durations
     p @midpoint
     return @midpoint
   end
@@ -82,6 +84,9 @@ class MidpointService
   def convert_to_geocode
     @addresses.map! do |address|
       results = Geocoder.search(address)
+      if results.nil?
+        convert_to_geocode
+      end
       { lat: results.first.coordinates[0], lng: results.first.coordinates[1], duration: 0 }
     end
   end
