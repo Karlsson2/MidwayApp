@@ -4,32 +4,49 @@ class MidwaysController < ApplicationController
   end
 
   def new
-    #form is here...
+    @midway = Midway.new
+    @friendships = current_user.friends
+    total_users = []
+    @friendships.each do |friendship|
+      total_users.push(friendship.user)
+      total_users.push(friendship.friend)
+    end
+    @friends = []
+    total_users.each do |every_user|
+      @friends.push every_user if every_user.id != current_user.id
+    end
+    @options = ["restaurant", "pub", "bar"]
   end
 
-  def choose_venue
+  def create
     midpoint_service = MidpointService.new(addresses: ["Putney UK", "Shoreditch UK", "Bethnal Green UK"], arrival_time: 1606327200)
     midpoint_coordinates = midpoint_service.calculate
     @midpoint = "#{midpoint_coordinates[:lat]},#{midpoint_coordinates[:lng]}"
-    # this will be where user choose the venues, after the midpoint has been displayed to them
 
+    @midway = Midway.new(midway_params)
+    @midway.user = current_user
+    @midway.midpoint = @midpoint
+
+    params[:users_id].each do |user_id|
+      MidwayParticipant.new(params[:user_id])
+    end
+
+    @midway.save!
+  end
+
+  def edit
     # this queries the foursquare api and saves an ARRAY of venues in @venues
     foursquare_service = FoursquareService.new(location: @midpoint, radius: 200, categoryId: "4bf58dd8d48988d11b941735")
     @venues = foursquare_service.find_venues
   end
 
-  def create
-    # choose_venue
-
-    # @midway = Midway.new
-    # @midway.user = current_user
-    # @midway.midpoint = @midpoint
-    # @midway.venue = @venue
-    # @midway.save!
-  end
-
   # def show
   #   # this will be confirmation page
   # end
+
+    private
+
+  def midway_params
+  end
 
 end
