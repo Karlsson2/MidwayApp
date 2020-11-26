@@ -1,0 +1,29 @@
+.btn {
+  background-color: #646561;
+  border: 2px solid white;
+  color: white;
+  border-radius: 5px;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  color: white;
+  background-color: #03B0A5;
+}
+
+.btn-home {
+  border: 2px solid white;
+  border-radius: 5px;
+  color: white;
+  background-image: linear-gradient(to right, #006067 0%, #009E99  51%, #03C5B8  100%);
+  transition: 0.5s;
+  background-size: 200% auto;
+  opacity: 0.8;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.btn-home:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: white;
+  text-decoration: none;
+}
