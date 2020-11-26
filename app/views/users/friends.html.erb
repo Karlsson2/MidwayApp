@@ -6,15 +6,18 @@
       <% @friends.each do |friendship| %>
         <% if friendship.user_id == current_user.id %>
           <div class="friend border-bottom">
-            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar" %>
-            <%= friendship.friend.first_name %> <%= friendship.friend.last_name %>
+            <p>
+              <%= image_tag friendship.friend.photo, gravity: :face, class: "avatar" %>
+              <%= friendship.friend.first_name %> <%= friendship.friend.last_name %>
+            </p>
 
-            </div>
+          </div>
         <% else friendship.friend_id == current_user.id %>
-         <div class="friend border-bottom">
-          <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar" %>
-          <%= friendship.user.first_name %> <%= friendship.user.last_name %>
-
+          <div class="friend border-bottom">
+            <p>
+              <%= image_tag friendship.user.photo, gravity: :face, class: "avatar" %>
+              <%= friendship.user.first_name %> <%= friendship.user.last_name %>
+            </p>
 
           </div>
         <% end %>
@@ -27,10 +30,11 @@
       <% @not_friends.each do |stranger| %>
 
           <div class="friend border-bottom">
+            <p>
+              <%= image_tag stranger.photo, gravity: :face, class: "avatar" %>
+              <%= stranger.first_name %> <%= stranger.last_name %>
+            </p>
 
-            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar" %>
-
-            <%= stranger.first_name %> <%= stranger.last_name %>
             <div class="add">
               <%= link_to user_friendships_path(stranger.id), method: :post  do%>
                 <i class="fas fa-user-plus"></i>
