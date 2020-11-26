@@ -1,4 +1,5 @@
-require 'JSON'
+require 'rubygems'
+require 'json'
 require 'open-uri'
 
 class MidpointService
