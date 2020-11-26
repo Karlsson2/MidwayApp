@@ -12,6 +12,8 @@
 
   <%= f.input :future_time, as: :datetime, html5: true %>
 
+  <%= f.input :venue_type, as: :radio_buttons, collection: ["Restaurant", "Pub", "Nightclub", "Cinema"] %>
+
   <%= f.submit %>
 <% end %>
 
