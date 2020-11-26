@@ -9,8 +9,9 @@ Rails.application.routes.draw do
     resources :friendships, only: [ :create ]
   end
 
-  resources :midways, only: [:index, :new, :create, :edit, :update]
 
+  resources :midways, only: [:index, :new, :create, :edit, :update]
+  
   get 'dashboard', to: 'pages#dashboard', as: 'dashboard'
   get 'users/:id' => 'users#show', as: "user_profile"
   get 'friends', to: 'users#friends', as: 'friends'
