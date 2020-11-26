@@ -22,6 +22,15 @@ const initMapbox = () => {
         .setLngLat([ marker.lng, marker.lat ])
         .addTo(map);
   });
+    const midpoint = JSON.parse(mapElement.dataset.midpoint);
+
+      // var el = document.createElement("div");
+      // el.className = 'marker';
+      // we are trying to style the midpoint marker
+
+    new mapboxgl.Marker()
+        .setLngLat([ midpoint.lng, midpoint.lat ])
+        .addTo(map);
     fitMapToMarkers(map, markers);
   }
 };
