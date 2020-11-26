@@ -3,6 +3,10 @@
   <%# find CSS in pages/_profile %>
   <div class="profile-container">
 
+    <div class ="profile-image">
+      <%= image_tag current_user.photo, style: "width:75px; height:75px;", class: "avatar" %>
+    </div>
+
     <h2>Profile</h2>
 
     <%# NAME %>
@@ -15,14 +19,14 @@
     <% else %>
       <p style="border: none; padding-top:0px;"><span style="text-decoration: underline;">Name</span> <span style="font-weight: bolder;"> <%= @user.first_name %> <%= @user.last_name %> </span> </p>
     <% end %>
-    
+
     <%# USERNAME %>
 
     <%# NO USERNAME %>
     <% if @user.username.blank? %>
       <div class="d-flex justify-content-between" style="border-top: solid 1px grey">
         <div>
-          <p style="margin-bottom: 2px; border: none !important;"><span style="text-decoration: underline;">Username</span> 
+          <p style="margin-bottom: 2px; border: none !important;"><span style="text-decoration: underline;">Username</span>
           </p>
           <p style="font-size: 10px; color: red; font-style: italic; border: none; padding-top: 0;">Hint: Add a username so your friends to add you</p>
         </div>
@@ -36,7 +40,7 @@
     <% else %>
      <div class="d-flex justify-content-between" style="border-top: solid 1px grey">
         <div>
-          <p style="margin-bottom: 2px; border: none !important;"><span style="text-decoration: underline;">Username</span> 
+          <p style="margin-bottom: 2px; border: none !important;"><span style="text-decoration: underline;">Username</span>
           </p>
           <p style="font-size: 10px; color: red; font-style: italic; border: none; padding-top: 0;">Share this with your friends so that they can find you!</p>
         </div>
