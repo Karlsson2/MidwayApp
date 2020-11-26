@@ -12,6 +12,10 @@ class MidwaysController < ApplicationController
     midpoint_coordinates = midpoint_service.calculate
     @midpoint = "#{midpoint_coordinates[:lat]},#{midpoint_coordinates[:lng]}"
     # this will be where user choose the venues, after the midpoint has been displayed to them
+
+    # this queries the foursquare api and saves an ARRAY of venues in @venues
+    foursquare_service = FoursquareService.new(location: @midpoint, radius: 200, categoryId: "4bf58dd8d48988d11b941735")
+    @venues = foursquare_service.find_venues
   end
 
   def create
