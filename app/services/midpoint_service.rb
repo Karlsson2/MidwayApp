@@ -1,3 +1,6 @@
+require 'rubygems'
+require 'json'
+require 'open-uri'
 
 class MidpointService
   def initialize(attributes = {})
