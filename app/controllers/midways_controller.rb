@@ -41,7 +41,6 @@ class MidwaysController < ApplicationController
     # this queries the foursquare api and saves an ARRAY of venues in @venues
     foursquare_service = FoursquareService.new(location: midpoint, radius: 200, categoryid: "4bf58dd8d48988d11b941735")
     @venues = foursquare_service.find_venues
-    raise
   end
 
   # def show
