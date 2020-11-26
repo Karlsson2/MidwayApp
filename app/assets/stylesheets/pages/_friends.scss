@@ -7,15 +7,15 @@
 
 .current-friends {
   padding: 20px;
-  background: white;
-  box-shadow: 0 10px 30px rgba(0,0,0,.1);
+  background: #F2F2F2;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   border-radius: 4px;
 }
 
 .not-friends{
   padding: 20px;
-  background: white;
-  box-shadow: 0 10px 30px rgba(0,0,0,.1);
+  background: #F2F2F2;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   border-radius: 4px;
 }
 
@@ -28,11 +28,28 @@
 .friend {
   padding: 8px;
   position: relative;
+  display: flex;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
 }
 
-
 .add {
+  color: #03C5B8;
   position: absolute;
-  top: 14px;
-  right: 160px;
+  top: 25px;
+  right: 25px;
+}
+
+.fa-user-plus {
+  color: #03C5B8;
+  font-size: 25px;
+  opacity: 0.8;
+}
+
+.fa-user-plus:hover {
+  opacity: 1;
+}
+
+.search-friend {
+  font-family: 'Raleway', sans-serif;
 }
