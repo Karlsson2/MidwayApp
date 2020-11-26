@@ -61,8 +61,12 @@ class MidwaysController < ApplicationController
     #find midpoint that was saved
     midpoint = @midway.midpoint
 
+    @midpoint_hash = Hash.new
+    @midpoint_hash[:lat] = midpoint.split(",")[0]
+    @midpoint_hash[:lng] = midpoint.split(",")[1]
+
     # this queries the foursquare api and saves an ARRAY of venues in @venues
-    foursquare_service = FoursquareService.new(location: midpoint, radius: 200, categoryid: chosen_category_id)
+    foursquare_service = FoursquareService.new(location: midpoint, radius: 1000, categoryid: chosen_category_id)
     @venues = foursquare_service.find_venues
 
     # save all venue lat and long into array alled markers
