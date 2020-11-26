@@ -3,6 +3,19 @@ class MidwaysController < ApplicationController
   def index
   end
 
+  def my_midways
+    @midways = []
+
+    current_user.midways.each do |midway|
+      result = FoursquareService.new(venue_id: midway.venue).venue_info
+
+      @midways << {name: result["name"],
+        address: result["location"]["address"] +", "+ result["location"]["city"],
+        photo: result["bestPhoto"]["prefix"] + result["bestPhoto"]["width"].to_s + "x" + result["bestPhoto"]["height"].to_s + result["bestPhoto"]["suffix"],
+        midway: midway}
+    end
+  end
+
   def new
     @midway = Midway.new
     @friendships = current_user.friends
@@ -52,7 +65,6 @@ class MidwaysController < ApplicationController
   end
 
   def edit
-
     #find midway and equate its assigned venue type to a category ID from Foursquare's API
     @midway = Midway.find(params[:id])
     venue_type_array = [{ type: "pub", categoryid: "4bf58dd8d48988d11b941735" }, { type: "restaurant", categoryid: "4d4b7105d754a06374d81259" }, { type: "nightclub", categoryid: "4bf58dd8d48988d11f941735" }, { type: "cinema", categoryid: "4bf58dd8d48988d17f941735" } ]

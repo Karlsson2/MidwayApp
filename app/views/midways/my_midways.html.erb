@@ -1,0 +1,32 @@
+<div class="main-container">
+  <div class = "my_midways_container p-2 mt-3" style="background: white; ">
+    <h2 class="p-3" style="text-align:center;">My Midways</h2>
+
+
+    <div class="card-wrapper ">
+    <% @midways.each do |midway|%>
+
+      <div class="card-product mt-1 mb-2 ">
+
+        <%= image_tag midway[:photo], style: "height:100px"%>
+
+        <div class="card-product-infos">
+
+          <h3><%= midway[:name]%></h3>
+          <p><%= midway[:address]%></p>
+          <p><%= midway[:midway].created_at.strftime('%Y-%m-%d') %></p>
+          <% midway[:midway].midway_participants.each do |participants| %>
+          <%= image_tag User.find(participants.user_id).photo, class: "avatar", style: "height: 40px; width: 40px;"%>
+          <%= User.find(participants.user_id).first_name %>
+          <% end %>
+
+        </div>
+
+      </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
+
