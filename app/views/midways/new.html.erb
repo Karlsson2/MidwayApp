@@ -1,0 +1,18 @@
+<%= simple_form_for :midway, url: midways_path do |f| %>
+
+  <%= f.fields_for :friends do |r| %>
+  <%= r.input :participants, as: :check_boxes, collection: @friends.map { |friend| [friend.username, friend.id] } %>
+  <% end %>
+
+  <%#= f.select(:friend_ids, @friends.collect {|friend| [ friend.username, friend.id ] },
+   { :prompt => "Please select"},
+   { :multiple => true, :size => 5  }) %>
+
+  <%= f.input :time_option, as: :radio_buttons, collection: [['0', 'Departure time'], ['1', 'Arrival time']], label_method: :second, value_method: :first %>
+
+  <%= f.input :future_time, as: :datetime, html5: true %>
+
+  <%= f.submit %>
+<% end %>
+
+
