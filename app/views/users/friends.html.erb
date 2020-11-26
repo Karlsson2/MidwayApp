@@ -1,23 +1,27 @@
 <div class="main-container">
   <div class="grid-friends">
     <div class="current-friends">
-      <h1 class="border-bottom"><%= current_user.first_name %>'s friends </h1>
+      <h2 class="border-bottom"><%= current_user.first_name %>'s friends </h2>
 
       <% @friends.each do |friendship| %>
         <% if friendship.user_id == current_user.id %>
           <div class="friend border-bottom">
-            <p>
-              <%= image_tag friendship.friend.photo, gravity: :face, class: "avatar" %>
-              <%= friendship.friend.first_name %> <%= friendship.friend.last_name %>
-            </p>
+
+            <div><%= image_tag friendship.friend.photo, gravity: :face, class: "avatar mr-3" %></div>
+            <div>
+              <p> <strong><%= friendship.friend.username %></strong> </p>
+              <p> <em><%= friendship.friend.first_name %> <%= friendship.friend.last_name %></em> </p>
+            </div>
 
           </div>
         <% else friendship.friend_id == current_user.id %>
           <div class="friend border-bottom">
-            <p>
-              <%= image_tag friendship.user.photo, gravity: :face, class: "avatar" %>
-              <%= friendship.user.first_name %> <%= friendship.user.last_name %>
-            </p>
+
+            <div><%= image_tag friendship.user.photo, gravity: :face, class: "avatar mr-3" %></div>
+            <div>
+              <p> <strong><%= friendship.user.username %></strong> </p>
+              <p> <em><%= friendship.user.first_name %> <%= friendship.user.last_name %></em> </p>
+            </div>
 
           </div>
         <% end %>
@@ -25,15 +29,24 @@
       </div>
 
     <div class="not-friends">
-      <h1 class="border-bottom">Add a friend</h1>
+      <h2 class="border-bottom">Add a friend</h2>
+
+      <div class="search-friend">
+        <%= simple_form_for :search, url: friends_path, method: "GET", html: { class: 'search-form-control form-inline' } do |f| %>
+          <%= f.input :name, label: false, required: false, input_html: {value: "", class: 'input mr-2', placeholder: "Look for username / name" }  %>
+          <%= f.submit "Search", class: "btn btn-sm my-2 my-sm-0" %>
+        <% end %>
+      </div>
 
       <% @not_friends.each do |stranger| %>
 
           <div class="friend border-bottom">
-            <p>
-              <%= image_tag stranger.photo, gravity: :face, class: "avatar" %>
-              <%= stranger.first_name %> <%= stranger.last_name %>
-            </p>
+
+            <div><%= image_tag stranger.photo, gravity: :face, class: "avatar mr-3" %></div>
+            <div>
+              <p> <strong><%= stranger.username %></strong> </p>
+              <p> <em><%= stranger.first_name %> <%= stranger.last_name %></em> </p>
+            </div>
 
             <div class="add">
               <%= link_to user_friendships_path(stranger.id), method: :post  do%>

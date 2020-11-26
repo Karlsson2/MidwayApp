@@ -32,28 +32,58 @@ class MidwaysController < ApplicationController
   end
 
   def create
-    midpoint_service = MidpointService.new(addresses: ["Putney UK", "Shoreditch UK", "Bethnal Green UK"], arrival_time: 1606327200)
-    midpoint_coordinates = midpoint_service.calculate
-    @midpoint = "#{midpoint_coordinates[:lat]},#{midpoint_coordinates[:lng]}"
-
+    #create the instance of the midway
     @midway = Midway.new(midway_params)
     @midway.user = current_user
-    @midway.midpoint = @midpoint
+    @midway.save
 
-    params[:users_id].each do |user_id|
-      MidwayParticipant.new(params[:user_id])
+    #access the friend IDs from the form and create array of their locations
+    friends = params[:midway][:friends][:participants].reject(&:blank?)
+    friends.each do |id|
+      MidwayParticipant.create!(user_id: id.to_i, midway_id: @midway.id)
+    end
+    participants = MidwayParticipant.where(midway_id: @midway.id)
+    participants_locations = []
+    participants_locations.push(@midway.user.location)
+    participants.each do |participant|
+      participants_locations.push(participant.user.location)
     end
 
+    #accesses the time_option and the future_time
+    time_option = params[:midway][:time_option].to_i
+    future_time = params[:midway][:future_time].to_datetime.to_i
+
+    #accesses the venue type the user wants
+    @midway.venue_type = params[:midway][:venue_type].downcase
+
+    #assigns the midpoint
+    midpoint_service = MidpointService.new(addresses: participants_locations, time_option: time_option, future_time: future_time)
+    midpoint_coordinates = midpoint_service.calculate
+    @midpoint = "#{midpoint_coordinates[:lat]},#{midpoint_coordinates[:lng]}"
+    @midway.midpoint = @midpoint
     @midway.save!
   end
 
   def edit
+    #find midway and equate its assigned venue type to a category ID from Foursquare's API
+    @midway = Midway.find(params[:id])
+    venue_type_array = [{ type: "pub", categoryid: "4bf58dd8d48988d11b941735" }, { type: "restaurant", categoryid: "4d4b7105d754a06374d81259" }, { type: "nightclub", categoryid: "4bf58dd8d48988d11f941735" }, { type: "cinema", categoryid: "4bf58dd8d48988d17f941735" } ]
+    chosen_category_id =  venue_type_array.find { |vt| vt[:type] == @midway.venue_type }[:categoryid]
 
-    #find the midway we are editing and gets its midpoint that was saved
-    midpoint = (Midway.find(params[:id])).midpoint
+    #find midpoint that was saved
+    midpoint = @midway.midpoint
+    
     # this queries the foursquare api and saves an ARRAY of venues in @venues
-    foursquare_service = FoursquareService.new(location: midpoint, radius: 200, categoryid: "4bf58dd8d48988d11b941735")
+    foursquare_service = FoursquareService.new(location: midpoint, radius: 200, categoryid: chosen_category_id)
     @venues = foursquare_service.find_venues
+
+    # save all venue lat and long into array alled markers
+    @markers = @venues.map do |venue|
+      {
+        lat: venue["location"]["lat"],
+        lng: venue["location"]["lng"]
+      }
+    end
   end
 
   # def show
@@ -63,6 +93,7 @@ class MidwaysController < ApplicationController
     private
 
   def midway_params
+    params.require(:midway).permit(:friends, :time_option, :future_time)
   end
 
 end
