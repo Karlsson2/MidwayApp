@@ -1,0 +1,17 @@
+<%= simple_form_for :midway do |f| %>
+  <% @friends.each do |friend| %>
+  <%= friend.username.capitalize %>
+  <% end %>
+
+  <%#= f.select(:friend_ids, @friends.collect {|friend| [ friend.username, friend.id ] },
+   { :prompt => "Please select"},
+   { :multiple => true, :size => 5  }) %>
+
+  <%= f.input :time_option, as: :radio_buttons, collection: [['0', 'departure_time'], ['1', 'arrival_time']], label_method: :second, value_method: :first %>
+
+  <%= datetime_field("midway", "future_time") %>
+
+  <%= f.submit %>
+<% end %>
+
+
