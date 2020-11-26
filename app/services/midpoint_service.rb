@@ -1,5 +1,3 @@
-require 'JSON'
-require 'open-uri'
 
 class MidpointService
   def initialize(attributes = {})
