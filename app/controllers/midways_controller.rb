@@ -103,7 +103,25 @@ class MidwaysController < ApplicationController
 
   def show
     @midway = Midway.find(params[:id])
-    @venue = FoursquareService.new(venue_id: @midway.venue).venue_info
+    result = FoursquareService.new(venue_id: @midway.venue).venue_info
+
+    @venue_hash = Hash.new
+    @venue_hash[:name] = result["name"]
+
+    if result["location"]["address"].nil? || result["location"]["city"].nil?
+      @venue_hash[:address] = "London"
+    else
+      @venue_hash[:address] = result["location"]["address"] + ", " + result["location"]["city"]
+    end
+
+    if result["bestPhoto"].nil?
+      @venue_hash[:photo] = "https://sca.frogbikes.com/secure/img/no_image_available.jpeg"
+    else
+      @venue_hash[:photo] =["bestPhoto"]["prefix"] + result["bestPhoto"]["width"].to_s + "x" + result["bestPhoto"]["height"].to_s + result["bestPhoto"]["suffix"]
+    end
+
+    @venue_hash[:lat] = result["location"]["lat"]
+    @venue_hash[:lng] = result["location"]["lng"]
 
     participants = MidwayParticipant.where(midway_id: @midway.id)
     addresses = participants.map { |participant| participant.user.location}
@@ -113,10 +131,6 @@ class MidwaysController < ApplicationController
     @midpoint_hash = Hash.new
     @midpoint_hash[:lat] = midpoint.split(",")[0]
     @midpoint_hash[:lng] = midpoint.split(",")[1]
-
-    @venue_hash = Hash.new
-    @venue_hash[:lat] = @venue["location"]["lat"]
-    @venue_hash[:lng] = @venue["location"]["lng"]
 
     @markers = addresses_coordinates.map do |participant|
       {
