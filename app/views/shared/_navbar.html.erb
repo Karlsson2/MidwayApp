@@ -1,6 +1,6 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="nav-midway">
-  <%= link_to "#", class: "navbar-brand " do %>
+  <%= link_to dashboard_path, class: "navbar-brand " do %>
     Midway
   <% end %>
 </div>
@@ -17,6 +17,7 @@
       <li class="nav-item dropdown">
         <%= image_tag current_user.photo, gravity: :face, class: "avatar-navbar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <%= link_to "New Midway", new_midway_path, class: "dropdown-item" %>
           <%= link_to "My Friends", friends_path, class: "dropdown-item" %>
           <%= link_to "My Midways", my_midways_path, class: "dropdown-item" %>
           <%= link_to "My Profile", user_profile_path(current_user.id), class: "dropdown-item" %>
