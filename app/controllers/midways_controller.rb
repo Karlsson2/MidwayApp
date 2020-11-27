@@ -8,10 +8,17 @@ class MidwaysController < ApplicationController
 
     current_user.midways.each do |midway|
       result = FoursquareService.new(venue_id: midway.venue).venue_info
+     
+      
+      if result["bestPhoto"]["prefix"].nil?
+        photo = "https://sca.frogbikes.com/secure/img/no_image_available.jpeg"
+      else
+          photo = result["bestPhoto"]["prefix"] + result["bestPhoto"]["width"].to_s + "x" + result["bestPhoto"]["height"].to_s + result["bestPhoto"]["suffix"]
+      end 
 
       @midways << {name: result["name"],
         address: result["location"]["address"] +", "+ result["location"]["city"],
-        photo: result["bestPhoto"]["prefix"] + result["bestPhoto"]["width"].to_s + "x" + result["bestPhoto"]["height"].to_s + result["bestPhoto"]["suffix"],
+        photo: photo, 
         midway: midway}
     end
   end
