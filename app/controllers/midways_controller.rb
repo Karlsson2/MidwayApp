@@ -80,6 +80,7 @@ class MidwaysController < ApplicationController
     # this queries the foursquare api and saves an ARRAY of venues in @venues
     foursquare_service = FoursquareService.new(location: midpoint, radius: 1000, categoryid: chosen_category_id)
     @venues = foursquare_service.find_venues
+    @venue_hash = fetching_venue(@venues)
 
     # save all venue lat and long into array alled markers
     @markers = @venues.map do |venue|
@@ -88,6 +89,20 @@ class MidwaysController < ApplicationController
         lng: venue["location"]["lng"]
       }
     end
+  end
+
+  def fetching_venue(venues)
+    venue_hash = []
+
+    venues.each do |venue|
+      venue_hash << {
+      id: venue["id"],
+      name: venue["name"],
+      address: "#{venue["location"]["address"]}, #{venue["location"]["postalCode"]}, #{venue["location"]["city"]}",
+      category: venue["categories"][0]["shortName"]
+      }
+    end
+    venue_hash
   end
 
   # def show
