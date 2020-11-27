@@ -93,14 +93,20 @@ class MidwaysController < ApplicationController
     end
   end
 
-  # def show
-  #   # this will be confirmation page
-  # end
+  def update
+    @midway = Midway.find(params[:id])
+    @midway.venue = params[:venue]
+    redirect_to midway_path(@midway.id)
+  end
+
+  def show
+    @midway = Midway.find(params[:id])
+    @venue = FoursquareService.new(venue_id: @midway.venue).venue_info
+  end
 
     private
 
   def midway_params
-    params.require(:midway).permit(:friends, :time_option, :future_time)
+    params.require(:midway).permit(:friends, :time_option, :future_time, :venue_type, :venue)
   end
-
 end
