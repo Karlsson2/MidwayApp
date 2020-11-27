@@ -94,23 +94,10 @@ class MidwaysController < ApplicationController
     end
   end
 
-  def fetching_venue(venues)
-    venue_hash = []
-
-    venues.each do |venue|
-      venue_hash << {
-      id: venue["id"],
-      name: venue["name"],
-      address: "#{venue["location"]["address"]}, #{venue["location"]["postalCode"]}, #{venue["location"]["city"]}",
-      category: venue["categories"][0]["shortName"]
-      }
-    end
-    venue_hash
-  end
-
   def update
     @midway = Midway.find(params[:id])
-    @midway.venue = params[:venue]
+    @midway.venue = params[:venue_id]
+    @midway.save!
     redirect_to midway_path(@midway.id)
   end
 
@@ -155,4 +142,19 @@ class MidwaysController < ApplicationController
       { lat: results.first.coordinates[0], lng: results.first.coordinates[1]}
     end
   end
+
+  def fetching_venue(venues)
+    venue_hash = []
+
+    venues.each do |venue|
+      venue_hash << {
+      id: venue["id"],
+      name: venue["name"],
+      address: "#{venue["location"]["address"]}, #{venue["location"]["postalCode"]}, #{venue["location"]["city"]}",
+      category: venue["categories"][0]["shortName"]
+      }
+    end
+    venue_hash
+  end
+
 end
