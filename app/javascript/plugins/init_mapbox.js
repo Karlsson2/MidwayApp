@@ -21,7 +21,7 @@ const initMapbox = () => {
       new mapboxgl.Marker()
         .setLngLat([ marker.lng, marker.lat ])
         .addTo(map);
-  });
+    });
     const midpoint = JSON.parse(mapElement.dataset.midpoint);
 
       // var el = document.createElement("div");
@@ -30,6 +30,57 @@ const initMapbox = () => {
 
     new mapboxgl.Marker()
         .setLngLat([ midpoint.lng, midpoint.lat ])
+        .addTo(map);
+    fitMapToMarkers(map, markers);
+  }
+
+
+
+// map for show page below
+
+
+
+
+  const mapElementShow = document.getElementById('map-show');
+
+  // does as it states, fits map to markers so not zoomed out
+  const fitMapShowToMarkers = (map, markers) => {
+    const bounds = new mapboxgl.LngLatBounds();
+    markers.forEach(marker => bounds.extend([ marker.lng, marker.lat ]));
+    map.fitBounds(bounds, { padding: 70, maxZoom: 10, duration: 0 });
+  };
+
+  if (mapElementShow) { // only build a map if there's a div#map to inject into
+    mapboxgl.accessToken = mapElementShow.dataset.mapboxApiKey;
+    const map = new mapboxgl.Map({
+      container: 'map-show',
+      style: 'mapbox://styles/mapbox/streets-v10'
+    });
+    const markers = JSON.parse(mapElementShow.dataset.markers);
+    markers.forEach((marker) => {
+      new mapboxgl.Marker()
+        .setLngLat([ marker.lng, marker.lat ])
+        .addTo(map);
+    });
+    const midpoint = JSON.parse(mapElementShow.dataset.midpoint);
+
+      // var el = document.createElement("div");
+      // el.className = 'marker';
+      // we are trying to style the midpoint marker
+
+    new mapboxgl.Marker()
+        .setLngLat([ midpoint.lng, midpoint.lat ])
+        .addTo(map);
+    fitMapToMarkers(map, markers);
+
+    const venue = JSON.parse(mapElementShow.dataset.venue);
+
+      // var el = document.createElement("div");
+      // el.className = 'marker';
+      // we are trying to style the venue marker
+
+    new mapboxgl.Marker()
+        .setLngLat([ venue.lng, venue.lat ])
         .addTo(map);
     fitMapToMarkers(map, markers);
   }

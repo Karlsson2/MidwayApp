@@ -1,0 +1,33 @@
+<div class="main-container">
+
+  <div id="map-show"
+       style="width: 100%; height: 600px;"
+       data-markers="<%= @markers.to_json %>"
+       data-midpoint="<%= @midpoint_hash.to_json %>"
+       data-venue="<%= @venue_hash.to_json %>"
+       data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"></div>
+
+<!--   <%# show styling in pages/show.css %>
+  <div class="show-container">
+    <div class="card-container">
+      <%# wait for card styling %>
+    </div>
+
+    <div class="directions-container">
+      <%# figure out to use Google Directions API %>
+
+      <%#= participants.each do |participant| %>
+        <a href="googleURL#{participant.lat/lng}" class="avatar">
+          <img src="participant.photo" alt="">
+        </a>
+      <%# end %>
+
+    </div>
+
+    <div class="share-container">
+      <%# font awesome icons and a share link that is identical for all %>
+    </div>
+
+  </div> -->
+
+</div>
