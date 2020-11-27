@@ -10,14 +10,14 @@ class MidwaysController < ApplicationController
       result = FoursquareService.new(venue_id: midway.venue).venue_info
      
       
-      if result["bestPhoto"]["prefix"].nil?
+      if result["bestPhoto"].nil?
         photo = "https://sca.frogbikes.com/secure/img/no_image_available.jpeg"
       else
           photo = result["bestPhoto"]["prefix"] + result["bestPhoto"]["width"].to_s + "x" + result["bestPhoto"]["height"].to_s + result["bestPhoto"]["suffix"]
       end 
 
       if result["location"]["address"].nil?
-        location = result["location"]["formattedAddress"][0] + ", " + result["location"]["formattedAddress"][1]
+        location = result["location"]["formattedAddress"][0]
       else
         location = result["location"]["address"] + ", " + result["location"]["city"]
       end
@@ -122,7 +122,7 @@ class MidwaysController < ApplicationController
     @venue_hash[:name] = result["name"]
 
     if result["location"]["address"].nil? || result["location"]["city"].nil?
-      @venue_hash[:address] = "London"
+      @venue_hash[:address] = result["location"]["formattedAddress"][0]
     else
       @venue_hash[:address] = result["location"]["address"] + ", " + result["location"]["city"]
     end
