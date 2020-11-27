@@ -42,9 +42,9 @@ class MidwaysController < ApplicationController
     friends.each do |id|
       MidwayParticipant.create!(user_id: id.to_i, midway_id: @midway.id)
     end
+    MidwayParticipant.create!(user_id: current_user.id, midway_id: @midway.id)
     participants = MidwayParticipant.where(midway_id: @midway.id)
     participants_locations = []
-    participants_locations.push(@midway.user.location)
     participants.each do |participant|
       participants_locations.push(participant.user.location)
     end
@@ -62,6 +62,9 @@ class MidwaysController < ApplicationController
     @midpoint = "#{midpoint_coordinates[:lat]},#{midpoint_coordinates[:lng]}"
     @midway.midpoint = @midpoint
     @midway.save!
+
+    #redirect straight to edit page to pick the venue
+    redirect_to edit_midway_path(@midway.id)
   end
 
   def edit
