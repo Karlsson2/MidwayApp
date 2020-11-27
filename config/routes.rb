@@ -10,8 +10,8 @@ Rails.application.routes.draw do
   end
 
 
-  resources :midways, only: [:index, :new, :create, :edit, :update]
-  
+  resources :midways, only: [:index, :new, :create, :edit, :update, :show]
+
   get 'dashboard', to: 'pages#dashboard', as: 'dashboard'
   get 'users/:id' => 'users#show', as: "user_profile"
   get 'friends', to: 'users#friends', as: 'friends'

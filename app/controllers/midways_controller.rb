@@ -117,6 +117,26 @@ class MidwaysController < ApplicationController
   def show
     @midway = Midway.find(params[:id])
     @venue = FoursquareService.new(venue_id: @midway.venue).venue_info
+
+    participants = MidwayParticipant.where(midway_id: @midway.id)
+    addresses = participants.map { |participant| participant.user.location}
+    addresses_coordinates = convert_to_geocode(addresses)
+
+    midpoint = @midway.midpoint
+    @midpoint_hash = Hash.new
+    @midpoint_hash[:lat] = midpoint.split(",")[0]
+    @midpoint_hash[:lng] = midpoint.split(",")[1]
+
+    @venue_hash = Hash.new
+    @venue_hash[:lat] = @venue["location"]["lat"]
+    @venue_hash[:lng] = @venue["location"]["lng"]
+
+    @markers = addresses_coordinates.map do |participant|
+      {
+        lat: participant[:lat],
+        lng: participant[:lng]
+      }
+    end
   end
 
 
@@ -124,5 +144,15 @@ class MidwaysController < ApplicationController
 
   def midway_params
     params.require(:midway).permit(:friends, :time_option, :future_time, :venue_type, :venue)
+  end
+
+  def convert_to_geocode(addresses)
+    addresses.map! do |address|
+      results = Geocoder.search(address)
+      if results.nil?
+        convert_to_geocode
+      end
+      { lat: results.first.coordinates[0], lng: results.first.coordinates[1]}
+    end
   end
 end
