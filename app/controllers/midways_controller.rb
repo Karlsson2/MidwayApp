@@ -16,8 +16,14 @@ class MidwaysController < ApplicationController
           photo = result["bestPhoto"]["prefix"] + result["bestPhoto"]["width"].to_s + "x" + result["bestPhoto"]["height"].to_s + result["bestPhoto"]["suffix"]
       end 
 
+      if result["location"]["address"].nil?
+        location = result["location"]["formattedAddress"][0] + ", " + result["location"]["formattedAddress"][1]
+      else
+        location = result["location"]["address"] + ", " + result["location"]["city"]
+      end
+
       @midways << {name: result["name"],
-        address: result["location"]["address"] +", "+ result["location"]["city"],
+        address: location,
         photo: photo, 
         midway: midway}
     end
@@ -124,7 +130,7 @@ class MidwaysController < ApplicationController
     if result["bestPhoto"].nil?
       @venue_hash[:photo] = "https://sca.frogbikes.com/secure/img/no_image_available.jpeg"
     else
-      @venue_hash[:photo] =["bestPhoto"]["prefix"] + result["bestPhoto"]["width"].to_s + "x" + result["bestPhoto"]["height"].to_s + result["bestPhoto"]["suffix"]
+      @venue_hash[:photo] = result["bestPhoto"]["prefix"] + result["bestPhoto"]["width"].to_s + "x" + result["bestPhoto"]["height"].to_s + result["bestPhoto"]["suffix"]
     end
 
     @venue_hash[:lat] = result["location"]["lat"]
