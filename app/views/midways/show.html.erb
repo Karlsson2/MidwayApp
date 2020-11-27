@@ -7,10 +7,28 @@
        data-venue="<%= @venue_hash.to_json %>"
        data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"></div>
 
-<!--   <%# show styling in pages/show.css %>
+  <%# show styling in pages/show.css %>
+
   <div class="show-container">
+
     <div class="card-container">
-      <%# wait for card styling %>
+      <div class="venue_info" style="background-color: white;">
+        <%# wait for card styling %>
+        <p><%= @venue_info["name"] %></p>
+
+        <% if @venue_info["contact"] && @venue_info["contact"]["phone"] %>
+          <p><%= @venue_info["contact"]["phone"] %></p>
+        <% end %>
+
+        <% if @venue_info["postalCose"] %>
+          <p><%= @venue_info["postalCode"] %></p>
+        <% end %>
+
+        <% if @venue_info["url"] %>
+          <p><%= @venue_info["url"] %></p>
+        <% end %>
+      </div>
+
     </div>
 
     <div class="directions-container">
@@ -28,6 +46,6 @@
       <%# font awesome icons and a share link that is identical for all %>
     </div>
 
-  </div> -->
+  </div>
 
 </div>
