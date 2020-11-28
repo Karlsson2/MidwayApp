@@ -3,13 +3,14 @@
 <div class="content-edit">
 <% counter = 0 %>
   <div>
-    <h2>Nearby activities</h2>
+    <h2 class ="pt-4"style="text-align: center;">Nearby activities</h2>
     <div class=cards>
       <% @venue_hash.each do |venue| %>
 
         <% counter += 1 %>
         <div class="card" style="width: 18rem;" data-toggle="modal" data-target="#exampleModalCenter<%= counter %>">
-          <img class="card-img-top" src="..." alt="Card image cap">
+
+          <%= image_tag venue[:photo], alt: "Card image cap", class: "card-img-top"  %>
           <div class="card-body">
             <h5><%= venue[:name] %></h5>
             <p><%= venue[:category] %></p>
