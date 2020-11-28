@@ -1,20 +1,25 @@
-<%= simple_form_for :midway, url: midways_path do |f| %>
+<div class="main-container" style="height: 100vh;">
+  <div class="midway-container-new">
+    <h2>Customize your midway:</h2>
+    <%= simple_form_for :midway, url: midways_path do |f| %>
 
-  <%= f.fields_for :friends do |r| %>
-  <%= r.input :participants, as: :check_boxes, collection: @friends.map { |friend| [friend.username, friend.id] } %>
-  <% end %>
+      <%= f.fields_for :friends do |r| %>
+      <%= r.input :participants, label: "Choose your friends", as: :check_boxes, collection: @friends.map { |friend| ["#{friend.first_name} #{friend.last_name} ", friend.id] } %>
+      <% end %>
 
-  <%#= f.select(:friend_ids, @friends.collect {|friend| [ friend.username, friend.id ] },
-   { :prompt => "Please select"},
-   { :multiple => true, :size => 5  }) %>
+      <%#= f.select(:friend_ids, @friends.collect {|friend| [ friend.username, friend.id ] },
+       { :prompt => "Please select"},
+       { :multiple => true, :size => 5  }) %>
 
-  <%= f.input :time_option, as: :radio_buttons, collection: [['0', 'Departure time'], ['1', 'Arrival time']], label_method: :second, value_method: :first %>
+      <%= f.input :time_option, label: "When do you want to travel/meet up?", as: :radio_buttons, collection: [['0', 'Departure time'], ['1', 'Arrival time']], label_method: :second, value_method: :first %>
 
-  <%= f.input :future_time, as: :datetime, html5: true %>
+      <%= f.input :future_time, label: "Please select the time:", as: :datetime, html5: true %>
 
-  <%= f.input :venue_type, as: :radio_buttons, collection: ["Restaurant", "Pub", "Nightclub", "Cinema"] %>
+      <%= f.input :venue_type, label: "What kind of venue do you want to meet at?", as: :radio_buttons, collection: ["Restaurant", "Pub", "Nightclub", "Cinema"] %>
 
-  <%= f.submit %>
-<% end %>
+      <%= f.submit "Find our Midway", class: "btn btn-home" %>
+    <% end %>
 
+  </div>
+</div>
 
