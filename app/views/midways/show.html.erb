@@ -76,19 +76,26 @@
 
       <div class="card-content">
         <div class="travel-grid">
-          <div class="travel-item">
-            <i class="fas fa-walking"></i> <p>15 min</p>
-          </div>
-          <div class="travel-item">
-            <i class="fas fa-car"></i> <p>15 min</p>
-          </div>
-          <div class="travel-item" style="background: black;">
-            <i class="fab fa-uber"></i> <p>5 min</p>
-          </div>
-          <div class="travel-item">
-            <i class="fas fa-subway"></i> <p>5 min</p>
-          </div>
-
+          <%=link_to "#" do %>
+            <div class="travel-item">
+              <i class="fas fa-walking"></i> <p>15 min</p>
+            </div>
+          <% end %>
+          <%=link_to "#" do %>
+            <div class="travel-item">
+              <i class="fas fa-car"></i> <p>15 min</p>
+            </div>
+          <% end %>
+          <%=link_to "#" do %>
+            <div class="travel-item" style="background: black;">
+              <i class="fab fa-uber"></i> <p>5 min</p>
+            </div>
+          <% end %>
+          <%=link_to "#" do %>
+            <div class="travel-item">
+              <i class="fas fa-subway"></i> <p>5 min</p>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
