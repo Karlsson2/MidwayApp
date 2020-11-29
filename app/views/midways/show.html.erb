@@ -1,7 +1,27 @@
-<div class="main-container">
+<div class="main-container mt-3">
+
+  <div class="title">
+    <h2>
+    Midway between
+    <% if @midway.midway_participants.count == 2 %>
+      <%= User.find(@midway.midway_participants.first.user_id).first_name %> &
+      <%= User.find(@midway.midway_participants.last.user_id).first_name %>
+    <% elsif @midway.midway_participants.count > 2 %>
+      <%= User.find(@midway.midway_participants.first.user_id).first_name %>,
+      <% @midway.midway_participants[1..-3].each do |participant| %>
+        <%= User.find(participant.user_id).first_name%>,
+      <% end %>
+      <%= User.find(@midway.midway_participants[-2].user_id).first_name %>
+      & <%= User.find(@midway.midway_participants.last.user_id).first_name %>
+    <% end %>
+      is <%= @venue_info["name"] %>
+    </h2>
+  </div>
+
+
 
   <div id="map-show"
-       style="width: 100%; height: 600px;"
+       style="width: 100%; height: 350px;"
        data-markers="<%= @markers.to_json %>"
        data-midpoint="<%= @midpoint_hash.to_json %>"
        data-venue="<%= @venue_hash.to_json %>"
@@ -9,12 +29,24 @@
 
   <%# show styling in pages/show.css %>
 
-  <div class="show-container">
+  <div class="show-container mb-3">
 
-    <div class="card-container">
-      <div class="venue_info" style="background-color: white;">
+    <div class="card-container" >
+      <h2 class="card-title">Your midway venue:</h2>
+
+       <%if @venue_info["bestPhoto"].nil?%>
+          <% photo = "https://sca.frogbikes.com/secure/img/no_image_available.jpeg" %>
+        <% else %>
+          <% photo = @venue_info["bestPhoto"]["prefix"] + @venue_info["bestPhoto"]["width"].to_s + "x" + @venue_info["bestPhoto"]["height"].to_s + @venue_info["bestPhoto"]["suffix"] %>
+        <% end %>
+
+        <%= image_tag photo, class: "venue_photo" %>
+      <div class="venue_info">
         <%# wait for card styling %>
-        <p><%= @venue_info["name"] %></p>
+
+
+
+        <h4><%= @venue_info["name"] %></h4>
 
         <% if @venue_info["contact"] && @venue_info["contact"]["phone"] %>
           <p><%= @venue_info["contact"]["phone"] %></p>
@@ -32,17 +64,53 @@
     </div>
 
     <div class="directions-container">
+      <h2 class="card-title">Travel to midway:</h2>
+
       <%# figure out to use Google Directions API %>
 
       <%#= participants.each do |participant| %>
-        <a href="googleURL#{participant.lat/lng}" class="avatar">
+<!--         <a href="googleURL#{participant.lat/lng}" class="avatar">
           <img src="participant.photo" alt="">
-        </a>
+        </a> -->
       <%# end %>
 
+      <div class="card-content">
+        <div class="travel-grid">
+          <div class="travel-item">
+            <i class="fas fa-walking"></i> <p>15 min</p>
+          </div>
+          <div class="travel-item">
+            <i class="fas fa-car"></i> <p>15 min</p>
+          </div>
+          <div class="travel-item" style="background: black;">
+            <i class="fab fa-uber"></i> <p>5 min</p>
+          </div>
+          <div class="travel-item">
+            <i class="fas fa-subway"></i> <p>5 min</p>
+          </div>
+
+        </div>
+      </div>
     </div>
 
     <div class="share-container">
+      <h2 class="card-title">Share:</h2>
+        <div class="card-content">
+          <div class="social-container">
+            <div class="social-element">
+              <i class="fab fa-whatsapp"></i>
+            </div>
+            <div class="social-element">
+              <i class="fab fa-facebook-messenger"></i>
+            </div>
+            <div class="social-element">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="social-element">
+              <i class="fas fa-share-alt"></i>
+            </div>
+          </div>
+      </div>
       <%# font awesome icons and a share link that is identical for all %>
     </div>
 
