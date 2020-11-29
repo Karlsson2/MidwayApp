@@ -151,6 +151,7 @@ class MidwaysController < ApplicationController
         lng: participant[:lng]
       }
     end
+    @venue_info = result
   end
 
 
