@@ -75,10 +75,17 @@ class MidwaysController < ApplicationController
 
     #assigns the midpoint
     midpoint_service = MidpointService.new(addresses: participants_locations, time_option: time_option, future_time: future_time)
-    midpoint_coordinates = midpoint_service.calculate
+    midpoint_coordinates = midpoint_service.calculate[0]
     @midpoint = "#{midpoint_coordinates[:lat]},#{midpoint_coordinates[:lng]}"
     @midway.midpoint = @midpoint
     @midway.save!
+
+    #assigns a duration to each Midway Participant
+    durations = midpoint_service.calculate[1]
+    participants.each_with_index do |participant, index|
+      participant.duration_to_midpoint = durations[index]
+      participant.save!
+    end
 
     #redirect straight to edit page to pick the venue
     redirect_to edit_midway_path(@midway.id)
@@ -135,6 +142,14 @@ class MidwaysController < ApplicationController
     @participants = MidwayParticipant.where(midway_id: @midway.id)
     addresses = @participants.map { |participant| participant.user.location}
     addresses_coordinates = convert_to_geocode(addresses)
+
+    #updates a duration to each Midway Participant
+    venue_service = VenueService.new(addresses: addresses_coordinates, venue_lat: @venue.lat, venue_lng: @venue.lng, time_option: @midway.time_option, future_time: @midway.future_time)
+    durations = venue_service.calculate
+    @participants.each_with_index do |participant, index|
+      participant.duration_to_midpoint = durations[index]
+      participant.save!
+    end
 
     midpoint = @midway.midpoint
     @midpoint_hash = Hash.new

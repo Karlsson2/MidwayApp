@@ -46,17 +46,22 @@
     <div class="directions-container">
       <h2 class="card-title">Travel to midway:</h2>
 
-      <%# figure out to use Google Directions API %>
+      <div class="card-content">
+        <div class="users-grid">
+          <% @participants.each do |participant| %>
+          <div class="travel-item user-button" data-duration="<%= participant.duration_to_midpoint %>">
+            <%= image_tag participant.user.photo, gravity: :face, class: "avatar-navbar" %>
+            <p> <%= participant.user.first_name %></p>
+          </div>
+          <% end %>
+        </div>
+      </div>
 
       <%#= participants.each do |participant| %>
 <!--         <a href="googleURL#{participant.lat/lng}" class="avatar">
           <img src="participant.photo" alt="">
         </a> -->
       <%# end %>
-
-    <%# @participants.each do |participant| %>
-    <%#= participant.user %>
-    <%# end %>
 
     </div>
 
@@ -86,14 +91,90 @@
               <i class="fas fa-envelope" id="mail-icon"></i>
               <% end %>
             </div>
-            <div class="social-element">
-              <i class="fas fa-share-alt"></i>
+            <div class="social-element share-button">
+              <i class="fas fa-copy"></i>
             </div>
           </div>
       </div>
-      <%# font awesome icons and a share link that is identical for all %>
     </div>
 
   </div>
 
 </div>
+
+<script type="text/javascript">
+
+  // User button and response
+  var userButtonsArray = document.querySelectorAll('.user-button');
+  console.log(userButtonsArray)
+  userButtonsArray.forEach(function(button) {
+    button.addEventListener('click', function(event) {
+    // console.log(event.target.parentElement);
+    var durationToMidpoint = button.dataset.duration;
+    var grid = event.target.parentElement;
+    grid.parentElement.innerHTML = `<div class="card-content">
+        <div class="travel-grid">
+          <%=link_to "#" do %>
+            <div class="travel-item">
+              <i class="fas fa-walking"></i> <p> ${durationToMidpoint} </p>
+            </div>
+          <% end %>
+          <%=link_to "#" do %>
+            <div class="travel-item">
+              <i class="fas fa-car"></i> <p> ${durationToMidpoint} </p>
+            </div>
+          <% end %>
+          <%=link_to "https://m.uber.com/ul/?client_id=%3CCLIENT_ID%3E&action=setPickup&pickup=my_location&dropoff%5Blatitude%5D=#{@midway.venue.lat}&dropoff[longitude]=#{@midway.venue.lng}&dropoff[nickname]=#{@midway.venue.name}&product_id=a1111c8c-c720-46c3-8534-2fcdd730040d" do %>
+            <div class="travel-item" style="background: black;">
+              <i class="fab fa-uber"></i> <p> ${durationToMidpoint} </p>
+            </div>
+          <% end %>
+          <%=link_to "#" do %>
+            <div class="travel-item">
+              <i class="fas fa-subway"></i> <p> ${durationToMidpoint} </p>
+            </div>
+          <% end %>
+        </div>
+      </div> `
+    });
+  });
+
+  // copy to Clipboard function
+  function copyTextToClipboard(text) {
+    var textArea = document.createElement("textarea");
+    textArea.style.position = 'fixed';
+    textArea.style.top = 0;
+    textArea.style.left = 0;
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+    textArea.style.padding = 0;
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+    textArea.style.background = 'transparent';
+    textArea.value = text;
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+      console.log('Copying text command was ' + msg);
+    } catch (err) {
+      console.log('Oops, unable to copy');
+    }
+
+    document.body.removeChild(textArea);
+  }
+
+  var shareButton = document.querySelector('.share-button');
+  var firstName = '<%= @midway.user.first_name %>';
+  var id = '<%= @midway.id %>';
+
+  shareButton.addEventListener('click', function(event) {
+    copyTextToClipboard(`Hey its ${firstName}, join us at https://www.mid-way.co.uk/midways/${id}. See you there! `);
+  });
+
+</script>

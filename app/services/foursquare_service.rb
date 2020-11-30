@@ -29,7 +29,7 @@ class FoursquareService
     venue_type = @venue_type
 
     # v for version, current date works
-    url = base_url + "location=#{longitude},#{latitude}&radius=#{radius}&type=#{venue_type}&key=AIzaSyDuEFZ2Yuv4-gZn9S_Nv8e_rxz_Jcdy85M"
+    url = base_url + "location=#{longitude},#{latitude}&radius=#{radius}&type=#{venue_type}&key=AIzaSyDFvyNLsoIQsADW5U0uePwiuLjbHg9CnBs"
     json = JSON.parse(open(url).read)
     venues = []
     json["results"].each do |result|
@@ -42,7 +42,7 @@ class FoursquareService
   end
 
   def search_photo
-    url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=#{@photo_reference}&key=AIzaSyDuEFZ2Yuv4-gZn9S_Nv8e_rxz_Jcdy85M"
+    url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=#{@photo_reference}&key=AIzaSyDFvyNLsoIQsADW5U0uePwiuLjbHg9CnBs"
     return url
   end
 end
