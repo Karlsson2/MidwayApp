@@ -151,6 +151,7 @@ class MidwaysController < ApplicationController
         lng: participant[:lng]
       }
     end
+    @venue_info = result
   end
 
 
@@ -173,17 +174,31 @@ class MidwaysController < ApplicationController
   def fetching_venue(venues)
     venue_hash = []
 
+
+
     venues.each do |venue|
 
       venue_hash << {
       id: venue["id"],
       name: venue["name"],
+
       address: "#{venue["location"]["address"]}, #{venue["location"]["postalCode"]}, #{venue["location"]["city"]}",
-      category: venue["categories"][0]["shortName"],
-      # photo: photo
+      category: venue["categories"][0]["shortName"]
       }
     end
-    venue_hash
+
+      venue_hash.each do |venue|
+      result = FoursquareService.new(venue_id: venue[:id]).venue_info
+
+
+        if result["bestPhoto"].nil?
+          venue[:photo] = "https://sca.frogbikes.com/secure/img/no_image_available.jpeg"
+        else
+            venue[:photo] = result["bestPhoto"]["prefix"] + result["bestPhoto"]["width"].to_s + "x" + result["bestPhoto"]["height"].to_s + result["bestPhoto"]["suffix"]
+        end
+      end
+      venue_hash
+
   end
 
 end

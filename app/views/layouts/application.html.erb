@@ -16,7 +16,8 @@
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
   </head>
 
-  <body style="background-image: url( <%= image_path 'background.png'%>)">
+
+    <body >
     <% if @navbar_visible %>
       <%=render 'shared/navbar' %>
     <% end %>
@@ -24,7 +25,25 @@
     <p class="notice mb-0"><%= notice %></p>
     <p class="alert mb-0"><%= alert %></p>
 
+    <div class="yield-container">
     <%= yield %>
+    </div>
+
     <%= render "shared/footer" %>
   </body>
+
 </html>
+
+  <style>
+    <% unless controller_name == "midways"  && action_name == "edit" || action_name == "show" %>
+    body {
+     background-image: url( <%= image_path 'background.png'%>)
+    }
+    <% end %>
+    <%unless action_name == "home" %>
+    .yield-container {
+      min-height: calc(100vh - 56px);
+    }
+    <% end %>
+  </style>
+
