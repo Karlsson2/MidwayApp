@@ -14,7 +14,7 @@
       <%= User.find(@midway.midway_participants[-2].user_id).first_name %>
       & <%= User.find(@midway.midway_participants.last.user_id).first_name %>
     <% end %>
-      is <%= @venue_info["name"] %>
+      is <%= @midway.venue.name %>
     </h2>
   </div>
 
@@ -34,31 +34,11 @@
     <div class="card-container" >
       <h2 class="card-title">Your midway venue:</h2>
 
-       <%if @venue_info["bestPhoto"].nil?%>
-          <% photo = "https://sca.frogbikes.com/secure/img/no_image_available.jpeg" %>
-        <% else %>
-          <% photo = @venue_info["bestPhoto"]["prefix"] + @venue_info["bestPhoto"]["width"].to_s + "x" + @venue_info["bestPhoto"]["height"].to_s + @venue_info["bestPhoto"]["suffix"] %>
-        <% end %>
-
-        <%= image_tag photo, class: "venue_photo" %>
+        <%= image_tag @midway.venue.photo_url, class: "venue_photo" %>
       <div class="venue_info">
         <%# wait for card styling %>
 
-
-
-        <h4><%= @venue_info["name"] %></h4>
-
-        <% if @venue_info["contact"] && @venue_info["contact"]["phone"] %>
-          <p><%= @venue_info["contact"]["phone"] %></p>
-        <% end %>
-
-        <% if @venue_info["postalCose"] %>
-          <p><%= @venue_info["postalCode"] %></p>
-        <% end %>
-
-        <% if @venue_info["url"] %>
-          <p><%= @venue_info["url"] %></p>
-        <% end %>
+        <h4><%= @midway.venue.name %></h4>
       </div>
 
     </div>
