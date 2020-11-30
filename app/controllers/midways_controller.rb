@@ -136,8 +136,8 @@ class MidwaysController < ApplicationController
     @venue_hash[:lat] = result["location"]["lat"]
     @venue_hash[:lng] = result["location"]["lng"]
 
-    participants = MidwayParticipant.where(midway_id: @midway.id)
-    addresses = participants.map { |participant| participant.user.location}
+    @participants = MidwayParticipant.where(midway_id: @midway.id)
+    addresses = @participants.map { |participant| participant.user.location}
     addresses_coordinates = convert_to_geocode(addresses)
 
     midpoint = @midway.midpoint
