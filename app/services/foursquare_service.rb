@@ -41,5 +41,4 @@ class FoursquareService
     json = JSON.parse(open(url).read)
     venue_info = json["response"]["venue"]
   end
-
 end

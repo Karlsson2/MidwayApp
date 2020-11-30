@@ -9,9 +9,16 @@
         <div class="card" style="width: 18rem;" data-toggle="modal" data-target="#exampleModalCenter<%= counter %>">
 
           <%= image_tag venue[:photo], alt: "Card image cap", class: "card-img-top"  %>
+
           <div class="card-body">
-            <h5><%= venue[:name] %></h5>
-            <p><em><%= venue[:category] %></em></p>
+            <div class="">
+              <h5><%= venue[:name] %></h5>
+              <p><em><%= venue[:category] %></em></p>
+            </div>
+            <div class="more-info">
+              <p> <strong><%= venue[:price] %></strong> </p>
+              <p> <%= venue[:rating] %>/10 </p>
+            </div>
           </div>
         </div>
 
