@@ -26,7 +26,15 @@
     <p class="alert mb-0"><%= alert %></p>
 
     <div class="yield-container">
-    <%= yield %>
+
+    <div class="overlay">
+        <div class="loader"></div>
+        <br/>
+        Finding your optimal Midway..
+    </div>
+
+
+      <%= yield %>
     </div>
 
     <%= render "shared/footer" %>
