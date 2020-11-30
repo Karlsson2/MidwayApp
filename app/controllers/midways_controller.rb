@@ -181,7 +181,6 @@ class MidwaysController < ApplicationController
       venue_hash << {
       id: venue["id"],
       name: venue["name"],
-
       address: "#{venue["location"]["address"]}, #{venue["location"]["postalCode"]}, #{venue["location"]["city"]}",
       category: venue["categories"][0]["shortName"]
       }
@@ -190,12 +189,41 @@ class MidwaysController < ApplicationController
       venue_hash.each do |venue|
       result = FoursquareService.new(venue_id: venue[:id]).venue_info
 
-
+        # For photo
         if result["bestPhoto"].nil?
           venue[:photo] = "https://sca.frogbikes.com/secure/img/no_image_available.jpeg"
         else
             venue[:photo] = result["bestPhoto"]["prefix"] + result["bestPhoto"]["width"].to_s + "x" + result["bestPhoto"]["height"].to_s + result["bestPhoto"]["suffix"]
         end
+
+        # For rating
+        if result["rating"].nil?
+          venue[:rating] = "No ratings available."
+        else
+          venue[:rating] = result["rating"]
+        end
+
+        # For price range
+        if result["attributes"]["groups"][0]["summary"].nil?
+          venue[:price] = "N/A"
+        else
+          venue[:price] = result["attributes"]["groups"][0]["summary"]
+        end
+
+        # For opening hours
+        if result["hours"].nil?
+          venue[:hours] = "Check website."
+        else
+          venue[:hours] = result["hours"]["status"]
+        end
+
+        # For URL
+        if result["url"].nil?
+          venue[:url] = "N/A"
+        else
+          venue[:url] = result["url"]
+        end
+
       end
       venue_hash
 

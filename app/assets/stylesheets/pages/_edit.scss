@@ -20,8 +20,17 @@
 .card {
   background: #F2F2F2;
   cursor: pointer;
-  border-radius: 5px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.card-body {
+  display: flex;
+  grid-template-columns: 2fr 1fr;
+  justify-content: space-between;
+}
+
+.more-info {
+  text-align: right;
 }
 
 .main > h2 {
