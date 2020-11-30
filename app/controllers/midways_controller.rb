@@ -177,12 +177,12 @@ class MidwaysController < ApplicationController
 
 
     venues.each do |venue|
+
       venue_hash << {
       id: venue["id"],
       name: venue["name"],
 
       address: "#{venue["location"]["address"]}, #{venue["location"]["postalCode"]}, #{venue["location"]["city"]}",
-
       category: venue["categories"][0]["shortName"]
       }
     end

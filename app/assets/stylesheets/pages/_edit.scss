@@ -19,6 +19,14 @@
 
 .card {
   background: #F2F2F2;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.main > h2 {
+  margin: 10px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 /*Media Queries*/
