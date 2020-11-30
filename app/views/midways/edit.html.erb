@@ -1,8 +1,7 @@
-
-
 <div class="content-edit">
 <% counter = 0 %>
-  <div>
+
+  <div class="main">
     <h2>Nearby activities</h2>
     <div class=cards>
       <% @venue_hash.each do |venue| %>
@@ -12,7 +11,7 @@
           <img class="card-img-top" src="..." alt="Card image cap">
           <div class="card-body">
             <h5><%= venue[:name] %></h5>
-            <p><%= venue[:category] %></p>
+            <p><em><%= venue[:category] %></em></p>
           </div>
         </div>
 
@@ -31,7 +30,7 @@
                 <%= venue[:category] %>
               </div>
               <div class="modal-footer">
-                <%= link_to "Confirm", midway_path(@midway.id, venue_id: venue[:id]), method: :patch, class: "btn btn-primary" %>
+                <%= link_to "Confirm", midway_path(@midway.id, venue_id: venue[:id]), method: :patch, class: "btn" %>
               </div>
             </div>
           </div>
