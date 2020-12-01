@@ -1,8 +1,15 @@
   <%# CSS in assets/stylesheets/components/map %>
-  
-  <h2> <%= venue[:name] %> </h2>
-  <p style="font-weight: bold;"> <%= venue[:categories][0] %> </p>
-  <% if venue[:rating] %>
-    <p><i class="fas fa-star" style="color: yellow;"></i> <span style="font-weight: bold;"><%= venue[:rating] %>/5</span></p>
-  <% end %>
 
+<%= image_tag venue[:photo], alt: "Card image cap", class: "card-img-top" %>
+
+<div class="card-body">
+  <h5><%= venue[:name] %></h5>
+  <div class="card-info">
+    <div>
+      <p><em><%= venue[:categories][0]&.humanize %></em></p>
+    </div>
+    <div class="more-info">
+      <p> <%= venue[:rating] %> <i class="far fa-star"></i> </p>
+    </div>
+  </div>
+</div>

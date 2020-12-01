@@ -2,14 +2,6 @@
   max-width: 200px;
 }
 
-// .mapboxgl-popup-content {
-
-//   h2{
-//     font-family: 'Josefin Sans', sans-serif;
-//   }
-
-//   p{
-
-//   }
-  
-// }
+.mapboxgl-popup > .card-body {
+  padding: 0;
+}
