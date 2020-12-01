@@ -11,13 +11,15 @@ import 'bootstrap';
 import { initMapbox } from '../plugins/init_mapbox';
 import { loader } from 'helpers/loader.js';
 import { menuToggle } from '../components/navbar';
+import { initSweetalert } from '../plugins/init_sweetalert';
 
 document.addEventListener('turbolinks:load', () => {
   initMapbox();
   menuToggle();
+  initSweetalert();
   loader();
-})
 
+});
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference

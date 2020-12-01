@@ -94,8 +94,10 @@
               <i class="fas fa-envelope" id="mail-icon"></i>
               <% end %>
             </div>
-            <div class="social-element share-button">
-              <i class="fas fa-copy"></i>
+            <div class="social-element">
+              <button id="share-button">
+                <i class="fas fa-copy"></i>
+              </button>
             </div>
           </div>
       </div>
@@ -110,7 +112,7 @@
   function renderUsersAndTravel() {
     // User button and response
     var userButtonsArray = document.querySelectorAll('.user-button');
-    console.log(userButtonsArray)
+    // console.log(userButtonsArray)
     var originalHTML = document.querySelector('.users-grid').innerHTML;
     var backButton = document.querySelector("#back-button");
     userButtonsArray.forEach(function(button) {
@@ -124,9 +126,9 @@
       var venueLat = button.dataset.venuelat;
       var venueLng = button.dataset.venuelng;
       var location = button.dataset.location;
-      console.log(location)
+      // console.log(location)
       var changeThis = document.querySelector('.users-grid');
-      console.log(changeThis)
+      // console.log(changeThis)
       changeThis.innerHTML = `
 
               <a href="https://www.google.com/maps/dir/?api=1&origin=${location}&destination=${venueLat},${venueLng}&travelmode=transit" target="_blank", rel="nofollow">
@@ -157,9 +159,9 @@
     });
 
     backButton.addEventListener('click', function(event) {
-      console.log("test");
+      // console.log("test");
       var changeThis = document.querySelector('.users-grid');
-      console.log(originalHTML);
+      // console.log(originalHTML);
       changeThis.innerHTML = originalHTML;
       backButton.style.display = "none";
       renderUsersAndTravel();
