@@ -91,7 +91,8 @@ class MidwaysController < ApplicationController
     @markers = @venues.map do |venue|
       {
         lat: venue["geometry"]["location"]["lat"],
-        lng: venue["geometry"]["location"]["lng"]
+        lng: venue["geometry"]["location"]["lng"],
+        infoWindow: render_to_string(partial: "info_window", locals: { venue: venue })
       }
     end
   end
