@@ -9,9 +9,11 @@ require("@rails/activestorage").start()
 require("channels")
 import 'bootstrap';
 import { initMapbox } from '../plugins/init_mapbox';
+import { menuToggle } from '../components/navbar';
 
 document.addEventListener('turbolinks:load', () => {
   initMapbox();
+  menuToggle();
 })
 
 
