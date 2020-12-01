@@ -1,1 +1,8 @@
-<h2> <%= venue["name"] %> </h2>
+  <%# CSS in assets/stylesheets/components/map %>
+  
+  <h2> <%= venue[:name] %> </h2>
+  <p style="font-weight: bold;"> <%= venue[:categories][0] %> </p>
+  <% if venue[:rating] %>
+    <p><i class="fas fa-star" style="color: yellow;"></i> <span style="font-weight: bold;"><%= venue[:rating] %>/5</span></p>
+  <% end %>
+

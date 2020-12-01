@@ -1,4 +1,9 @@
 .marker {
   width: 250px;
   height: 250px;
+  z-index: 4;
+}
+
+.mapboxgl-marker{
+  cursor: pointer;
 }
