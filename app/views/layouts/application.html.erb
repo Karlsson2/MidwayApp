@@ -23,12 +23,11 @@
 
 
     <body >
+    <%= render 'shared/flashes' %>
+
     <% if @navbar_visible %>
       <%=render 'shared/navbar' %>
     <% end %>
-
-    <p class="notice mb-0"><%= notice %></p>
-    <p class="alert mb-0"><%= alert %></p>
 
     <div class="yield-container">
 
