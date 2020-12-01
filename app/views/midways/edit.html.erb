@@ -7,18 +7,21 @@
       <% @venue_hash.each do |venue| %>
 
         <% counter += 1 %>
-        <div class="card">
+        <div class="card" data-toggle="modal" data-target="#exampleModalCenter<%= counter %>">
 
-          <%= image_tag venue[:photo], alt: "Card image cap", class: "card-img-top"  %>
+          <%= image_tag venue[:photo], alt: "Card image cap", class: "card-img-top" %>
 
           <div class="card-body">
+            <h5><%= venue[:name] %></h5>
             <div class="card-info">
-              <h5><%= venue[:name] %></h5>
-              <p><em><%= venue[:categories]&.humanize %></em></p>
+              <div>
+                <p><em><%= venue[:categories][0]&.humanize %></em></p>
+              </div>
+              <div class="more-info">
+                <p> <%= venue[:rating] %> <i class="far fa-star"></i> </p>
+              </div>
             </div>
-            <div class="more-info">
-              <p> <%= venue[:rating] %> <i class="far fa-star"></i> </p>
-            </div>
+
           </div>
         </div>
 
@@ -33,7 +36,8 @@
                 </button>
               </div>
               <div class="modal-body">
-                <p> Address: <%= venue[:address] %></p>
+                <%= image_tag venue[:photo], alt: "Card image cap", class: "card-img-top" %>
+                <div class="address"><p> <%= venue[:address] %></p></div>
                 <p style="color: <%= venue_color(venue[:open_boolean]) %>"><%= venue[:open_boolean] %></p>
                 <p> Pricing: <strong><%= venue[:price] %></strong> </p>
               </div>
