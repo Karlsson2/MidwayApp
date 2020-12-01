@@ -9,9 +9,19 @@
         <div class="card" style="width: 18rem;" data-toggle="modal" data-target="#exampleModalCenter<%= counter %>">
 
           <%= image_tag venue[:photo], alt: "Card image cap", class: "card-img-top"  %>
+
           <div class="card-body">
-            <h5><%= venue[:name] %></h5>
-            <p><em><%= venue[:category] %></em></p>
+            <div class="">
+              <h5><%= venue[:name] %></h5>
+              <p>
+                <% venue[:categories].each do |category| %>
+                <em><%= category.capitalize %></em>
+                <% end unless venue[:categories].nil?  %>
+              </p>
+            </div>
+            <div class="more-info">
+              <p> <%= venue[:rating] %>/10 </p>
+            </div>
           </div>
         </div>
 
@@ -27,10 +37,9 @@
               </div>
               <div class="modal-body">
                 <%= venue[:address] %>
-                <%= venue[:category] %>
               </div>
               <div class="modal-footer">
-                <%= link_to "Confirm", midway_path(@midway.id, venue_id: venue[:id]), method: :patch, class: "btn" %>
+                <%= link_to "Confirm", midway_path(@midway.id, address: venue[:address], name: venue[:name], photo_url: venue[:photo], categories: venue[:categories], lat: venue[:lat], lng: venue[:lng] ), method: :patch, class: "btn" %>
               </div>
             </div>
           </div>

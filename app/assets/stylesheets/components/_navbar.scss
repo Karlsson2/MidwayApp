@@ -1,6 +1,18 @@
+// NAVBAR LE WAGON STYLING
+
 .navbar-lewagon {
   justify-content: space-between;
   background: #F2F2F2;
+  height: 75px;
+  align-items: center;
+}
+
+.navbar-nav {
+  align-items: center;
+}
+
+.navbar-nav p {
+  font-size: 18px;
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -10,6 +22,175 @@
 .navbar-lewagon .navbar-brand img {
   width: 40px;
 }
+
+// MENU ITEM STYLING
+
+.dropdown-item {
+  color: white;
+  font-weight: bold;
+}
+
 .dropdown-item:hover {
-  background: rgba(3, 197, 184, 0.2);
+  color: #03C5B8;
+  background-color: #646561;
+}
+
+
+/* START OF DYNAMIC MENU CODE */
+header {
+  position: absolute;
+  overflow: visible;
+  z-index: 100;
+  background-color: transparent;
+  width: 100%;
+  height: 5rem;
+  padding: 1.5rem;
+
+  h1 {
+    font-size: 2.2rem;
+    float: left;
+    margin-top: 5px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  span.menu-control-open,
+  span.menu-control-close,
+  nav,
+  a {
+    font-weight: bold;
+    color: #FFF;
+  }
+
+  span.menu-control-open,
+  span.menu-control-close,
+  nav a {
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  span.menu-control-open,
+  span.menu-control-close {
+    display: block;
+    cursor: pointer;
+  }
+
+  span.menu-control-open {
+    position: relative;
+    font-size: 1.2rem;
+    line-height: 150%;
+    // float: right;
+    margin-top: 5px;
+    svg {
+        position: absolute;
+        top: -12px;
+        left: 12px;
+        line, circle {
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 3;
+        }
+    }
+    &:before {
+        padding-top: 1px;
+    }
+    &:before, &:after {
+        content: '';
+        display: block;
+        width: 100%;
+        border-top: 3px solid wheat;
+    }
+  }
+
+  span.menu-control-close {
+    font-size: 1.2rem;
+    text-align: right;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.menu {
+  position: absolute;
+  right: 0;
+  top: 0;
+  // background-color: #646561;
+  background-image: linear-gradient(to bottom, #646561 0%, #646561  100%);
+  height: 100vh;
+  width: 0;
+  overflow: hidden;
+  transition: all .3s ease-in-out;
+  a {
+    transform: translate3d(-150px, 0, 0);
+    transition: transform .15s ease-in;
+  }
+
+  .menu-inner {
+    position: relative;
+    height: 100%;
+    width: 80vw;
+    padding: 1.5rem;
+  }
+
+  /* Unnecessary styles for the menu footer */
+  // .version, .madeIn {
+  //   position: absolute;
+  //   bottom: 1.5rem;
+  //   font-size: 1.2rem;
+  //   text-transform: uppercase;
+  //   font-weight: bold;
+  // }
+  // .version {
+  //   right: 1.5rem;
+  // }
+}
+
+.menu--active {
+  overflow: hidden;
+
+
+  nav a {
+    transform: translate3d(0, 0, 0);
+    transition: transform 500ms ease-out;
+
+    /* Handles items within the slide-out to give them the delayed slide-in */
+    &:first-child {
+      transition-delay: .1s;
+    }
+    &:nth-child(2) {
+      transition-delay: .2s;
+    }
+    &:nth-child(3) {
+      transition-delay: .3s;
+    }
+    &:nth-child(4) {
+      transition-delay: .4s;
+    }
+    &:last-child {
+      transition-delay: .5s;
+    }
+  }
+}
+
+// This media query sets the width of the menu to be larger on a smaller screen
+ @media screen and (max-width: 767px) {
+  .menu--active .menu {
+    width: 80%;
+    height: calc(100vh - 75px); }
+}
+
+// This media query sets the menu width to be slightly smaller on a larger screen (think an iPad)
+@media screen and (min-width: 768px) {
+  .menu--active .menu {
+    width: 40%;
+    height: calc(100vh - 75px);
+    .menu-inner {
+      width: 40vw;
+    }
+  }
 }

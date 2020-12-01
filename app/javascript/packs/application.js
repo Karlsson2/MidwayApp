@@ -10,9 +10,11 @@ require("channels")
 import 'bootstrap';
 import { initMapbox } from '../plugins/init_mapbox';
 import { loader } from 'helpers/loader.js';
+import { menuToggle } from '../components/navbar';
 
 document.addEventListener('turbolinks:load', () => {
   initMapbox();
+  menuToggle();
   loader();
 })
 

@@ -45,10 +45,14 @@ class MidwaysController < ApplicationController
   end
 
   def create
+    @venue = Venue.new
+    @venue.save!
+
     #create the instance of the midway
     @midway = Midway.new(midway_params)
     @midway.user = current_user
-    @midway.save
+    @midway.venue = @venue
+    @midway.save!
 
     #access the friend IDs from the form and create array of their locations
     friends = params[:midway][:friends][:participants].reject(&:blank?)
@@ -83,61 +87,53 @@ class MidwaysController < ApplicationController
   def edit
     #find midway and equate its assigned venue type to a category ID from Foursquare's API
     @midway = Midway.find(params[:id])
-    venue_type_array = [{ type: "pub", categoryid: "4bf58dd8d48988d11b941735" }, { type: "restaurant", categoryid: "4d4b7105d754a06374d81259" }, { type: "nightclub", categoryid: "4bf58dd8d48988d11f941735" }, { type: "cinema", categoryid: "4bf58dd8d48988d17f941735" } ]
-    chosen_category_id =  venue_type_array.find { |vt| vt[:type] == @midway.venue_type }[:categoryid]
 
     #find midpoint that was saved
     midpoint = @midway.midpoint
+    #find venue type that was saved
+    venue_type = @midway.venue_type
 
     @midpoint_hash = Hash.new
     @midpoint_hash[:lat] = midpoint.split(",")[0]
     @midpoint_hash[:lng] = midpoint.split(",")[1]
 
     # this queries the foursquare api and saves an ARRAY of venues in @venues
-    foursquare_service = FoursquareService.new(location: midpoint, radius: 1000, categoryid: chosen_category_id)
+    foursquare_service = FoursquareService.new(location: midpoint, radius: 1000, venue_type: venue_type)
     @venues = foursquare_service.find_venues
     @venue_hash = fetching_venue(@venues)
 
     # save all venue lat and long into array alled markers
     @markers = @venues.map do |venue|
       {
-        lat: venue["location"]["lat"],
-        lng: venue["location"]["lng"]
+        lat: venue["geometry"]["location"]["lat"],
+        lng: venue["geometry"]["location"]["lng"]
       }
     end
   end
 
   def update
     @midway = Midway.find(params[:id])
-    @midway.venue = params[:venue_id]
+
+    @midway.venue.update(venue_params)
+    @midway.venue.save!
+
     @midway.save!
     redirect_to midway_path(@midway.id)
   end
 
   def show
     @midway = Midway.find(params[:id])
-    result = FoursquareService.new(venue_id: @midway.venue).venue_info
+    @venue = @midway.venue
 
     @venue_hash = Hash.new
-    @venue_hash[:name] = result["name"]
+    @venue_hash[:name] = @venue.name
+    @venue_hash[:address] = @venue.address
+    @venue_hash[:photo] = @venue.photo_url
+    @venue_hash[:lat] = @venue.lat
+    @venue_hash[:lng] = @venue.lng
 
-    if result["location"]["address"].nil? || result["location"]["city"].nil?
-      @venue_hash[:address] = result["location"]["formattedAddress"][0]
-    else
-      @venue_hash[:address] = result["location"]["address"] + ", " + result["location"]["city"]
-    end
-
-    if result["bestPhoto"].nil?
-      @venue_hash[:photo] = "https://sca.frogbikes.com/secure/img/no_image_available.jpeg"
-    else
-      @venue_hash[:photo] = result["bestPhoto"]["prefix"] + result["bestPhoto"]["width"].to_s + "x" + result["bestPhoto"]["height"].to_s + result["bestPhoto"]["suffix"]
-    end
-
-    @venue_hash[:lat] = result["location"]["lat"]
-    @venue_hash[:lng] = result["location"]["lng"]
-
-    participants = MidwayParticipant.where(midway_id: @midway.id)
-    addresses = participants.map { |participant| participant.user.location}
+    @participants = MidwayParticipant.where(midway_id: @midway.id)
+    addresses = @participants.map { |participant| participant.user.location}
     addresses_coordinates = convert_to_geocode(addresses)
 
     midpoint = @midway.midpoint
@@ -151,14 +147,16 @@ class MidwaysController < ApplicationController
         lng: participant[:lng]
       }
     end
-    @venue_info = result
   end
-
 
     private
 
   def midway_params
     params.require(:midway).permit(:friends, :time_option, :future_time, :venue_type, :venue)
+  end
+
+  def venue_params
+    params.permit(:name, :address, :lat, :lng, :categories, :photo_url)
   end
 
   def convert_to_geocode(addresses)
@@ -174,31 +172,34 @@ class MidwaysController < ApplicationController
   def fetching_venue(venues)
     venue_hash = []
 
-
-
     venues.each do |venue|
 
-      venue_hash << {
-      id: venue["id"],
-      name: venue["name"],
+      open_info = venue["opening_hours"].nil? ? "n/a" : venue["opening_hours"]["open_now"]
+      photo_string = venue["photos"].nil? ? "" : venue["photos"][0]["photo_reference"]
+      venue["types"].delete("point_of_interest")
+      venue["types"].delete("establishment")
 
-      address: "#{venue["location"]["address"]}, #{venue["location"]["postalCode"]}, #{venue["location"]["city"]}",
-      category: venue["categories"][0]["shortName"]
+      venue_hash << {
+      name: venue["name"],
+      address: venue["vicinity"].split.map(&:capitalize).join(' '),
+      categories: venue["types"],
+      rating: venue["rating"],
+      open_boolean: open_info,
+      photo_reference: photo_string,
+      lat: venue["geometry"]["location"]["lat"],
+      lng: venue["geometry"]["location"]["lng"],
       }
     end
 
-      venue_hash.each do |venue|
-      result = FoursquareService.new(venue_id: venue[:id]).venue_info
-
-
-        if result["bestPhoto"].nil?
-          venue[:photo] = "https://sca.frogbikes.com/secure/img/no_image_available.jpeg"
-        else
-            venue[:photo] = result["bestPhoto"]["prefix"] + result["bestPhoto"]["width"].to_s + "x" + result["bestPhoto"]["height"].to_s + result["bestPhoto"]["suffix"]
-        end
+    venue_hash.each do |venue|
+      if venue[:photo_reference].nil? || venue[:photo_reference] == ""
+        venue[:photo] = "https://sca.frogbikes.com/secure/img/no_image_available.jpeg"
+      else
+        venue[:photo] = FoursquareService.new(photo_reference: venue[:photo_reference]).search_photo
       end
-      venue_hash
+    end
 
+    venue_hash
   end
 
 end

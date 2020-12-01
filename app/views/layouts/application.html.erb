@@ -43,14 +43,15 @@
 </html>
 
   <style>
-    <% unless controller_name == "midways"  && action_name == "edit" || action_name == "show" %>
+    <% unless controller_name == "midways" && action_name == "edit" || action_name == "show" %>
     body {
-     background-image: url( <%= image_path 'background.png'%>)
+     background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url("https://images.unsplash.com/photo-1478860409698-8707f313ee8b?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1500&q=80");
+     background-size: cover;
     }
     <% end %>
     <%unless action_name == "home" %>
     .yield-container {
-      min-height: calc(100vh - 56px);
+      min-height: calc(100vh - 75px);
     }
     <% end %>
   </style>

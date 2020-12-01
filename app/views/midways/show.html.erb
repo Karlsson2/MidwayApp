@@ -14,7 +14,7 @@
       <%= User.find(@midway.midway_participants[-2].user_id).first_name %>
       & <%= User.find(@midway.midway_participants.last.user_id).first_name %>
     <% end %>
-      is <%= @venue_info["name"] %>
+      is <%= @midway.venue.name %>
     </h2>
   </div>
 
@@ -34,31 +34,11 @@
     <div class="card-container" >
       <h2 class="card-title">Your midway venue:</h2>
 
-       <%if @venue_info["bestPhoto"].nil?%>
-          <% photo = "https://sca.frogbikes.com/secure/img/no_image_available.jpeg" %>
-        <% else %>
-          <% photo = @venue_info["bestPhoto"]["prefix"] + @venue_info["bestPhoto"]["width"].to_s + "x" + @venue_info["bestPhoto"]["height"].to_s + @venue_info["bestPhoto"]["suffix"] %>
-        <% end %>
-
-        <%= image_tag photo, class: "venue_photo" %>
+        <%= image_tag @midway.venue.photo_url, class: "venue_photo" %>
       <div class="venue_info">
         <%# wait for card styling %>
 
-
-
-        <h4><%= @venue_info["name"] %></h4>
-
-        <% if @venue_info["contact"] && @venue_info["contact"]["phone"] %>
-          <p><%= @venue_info["contact"]["phone"] %></p>
-        <% end %>
-
-        <% if @venue_info["postalCose"] %>
-          <p><%= @venue_info["postalCode"] %></p>
-        <% end %>
-
-        <% if @venue_info["url"] %>
-          <p><%= @venue_info["url"] %></p>
-        <% end %>
+        <h4><%= @midway.venue.name %></h4>
       </div>
 
     </div>
@@ -74,30 +54,10 @@
         </a> -->
       <%# end %>
 
-      <div class="card-content">
-        <div class="travel-grid">
-          <%=link_to "#" do %>
-            <div class="travel-item">
-              <i class="fas fa-walking"></i> <p>15 min</p>
-            </div>
-          <% end %>
-          <%=link_to "#" do %>
-            <div class="travel-item">
-              <i class="fas fa-car"></i> <p>15 min</p>
-            </div>
-          <% end %>
-          <%=link_to "#" do %>
-            <div class="travel-item" style="background: black;">
-              <i class="fab fa-uber"></i> <p>5 min</p>
-            </div>
-          <% end %>
-          <%=link_to "#" do %>
-            <div class="travel-item">
-              <i class="fas fa-subway"></i> <p>5 min</p>
-            </div>
-          <% end %>
-        </div>
-      </div>
+    <%# @participants.each do |participant| %>
+    <%#= participant.user %>
+    <%# end %>
+
     </div>
 
     <div class="share-container">
@@ -105,13 +65,26 @@
         <div class="card-content">
           <div class="social-container">
             <div class="social-element">
-              <i class="fab fa-whatsapp"></i>
+              <%= link_to "https://wa.me/?text=Join%20our%20midway%20at%20https://www.mid-way.co.uk/midways/#{@midway.id}", target: "_blank", rel: "nofollow" do %>
+                <i class="fab fa-whatsapp"></i>
+              <% end %>
             </div>
             <div class="social-element">
-              <i class="fab fa-facebook-messenger"></i>
+              <%= link_to "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.mid-way.co.uk%2Fmidways%2F#{@midway.id}%2F&display=popup&ref=plugin&src=like&kid_directed_site=0&app_id=113869198637480", target: "_blank", rel: "nofollow" do %>
+                <i class="fab fa-facebook-messenger"></i>
+              <% end %>
             </div>
+
+            <%#= this creates a string of all the emails separated by a comma %>
+            <% @emails = "" %>
+            <% @participants.each do |participant| %>
+              <% @emails = @emails + ", " + participant.user.email %>
+            <% end %>
+
             <div class="social-element">
-              <i class="fas fa-envelope"></i>
+              <%= mail_to @emails, subject: "Join our Midway", body: "Hey it's #{@midway.user.first_name}, join us at https://www.mid-way.co.uk/midways/#{@midway.id}. See you there!" do %>
+              <i class="fas fa-envelope" id="mail-icon"></i>
+              <% end %>
             </div>
             <div class="social-element">
               <i class="fas fa-share-alt"></i>
