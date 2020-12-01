@@ -2,21 +2,17 @@
   z-index: 3;
   position: absolute;
   top: 0; right: 0; left: 0; bottom: 0;
-  justify-content: center;
-  text-align: center;
   top: 25%;
   height: calc(100vh - 150px);
 }
 
 .introduction-message {
   padding: 50px;
-  justify-content: center;
-  align-items: center;
+
   margin: 0 50px;
 }
 
 .introduction-message > h1 {
-  text-align: center;
   line-height: 2;
   font-size: 40px;
   margin-bottom: 30px;
@@ -31,25 +27,18 @@
 
 // TYPEWRITER EFFECT
 
-// #typewriter h1 {
-//   overflow: hidden; /* Ensures the content is not revealed until the animation */
-//   border-right: .15em solid white; /* The typwriter cursor */
-//   white-space: nowrap; /* Keeps the content on a single line */
-//   margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-  // letter-spacing: .15em;  Adjust as needed
-//   animation:
-//     typing 3.5s steps(40, end),
-//     blink-caret .75s step-end infinite;
-// }
 
-// /* The typing effect */
-// @keyframes typing {
-//   from { width: 0 }
-//   to { width: 100% }
-// }
+.introduction-message {
+  h1,h2 {
+  font-weight: 200;
+  margin: 0.4em 0;
+}
+}
 
-// /* The typewriter cursor effect */
-// @keyframes blink-caret {
-//   from, to { border-color: transparent }
-//   50% { border-color: white; }
-// }
+.introduction-message{
+h1 { font-size: 3.5em; }
+h2 {
+  color: #888;
+  font-size: 2em;
+}
+}

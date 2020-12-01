@@ -1,11 +1,13 @@
 <% @title="Midway Dashboard" %>
 <div class="content-main justify-content-center align-items-center">
-  <div class="introduction-message">
-    <h1>
-      Hello <%= current_user.first_name %>, <br>
-      So far, you have been on XX Midways... <br>
-      ... Want to start a new one?
-    </h1>
+  <div class="introduction-message" style="padding-left: 200px;" >
+
+    <h1 style="line-height: 130%; padding-bottom: 40px;">Hello <%= current_user.first_name %>, <br>
+  <span style="font-size: 46px; color: white;"
+     class="txt-rotate"
+     data-period="2000"
+     data-rotate='[ "So far, you have been on <%= current_user.midways.count %> Midways... ", "Your last midway was at <%= current_user.midways.first.venue.name %>", "Your last Midway was with <%= @participant_string %>", "Where do you want to go today?" ]'></span>
+</h1>
 
     <%= link_to "New Midway", new_midway_path, class: "btn-home align-items-center" %>
   </div>
