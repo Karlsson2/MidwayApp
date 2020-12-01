@@ -1,8 +1,13 @@
-<div class="main-container pt-5">
+<div class="content-main justify-content-center align-items-center">
+  <div class="introduction-message">
+    <h1>
+      Hello <%= current_user.first_name %>, <br>
+      So far, you have been on XX Midways... <br>
+      ... Want to start a new one?
+    </h1>
 
-<div style="background-color: white; padding: 60px;">
-<h2>THIS IS THE dashboard</h2>
-<%= link_to "New Midway", new_midway_path, class: "btn btn-home btn-lg" %>
+    <%= link_to "New Midway", new_midway_path, class: "btn-home align-items-center" %>
+  </div>
 </div>
-</div>
+
 

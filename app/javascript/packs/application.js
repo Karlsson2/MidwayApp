@@ -9,11 +9,11 @@ require("@rails/activestorage").start()
 require("channels")
 import 'bootstrap';
 import { initMapbox } from '../plugins/init_mapbox';
-// import { copyTextToClipboard } from '../plugins/copy_text_to_clipboard';
+import { menuToggle } from '../components/navbar';
 
 document.addEventListener('turbolinks:load', () => {
   initMapbox();
-  // copyTextToClipboard();
+  menuToggle();
 })
 
 
