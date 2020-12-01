@@ -14,7 +14,7 @@ const initMapbox = () => {
     mapboxgl.accessToken = mapElement.dataset.mapboxApiKey;
     const map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/mapbox/streets-v10'
+      style: "mapbox://styles/hardhillon/cki61i7fr0y5j19mlquwwtx68"
     });
     const markers = JSON.parse(mapElement.dataset.markers);
     markers.forEach((marker) => {
@@ -54,7 +54,7 @@ const initMapbox = () => {
     mapboxgl.accessToken = mapElementShow.dataset.mapboxApiKey;
     const map = new mapboxgl.Map({
       container: 'map-show',
-      style: 'mapbox://styles/mapbox/streets-v10'
+      style: 'mapbox://styles/hardhillon/cki61i7fr0y5j19mlquwwtx68'
     });
     const markers = JSON.parse(mapElementShow.dataset.markers);
     markers.forEach((marker) => {
