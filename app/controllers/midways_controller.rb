@@ -98,7 +98,8 @@ class MidwaysController < ApplicationController
     @markers = @venues.map do |venue|
       {
         lat: venue["geometry"]["location"]["lat"],
-        lng: venue["geometry"]["location"]["lng"]
+        lng: venue["geometry"]["location"]["lng"],
+        image_url: helpers.asset_url('normal_pin')
       }
     end
   end

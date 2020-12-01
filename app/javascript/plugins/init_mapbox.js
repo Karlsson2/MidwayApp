@@ -28,7 +28,25 @@ const initMapbox = () => {
       // el.className = 'marker';
       // we are trying to style the midpoint marker
 
-    new mapboxgl.Marker()
+    markers.forEach((marker) => {
+      // const popup = new mapboxgl.Popup().setHTML(marker.infoWindow);
+
+      // Create a HTML element for your custom marker
+      const marker_element = document.createElement('div');
+      element.className = 'marker_element';
+      element.style.backgroundImage = `url('${marker.image_url}')`;
+      element.style.backgroundSize = 'contain';
+      element.style.width = '32px';
+      element.style.height = '32px';
+
+      // Pass the element as an argument to the new marker
+      new mapboxgl.Marker(marker_element)
+        .setLngLat([marker.lng, marker.lat])
+        .setPopup(popup)
+        .addTo(map);
+    });
+
+    new mapboxgl.Marker(element)
         .setLngLat([ midpoint.lng, midpoint.lat ])
         .addTo(map);
     fitMapToMarkers(map, markers);
