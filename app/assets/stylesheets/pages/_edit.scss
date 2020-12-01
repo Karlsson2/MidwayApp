@@ -1,25 +1,36 @@
+// Creating grid between map and cards
+
 .content-edit {
   display: flex;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 2fr 1fr;
   justify-content: space-evenly;
 }
+
+.main > h2 {
+  margin: 10px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+// Creating grid for cards
 .cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 16px;
   padding: 16px;
   align-items: center;
   justify-content: center;
 }
 
+// Map sizing and positioning
 #map {
   height: 100vh;
-  width: 600px;
+  width: 700px;
   position: sticky;
   top: 0;
   right: 0;
 }
 
+// Card styling (and sections inside card)
 .card {
   background: #F2F2F2;
   cursor: pointer;
@@ -31,7 +42,11 @@
   transition: 0.3s;
 }
 
-.card-body {
+.card-img-top {
+  background-size: cover;
+}
+
+.card-info {
   display: flex;
   grid-template-columns: 2fr 1fr;
   justify-content: space-between;
@@ -41,13 +56,14 @@
   text-align: right;
 }
 
-.main > h2 {
-  margin: 10px;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-}
-
 .fa-star {
   color: #FFA650;
+}
+
+// Modal styling
+.address {
+  font-size: 20px;
+  margin-top: 10px;
 }
 
 /*Media Queries*/

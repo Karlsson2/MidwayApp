@@ -203,8 +203,8 @@ class MidwaysController < ApplicationController
                     end
                   end
       photo_string = venue["photos"].nil? ? "" : venue["photos"][0]["photo_reference"]
-      # venue["types"].delete("point_of_interest")
-      # venue["types"].delete("establishment")
+      venue["types"].delete("point_of_interest")
+      venue["types"].delete("establishment")
 
       price = if venue["price_level"].nil?
                 "Not available"
@@ -225,7 +225,7 @@ class MidwaysController < ApplicationController
       venue_hash << {
       name: venue["name"],
       address: venue["vicinity"].split.map(&:capitalize).join(' '),
-      categories: venue["types"][0],
+      categories: venue["types"],
       rating: venue["rating"],
       open_boolean: open_info,
       photo_reference: photo_string,
