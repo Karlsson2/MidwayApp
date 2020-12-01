@@ -111,8 +111,9 @@
     button.addEventListener('click', function(event) {
     // console.log(event.target.parentElement);
     var durationToMidpoint = button.dataset.duration;
-    var grid = event.target.parentElement;
-    grid.parentElement.innerHTML = `<div class="card-content">
+    var changeThis = document.querySelector('.users-grid').parentElement;
+    console.log(changeThis)
+    changeThis.innerHTML = `<div class="card-content">
         <div class="travel-grid">
           <%=link_to "#" do %>
             <div class="travel-item">
