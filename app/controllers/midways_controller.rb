@@ -4,7 +4,14 @@ class MidwaysController < ApplicationController
   end
 
   def my_midways
-    @midways = current_user.midways
+
+    @midways = []
+    current_user.midways.each do |midway|
+      if !midway.venue.name.nil?
+        @midways << midway
+      end
+    end
+
   end
 
   def new
