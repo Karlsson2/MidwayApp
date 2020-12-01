@@ -6,7 +6,7 @@ class MidpointService
   def initialize(attributes = {})
     @addresses = attributes[:addresses]
     @time_option = attributes[:time_option]
-    @future_time = attributes[:future_time]
+    @future_datetime = attributes[:future_datetime]
     convert_to_geocode
     @midpoint = { lat: 0, lng: 0 }
   end
@@ -23,7 +23,7 @@ class MidpointService
     # make the API calls to find the distances and duration between each user location and attempted midpoint
 
     @condition = false
-    url_time = @time_option == 1 ? "arrival_time=#{@future_time}" : "departure_time=#{@future_time}"
+    url_time = @time_option == 1 ? "arrival_time=#{@future_datetime}" : "departure_time=#{@future_datetime}"
 
     address_query=""
     @addresses.each do |address|

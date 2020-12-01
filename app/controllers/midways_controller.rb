@@ -53,13 +53,19 @@ class MidwaysController < ApplicationController
 
     #accesses the time_option and the future_time
     time_option = params[:midway][:time_option].to_i
-    future_time = params[:midway][:future_time].to_datetime.to_i
+    ft = params[:midway][:future_time].to_time
+    fd = params[:midway][:future_date].to_date
+    fdt = DateTime.new(fd.year, fd.month, fd.day, ft.hour, ft.min, ft.sec, ft.zone)
+    @midway.future_datetime = fdt
+    @midway.future_date = fd
+    future_datetime = fdt.to_i
 
-    #accesses the venue type the user wants
+    #accesses the venue type and any keywords the user wants
     @midway.venue_type = params[:midway][:venue_type].downcase
+    @midway.keyword = params[:midway][:keyword].downcase
 
     #assigns the midpoint
-    midpoint_service = MidpointService.new(addresses: participants_locations, time_option: time_option, future_time: future_time)
+    midpoint_service = MidpointService.new(addresses: participants_locations, time_option: time_option, future_datetime: future_datetime)
     midpoint_coordinates = midpoint_service.calculate[0]
     @midpoint = "#{midpoint_coordinates[:lat]},#{midpoint_coordinates[:lng]}"
     @midway.midpoint = @midpoint
@@ -82,15 +88,16 @@ class MidwaysController < ApplicationController
 
     #find midpoint that was saved
     midpoint = @midway.midpoint
-    #find venue type that was saved
+    #find venue type and keyword that was saved
     venue_type = @midway.venue_type
+    @midway.keyword.nil? ? keyword = "" : keyword = @midway.keyword
 
     @midpoint_hash = Hash.new
     @midpoint_hash[:lat] = midpoint.split(",")[0]
     @midpoint_hash[:lng] = midpoint.split(",")[1]
 
     # this queries the foursquare api and saves an ARRAY of venues in @venues
-    foursquare_service = FoursquareService.new(location: midpoint, radius: 1000, venue_type: venue_type)
+    foursquare_service = FoursquareService.new(location: midpoint, radius: 1000, venue_type: venue_type, keyword: keyword)
     @venues = foursquare_service.find_venues
     @venue_hash = fetching_venue(@venues)
     # save all venue lat and long into array alled markers
@@ -137,7 +144,7 @@ class MidwaysController < ApplicationController
     end
 
     #updates a duration (transit, walk and drive) to each Midway Participant
-    venue_service = VenueService.new(addresses: addresses_coordinates, venue_lat: @venue.lat, venue_lng: @venue.lng, time_option: @midway.time_option.to_i, future_time: @midway.future_time.to_datetime.to_i)
+    venue_service = VenueService.new(addresses: addresses_coordinates, venue_lat: @venue.lat, venue_lng: @venue.lng, time_option: @midway.time_option.to_i, future_time: @midway.future_datetime.to_i)
     transit_durations = venue_service.calculate_transit
     @participants.each_with_index do |participant, index|
       participant.duration_to_midpoint = transit_durations[index]
@@ -173,7 +180,7 @@ class MidwaysController < ApplicationController
     private
 
   def midway_params
-    params.require(:midway).permit(:friends, :time_option, :future_time, :venue_type, :venue)
+    params.require(:midway).permit(:friends, :time_option, :future_time, :future_date, :future_datetime, :venue_type, :venue, :keyword)
   end
 
   def venue_params

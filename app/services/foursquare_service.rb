@@ -8,6 +8,7 @@ class FoursquareService
     @location = attributes[:location]
     @radius = attributes[:radius]
     @venue_type = attributes[:venue_type]
+    @keyword = attributes[:keyword]
     @photo_reference = attributes[:photo_reference]
     @place_id = attributes[:place_id]
 
@@ -28,9 +29,10 @@ class FoursquareService
 
     radius = @radius.to_s
     venue_type = @venue_type
+    @keyword == "" ? keyword_query = "" : keyword_query = "&keyword=#{@keyword}"
 
     # v for version, current date works
-    url = base_url + "location=#{longitude},#{latitude}&radius=#{radius}&type=#{venue_type}&key=AIzaSyDFvyNLsoIQsADW5U0uePwiuLjbHg9CnBs"
+    url = base_url + "location=#{longitude},#{latitude}&radius=#{radius}&type=#{venue_type}#{keyword_query}&key=AIzaSyDFvyNLsoIQsADW5U0uePwiuLjbHg9CnBs"
     json = JSON.parse(open(url).read)
     venues = []
     json["results"].each do |result|
@@ -38,7 +40,6 @@ class FoursquareService
         venues.push(result)
       end
     end
-
     return venues
   end
 

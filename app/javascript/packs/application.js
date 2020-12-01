@@ -13,12 +13,18 @@ import { loader } from 'helpers/loader.js';
 import { menuToggle } from '../components/navbar';
 import { initSweetalert } from '../plugins/init_sweetalert';
 import {typewrite} from '../components/typewriter';
+import flatpickr from "flatpickr";
 
 document.addEventListener('turbolinks:load', () => {
   initMapbox();
   menuToggle();
   initSweetalert();
   typewrite();
+
+  const date = new Date().toLocaleTimeString('en-GB', { hour: "numeric", minute: "numeric"});
+  flatpickr(".datepicker", { minDate: "today", defaultDate: "today", dateFormat: "d m Y" });
+  flatpickr(".timepicker", { enableTime: true, defaultDate: date, noCalendar: true, dateFormat: "H:i", time_24hr: true});
+
   loader();
 
 });
