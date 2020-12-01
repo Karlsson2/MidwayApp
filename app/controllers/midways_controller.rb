@@ -221,8 +221,6 @@ class MidwaysController < ApplicationController
                 end
               end
 
-
-
       venue_hash << {
       name: venue["name"],
       address: venue["vicinity"].split.map(&:capitalize).join(' '),
@@ -233,6 +231,7 @@ class MidwaysController < ApplicationController
       price: price,
       lat: venue["geometry"]["location"]["lat"],
       lng: venue["geometry"]["location"]["lng"],
+      place_id: venue["place_id"]
       }
     end
 

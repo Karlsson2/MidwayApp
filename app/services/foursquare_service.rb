@@ -9,6 +9,7 @@ class FoursquareService
     @radius = attributes[:radius]
     @venue_type = attributes[:venue_type]
     @photo_reference = attributes[:photo_reference]
+    @place_id = attributes[:place_id]
 
     # if we weant to let them search themselves we can implement logic below to let them search
     #@venue_type = attributes[:venue_type]
@@ -45,4 +46,11 @@ class FoursquareService
     url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=#{@photo_reference}&key=AIzaSyDFvyNLsoIQsADW5U0uePwiuLjbHg9CnBs"
     return url
   end
+
+  def get_venue_info
+    base_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+    url = base_url + "place_id=#{place_id}&fields=name,rating,formatted_phone_number,photos,opening_hours,website&key=AIzaSyDFvyNLsoIQsADW5U0uePwiuLjbHg9CnBs"
+    json = JSON.parse(open(url).read)
+  end
+
 end
