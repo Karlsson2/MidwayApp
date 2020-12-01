@@ -40,12 +40,15 @@ class MidpointService
 
       @addresses.each_with_index do |address, index|
         address[:duration] = @matrix[:rows][index+1][:elements][0][:duration][:value]
+        address[:duration_text] = @matrix[:rows][index+1][:elements][0][:duration][:text]
       end
 
       # determines the longest route between a user and @midpoint
       durations = @addresses.map { |address| address[:duration] }
       max_duration = durations.max
       md_index = durations.index(max_duration)
+
+      durations_text = @addresses.map { |address| address[:duration_text] }
 
       # reassigns the midpoint to a new location (skewed to be closer to the user who previously would have had to travel the longest)
 
@@ -58,7 +61,7 @@ class MidpointService
       # stores as candidate_duration the discrepancy between the largest/smallest travel time
 
       candidate_duration = (max_duration - min_duration).abs
-      candidates.push([@midpoint, candidate_duration])
+      candidates.push([@midpoint, candidate_duration, durations_text])
     end
 
       # of the 5 attempts, selects the midpoint with the smallest discrepancy (candidate_duration)
@@ -72,7 +75,11 @@ class MidpointService
     p candidates
     p candidate_durations
     p @midpoint
-    return @midpoint
+
+    candidate_durations_text = candidates.map { |candidate| candidate[2] }
+    @durations_text = candidate_durations_text[mcd_index]
+    # p "Durations: #{@durations_text}"
+    return [@midpoint, @durations_text]
   end
 
   private
