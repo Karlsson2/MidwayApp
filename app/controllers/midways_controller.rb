@@ -124,9 +124,16 @@ class MidwaysController < ApplicationController
     @venue_hash[:lat] = @venue.lat
     @venue_hash[:lng] = @venue.lng
 
+    addresses_coordinates = []
+
     @participants = MidwayParticipant.where(midway_id: @midway.id)
-    addresses = @participants.map { |participant| participant.user.location}
-    addresses_coordinates = convert_to_geocode(addresses)
+    @participants.each do |participant|
+      coords = convert_to_geocode(participant.user.location)
+      participant.user.lat = coords[0]
+      participant.user.lng = coords[1]
+      participant.save!
+      addresses_coordinates.push({ lat: participant.user.lat, lng: participant.user.lng })
+    end
 
     #updates a duration (transit, walk and drive) to each Midway Participant
     venue_service = VenueService.new(addresses: addresses_coordinates, venue_lat: @venue.lat, venue_lng: @venue.lng, time_option: @midway.time_option.to_i, future_time: @midway.future_time.to_datetime.to_i)
@@ -172,14 +179,12 @@ class MidwaysController < ApplicationController
     params.permit(:name, :address, :lat, :lng, :categories, :photo_url)
   end
 
-  def convert_to_geocode(addresses)
-    addresses.map! do |address|
-      results = Geocoder.search(address)
-      if results.nil?
-        convert_to_geocode
-      end
-      { lat: results.first.coordinates[0], lng: results.first.coordinates[1]}
+  def convert_to_geocode(address)
+    results = Geocoder.search(address)
+    if results.nil?
+      convert_to_geocode
     end
+    coords = results.first.coordinates
   end
 
   def fetching_venue(venues)
