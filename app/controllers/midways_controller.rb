@@ -121,14 +121,27 @@ class MidwaysController < ApplicationController
     addresses = @participants.map { |participant| participant.user.location}
     addresses_coordinates = convert_to_geocode(addresses)
 
-    #updates a duration to each Midway Participant
+    #updates a duration (transit, walk and drive) to each Midway Participant
     venue_service = VenueService.new(addresses: addresses_coordinates, venue_lat: @venue.lat, venue_lng: @venue.lng, time_option: @midway.time_option.to_i, future_time: @midway.future_time.to_datetime.to_i)
-    durations = venue_service.calculate
+    transit_durations = venue_service.calculate_transit
     @participants.each_with_index do |participant, index|
-      participant.duration_to_midpoint = durations[index]
+      participant.duration_to_midpoint = transit_durations[index]
       participant.save!
     end
 
+    walk_durations = venue_service.calculate_walk
+    @participants.each_with_index do |participant, index|
+      participant.walk_to_midpoint = walk_durations[index]
+      participant.save!
+    end
+
+    drive_durations = venue_service.calculate_drive
+    @participants.each_with_index do |participant, index|
+      participant.drive_to_midpoint = drive_durations[index]
+      participant.save!
+    end
+
+    #passes the midpoint info into hash for the map to access
     midpoint = @midway.midpoint
     @midpoint_hash = Hash.new
     @midpoint_hash[:lat] = midpoint.split(",")[0]

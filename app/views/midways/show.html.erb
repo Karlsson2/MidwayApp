@@ -19,8 +19,6 @@
     </h2>
   </div>
 
-
-
   <div id="map-show"
        style="width: 100%; height: 350px;"
        data-markers="<%= @markers.to_json %>"
@@ -50,11 +48,15 @@
       <div class="card-content">
         <div class="users-grid">
           <% @participants.each do |participant| %>
-          <div class="travel-item user-button" data-duration="<%= participant.duration_to_midpoint %>">
-            <%= image_tag participant.user.photo, gravity: :face, class: "avatar-navbar" %>
-            <p> <%= participant.user.first_name %></p>
-          </div>
+            <div class="travel-item user-button" data-duration="<%= participant.duration_to_midpoint %>" data-walk="<%= participant.walk_to_midpoint %>" data-drive="<%= participant.drive_to_midpoint %>">
+              <%= image_tag participant.user.photo, gravity: :face, class: "avatar-navbar" %>
+              <p> <%= participant.user.first_name %></p>
+            </div>
           <% end %>
+        </div>
+
+        <div class="back-button-div">
+          <button type="button" class="btn btn-primary btn-sm" id="back-button" style="display: none;" >Back</button>
         </div>
       </div>
 
@@ -105,41 +107,56 @@
 
 <script type="text/javascript">
 
-  // User button and response
-  var userButtonsArray = document.querySelectorAll('.user-button');
-  console.log(userButtonsArray)
-  userButtonsArray.forEach(function(button) {
-    button.addEventListener('click', function(event) {
-    // console.log(event.target.parentElement);
-    var durationToMidpoint = button.dataset.duration;
-    var changeThis = document.querySelector('.users-grid').parentElement;
-    console.log(changeThis)
-    changeThis.innerHTML = `<div class="card-content">
-        <div class="travel-grid">
-          <%=link_to "#" do %>
-            <div class="travel-item">
-              <i class="fas fa-walking"></i> <p> ${durationToMidpoint} </p>
-            </div>
-          <% end %>
-          <%=link_to "#" do %>
-            <div class="travel-item">
-              <i class="fas fa-car"></i> <p> ${durationToMidpoint} </p>
-            </div>
-          <% end %>
-          <%=link_to "https://m.uber.com/ul/?client_id=%3CCLIENT_ID%3E&action=setPickup&pickup=my_location&dropoff%5Blatitude%5D=#{@midway.venue.lat}&dropoff[longitude]=#{@midway.venue.lng}&dropoff[nickname]=#{@midway.venue.name}&product_id=a1111c8c-c720-46c3-8534-2fcdd730040d" do %>
-            <div class="travel-item" style="background: black;">
-              <i class="fab fa-uber"></i> <p> ${durationToMidpoint} </p>
-            </div>
-          <% end %>
-          <%=link_to "#" do %>
-            <div class="travel-item">
-              <i class="fas fa-subway"></i> <p> ${durationToMidpoint} </p>
-            </div>
-          <% end %>
-        </div>
-      </div> `
+  function renderUsersAndTravel() {
+    // User button and response
+    var userButtonsArray = document.querySelectorAll('.user-button');
+    console.log(userButtonsArray)
+    var originalHTML = document.querySelector('.users-grid').innerHTML;
+    var backButton = document.querySelector("#back-button");
+    userButtonsArray.forEach(function(button) {
+      button.addEventListener('click', function(event) {
+      // console.log(event.target.parentElement);
+      var durationToMidpoint = button.dataset.duration;
+      var walkToMidpoint = button.dataset.walk;
+      var driveToMidpoint = button.dataset.drive;
+      var changeThis = document.querySelector('.users-grid');
+      console.log(changeThis)
+      changeThis.innerHTML = `
+            <%=link_to "#" do %>
+              <div class="travel-item">
+                <i class="fas fa-subway"></i> <p> ${durationToMidpoint} </p>
+              </div>
+            <% end %>
+            <%=link_to "#" do %>
+              <div class="travel-item">
+                <i class="fas fa-walking"></i> <p> ${walkToMidpoint} </p>
+              </div>
+            <% end %>
+            <%=link_to "#" do %>
+              <div class="travel-item">
+                <i class="fas fa-car"></i> <p> ${driveToMidpoint} </p>
+              </div>
+            <% end %>
+            <%=link_to "https://m.uber.com/ul/?client_id=%3CCLIENT_ID%3E&action=setPickup&pickup=my_location&dropoff%5Blatitude%5D=#{@midway.venue.lat}&dropoff[longitude]=#{@midway.venue.lng}&dropoff[nickname]=#{@midway.venue.name}&product_id=a1111c8c-c720-46c3-8534-2fcdd730040d" do %>
+              <div class="travel-item" style="background: black;">
+                <i class="fab fa-uber"></i> <p> ${driveToMidpoint} </p>
+              </div>
+            <% end %>`
+      backButton.style.display = "";
+      });
     });
-  });
+
+    backButton.addEventListener('click', function(event) {
+      console.log("test");
+      var changeThis = document.querySelector('.users-grid');
+      console.log(originalHTML);
+      changeThis.innerHTML = originalHTML;
+      backButton.style.display = "none";
+      renderUsersAndTravel();
+    });
+  };
+
+  renderUsersAndTravel();
 
   // copy to Clipboard function
   function copyTextToClipboard(text) {
