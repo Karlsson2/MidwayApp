@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 puts "Cleaning database..."
+Venue.destroy_all
 MidwayParticipant.destroy_all
 Midway.destroy_all
 Friendship.destroy_all
@@ -65,12 +66,16 @@ friendship8 = Friendship.create!(user: user5, friend: user4)
 friendship9 = Friendship.create!(user: user4, friend: user9)
 friendship10 = Friendship.create!(user: user8, friend: user7)
 
+venue1 = Venue.create!(name: "Spring", address: "Lancaster Pl, London WC2R 1LA", photo_url: "https://lh5.googleusercontent.com/p/AF1QipPHXnPGDClY5RY8PXXq4xpOSN6hBPqPo6jR97wB=w203-h152-k-no", lat:"51.509865",lng:"-0.118092")
+
 
 
 30.times do
   users = [user1, user2, user3, user4, user5, user6, user7, user8, user9, user10]
   mcreator = users.sample
-  m = Midway.create!( midpoint: "51.509865,-0.118092", venue: "5acb4fe9851de554affcffb5" , user: mcreator)
+  m = Midway.new( midpoint: "51.509865,-0.118092", user: mcreator)
+  m.venue = venue1
+  m.save!
   MidwayParticipant.create!( midway:m ,user:mcreator )
   users.delete(mcreator)
   3.times do

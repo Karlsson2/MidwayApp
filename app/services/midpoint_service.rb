@@ -36,6 +36,7 @@ class MidpointService
     5.times do
 
       url = "https://api.distancematrix.ai/maps/api/distancematrix/json?units=imperial&origins=#{address_query}&destinations=#{@midpoint[:lat]},#{@midpoint[:lng]}&transit_mode=subway&mode=transit&#{url_time}&key=#{ENV["DISTANCE_MATRIX_KEY"]}"
+
       @matrix = JSON.parse(open(url).read, symbolize_names: true)
 
       @addresses.each_with_index do |address, index|

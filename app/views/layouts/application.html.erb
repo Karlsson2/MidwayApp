@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Midway</title>
+    <%= favicon_link_tag asset_path('favicon.ico') %>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
+    <title><%= @title %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+
+    <meta property="og:url" content="http://www.mid-way.co.uk" />
+    <meta property="og:title" content="Midway: Meet in the middle" />
+    <meta property="og:description" content="Helping modern groups of people find a place to meet, in the middle..." />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="<%= image_url('ogimage.png') %>"/>
   </head>
 
 

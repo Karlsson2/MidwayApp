@@ -4,29 +4,14 @@ class MidwaysController < ApplicationController
   end
 
   def my_midways
+
     @midways = []
-
     current_user.midways.each do |midway|
-      result = FoursquareService.new(venue_id: midway.venue).venue_info
-
-
-      if result["bestPhoto"].nil?
-        photo = "https://sca.frogbikes.com/secure/img/no_image_available.jpeg"
-      else
-          photo = result["bestPhoto"]["prefix"] + result["bestPhoto"]["width"].to_s + "x" + result["bestPhoto"]["height"].to_s + result["bestPhoto"]["suffix"]
+      if !midway.venue.name.nil?
+        @midways << midway
       end
-
-      if result["location"]["address"].nil?
-        location = result["location"]["formattedAddress"][0]
-      else
-        location = result["location"]["address"] + ", " + result["location"]["city"]
-      end
-
-      @midways << {name: result["name"],
-        address: location,
-        photo: photo,
-        midway: midway}
     end
+
   end
 
   def new
@@ -143,14 +128,27 @@ class MidwaysController < ApplicationController
     addresses = @participants.map { |participant| participant.user.location}
     addresses_coordinates = convert_to_geocode(addresses)
 
-    #updates a duration to each Midway Participant
+    #updates a duration (transit, walk and drive) to each Midway Participant
     venue_service = VenueService.new(addresses: addresses_coordinates, venue_lat: @venue.lat, venue_lng: @venue.lng, time_option: @midway.time_option.to_i, future_time: @midway.future_time.to_datetime.to_i)
-    durations = venue_service.calculate
+    transit_durations = venue_service.calculate_transit
     @participants.each_with_index do |participant, index|
-      participant.duration_to_midpoint = durations[index]
+      participant.duration_to_midpoint = transit_durations[index]
       participant.save!
     end
 
+    walk_durations = venue_service.calculate_walk
+    @participants.each_with_index do |participant, index|
+      participant.walk_to_midpoint = walk_durations[index]
+      participant.save!
+    end
+
+    drive_durations = venue_service.calculate_drive
+    @participants.each_with_index do |participant, index|
+      participant.drive_to_midpoint = drive_durations[index]
+      participant.save!
+    end
+
+    #passes the midpoint info into hash for the map to access
     midpoint = @midway.midpoint
     @midpoint_hash = Hash.new
     @midpoint_hash[:lat] = midpoint.split(",")[0]
