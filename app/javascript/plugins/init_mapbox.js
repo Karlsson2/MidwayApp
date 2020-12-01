@@ -18,20 +18,31 @@ const initMapbox = () => {
     });
     const markers = JSON.parse(mapElement.dataset.markers);
     markers.forEach((marker) => {
+
       const popup = new mapboxgl.Popup().setHTML(marker.infoWindow);
 
-      new mapboxgl.Marker()
+      const marker_element = document.createElement('div');
+        marker_element.className = 'marker_element';
+        marker_element.style.backgroundImage = `url('${marker.image_url}')`;
+        marker_element.style.backgroundSize = 'contain';
+        marker_element.style.width = '25px';
+        marker_element.style.height = '25px';
+
+      new mapboxgl.Marker(marker_element)
         .setLngLat([ marker.lng, marker.lat ])
         .setPopup(popup)
         .addTo(map);
     });
     const midpoint = JSON.parse(mapElement.dataset.midpoint);
 
-      // var el = document.createElement("div");
-      // el.className = 'marker';
-      // we are trying to style the midpoint marker
+    const midpoint_marker = document.createElement('div');
+      midpoint_marker.className = 'midpoint_marker';
+      midpoint_marker.style.backgroundImage = `url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTTqgTjUQdutxymPxna3podsnrbxBe5HYpNA&usqp=CAU')`;
+      midpoint_marker.style.backgroundSize = 'contain';
+      midpoint_marker.style.width = '25px';
+      midpoint_marker.style.height = '25px';
 
-    new mapboxgl.Marker()
+    new mapboxgl.Marker(midpoint_marker)
         .setLngLat([ midpoint.lng, midpoint.lat ])
         .addTo(map);
     fitMapToMarkers(map, markers);
