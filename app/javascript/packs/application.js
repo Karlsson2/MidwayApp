@@ -12,11 +12,13 @@ import { initMapbox } from '../plugins/init_mapbox';
 import { loader } from 'helpers/loader.js';
 import { menuToggle } from '../components/navbar';
 import { initSweetalert } from '../plugins/init_sweetalert';
+import {typewrite} from '../components/typewriter';
 
 document.addEventListener('turbolinks:load', () => {
   initMapbox();
   menuToggle();
   initSweetalert();
+  typewrite();
   loader();
 
 });
