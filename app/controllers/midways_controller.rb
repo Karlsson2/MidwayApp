@@ -93,12 +93,12 @@ class MidwaysController < ApplicationController
     foursquare_service = FoursquareService.new(location: midpoint, radius: 1000, venue_type: venue_type)
     @venues = foursquare_service.find_venues
     @venue_hash = fetching_venue(@venues)
-
     # save all venue lat and long into array alled markers
-    @markers = @venues.map do |venue|
+    @markers = @venue_hash.map do |venue|
       {
-        lat: venue["geometry"]["location"]["lat"],
-        lng: venue["geometry"]["location"]["lng"]
+        lat: venue[:lat],
+        lng: venue[:lng],
+        infoWindow: render_to_string(partial: "info_window", locals: { venue: venue })
       }
     end
   end
