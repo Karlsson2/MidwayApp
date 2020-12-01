@@ -144,7 +144,7 @@ class MidwaysController < ApplicationController
     addresses_coordinates = convert_to_geocode(addresses)
 
     #updates a duration to each Midway Participant
-    venue_service = VenueService.new(addresses: addresses_coordinates, venue_lat: @venue.lat, venue_lng: @venue.lng, time_option: @midway.time_option, future_time: @midway.future_time)
+    venue_service = VenueService.new(addresses: addresses_coordinates, venue_lat: @venue.lat, venue_lng: @venue.lng, time_option: @midway.time_option.to_i, future_time: @midway.future_time.to_datetime.to_i)
     durations = venue_service.calculate
     @participants.each_with_index do |participant, index|
       participant.duration_to_midpoint = durations[index]
