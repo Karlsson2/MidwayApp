@@ -12,11 +12,9 @@
     padding-bottom: 8px;
     margin-bottom: 30px;
     font-weight: bold;
-    border-bottom: 1px solid black;
   }
 
   p{
-    border-top: 1px solid grey;
     padding-top: 17px;
     display: flex;
     justify-content: space-between;
@@ -34,6 +32,7 @@
 
 .profile-container-edit{
   width: 500px;
+  color: #646561 !important;
   background-color: white;
   margin: 30px auto;
   padding: 20px 50px 20px 50px;
@@ -46,11 +45,10 @@
     padding-bottom: 8px;
     margin-bottom: 30px;
     font-weight: bold;
-    border-bottom: 1px solid black;
+
   }
 
   p{
-    border-top: 1px solid grey;
     padding-top: 17px;
     display: flex;
     justify-content: space-between;

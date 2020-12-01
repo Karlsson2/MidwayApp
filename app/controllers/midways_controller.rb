@@ -93,13 +93,13 @@ class MidwaysController < ApplicationController
     foursquare_service = FoursquareService.new(location: midpoint, radius: 1000, venue_type: venue_type)
     @venues = foursquare_service.find_venues
     @venue_hash = fetching_venue(@venues)
-
     # save all venue lat and long into array alled markers
-    @markers = @venues.map do |venue|
+    @markers = @venue_hash.map do |venue|
       {
-        lat: venue["geometry"]["location"]["lat"],
-        lng: venue["geometry"]["location"]["lng"],
-        image_url: helpers.asset_url('normal_pin')
+        lat: venue[:lat],
+        lng: venue[:lng],
+        infoWindow: render_to_string(partial: "info_window", locals: { venue: venue }),
+        image_url: helpers.asset_url('normal_pin.png')
       }
     end
   end
@@ -125,9 +125,16 @@ class MidwaysController < ApplicationController
     @venue_hash[:lat] = @venue.lat
     @venue_hash[:lng] = @venue.lng
 
+    addresses_coordinates = []
+
     @participants = MidwayParticipant.where(midway_id: @midway.id)
-    addresses = @participants.map { |participant| participant.user.location}
-    addresses_coordinates = convert_to_geocode(addresses)
+    @participants.each do |participant|
+      coords = convert_to_geocode(participant.user.location)
+      participant.user.lat = coords[0]
+      participant.user.lng = coords[1]
+      participant.save!
+      addresses_coordinates.push({ lat: participant.user.lat, lng: participant.user.lng })
+    end
 
     #updates a duration (transit, walk and drive) to each Midway Participant
     venue_service = VenueService.new(addresses: addresses_coordinates, venue_lat: @venue.lat, venue_lng: @venue.lng, time_option: @midway.time_option.to_i, future_time: @midway.future_time.to_datetime.to_i)
@@ -173,14 +180,12 @@ class MidwaysController < ApplicationController
     params.permit(:name, :address, :lat, :lng, :categories, :photo_url)
   end
 
-  def convert_to_geocode(addresses)
-    addresses.map! do |address|
-      results = Geocoder.search(address)
-      if results.nil?
-        convert_to_geocode
-      end
-      { lat: results.first.coordinates[0], lng: results.first.coordinates[1]}
+  def convert_to_geocode(address)
+    results = Geocoder.search(address)
+    if results.nil?
+      convert_to_geocode
     end
+    coords = results.first.coordinates
   end
 
   def fetching_venue(venues)

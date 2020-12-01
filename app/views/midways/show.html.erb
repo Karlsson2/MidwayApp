@@ -48,7 +48,7 @@
       <div class="card-content">
         <div class="users-grid">
           <% @participants.each do |participant| %>
-            <div class="travel-item user-button" data-duration="<%= participant.duration_to_midpoint %>" data-walk="<%= participant.walk_to_midpoint %>" data-drive="<%= participant.drive_to_midpoint %>">
+            <div class="travel-item user-button" data-duration="<%= participant.duration_to_midpoint %>" data-walk="<%= participant.walk_to_midpoint %>" data-drive="<%= participant.drive_to_midpoint %>" data-lat="<%= participant.user.lat %>" data-lng="<%= participant.user.lng %>" data-venuelat="<%= @midway.venue.lat %>" data-venuelng="<%= @midway.venue.lng %>" data-location="<%= u participant.user.location %>">
               <%= image_tag participant.user.photo, gravity: :face, class: "avatar-navbar" %>
               <p> <%= participant.user.first_name %></p>
             </div>
@@ -94,8 +94,10 @@
               <i class="fas fa-envelope" id="mail-icon"></i>
               <% end %>
             </div>
-            <div class="social-element share-button">
-              <i class="fas fa-copy"></i>
+            <div class="social-element">
+              <button id="share-button">
+                <i class="fas fa-copy"></i>
+              </button>
             </div>
           </div>
       </div>
@@ -110,7 +112,7 @@
   function renderUsersAndTravel() {
     // User button and response
     var userButtonsArray = document.querySelectorAll('.user-button');
-    console.log(userButtonsArray)
+    // console.log(userButtonsArray)
     var originalHTML = document.querySelector('.users-grid').innerHTML;
     var backButton = document.querySelector("#back-button");
     userButtonsArray.forEach(function(button) {
@@ -119,25 +121,35 @@
       var durationToMidpoint = button.dataset.duration;
       var walkToMidpoint = button.dataset.walk;
       var driveToMidpoint = button.dataset.drive;
+      var lat = button.dataset.lat;
+      var lng = button.dataset.lng;
+      var venueLat = button.dataset.venuelat;
+      var venueLng = button.dataset.venuelng;
+      var location = button.dataset.location;
+      // console.log(location)
       var changeThis = document.querySelector('.users-grid');
-      console.log(changeThis)
+      // console.log(changeThis)
       changeThis.innerHTML = `
-            <%=link_to "#" do %>
+
+              <a href="https://www.google.com/maps/dir/?api=1&origin=${location}&destination=${venueLat},${venueLng}&travelmode=transit" target="_blank", rel="nofollow">
               <div class="travel-item">
                 <i class="fas fa-subway"></i> <p> ${durationToMidpoint} </p>
               </div>
-            <% end %>
-            <%=link_to "#" do %>
+              </a>
+
+              <a href="https://www.google.com/maps/dir/?api=1&origin=${location}&destination=${venueLat},${venueLng}&travelmode=walking" target="_blank", rel="nofollow">
               <div class="travel-item">
                 <i class="fas fa-walking"></i> <p> ${walkToMidpoint} </p>
               </div>
-            <% end %>
-            <%=link_to "#" do %>
+              </a>
+
+              <a href="https://www.google.com/maps/dir/?api=1&origin=${location}&destination=${venueLat},${venueLng}&travelmode=driving" target="_blank", rel="nofollow">
               <div class="travel-item">
                 <i class="fas fa-car"></i> <p> ${driveToMidpoint} </p>
               </div>
-            <% end %>
-            <%=link_to "https://m.uber.com/ul/?client_id=%3CCLIENT_ID%3E&action=setPickup&pickup=my_location&dropoff%5Blatitude%5D=#{@midway.venue.lat}&dropoff[longitude]=#{@midway.venue.lng}&dropoff[nickname]=#{@midway.venue.name}&product_id=a1111c8c-c720-46c3-8534-2fcdd730040d" do %>
+              </a>
+
+            <%=link_to "https://m.uber.com/ul/?client_id=%3CCLIENT_ID%3E&action=setPickup&pickup=my_location&dropoff%5Blatitude%5D=#{@midway.venue.lat}&dropoff[longitude]=#{@midway.venue.lng}&dropoff[nickname]=#{@midway.venue.name}&product_id=a1111c8c-c720-46c3-8534-2fcdd730040d", target: "_blank", rel: "nofollow" do %>
               <div class="travel-item" style="background: black;">
                 <i class="fab fa-uber"></i> <p> ${driveToMidpoint} </p>
               </div>
@@ -147,9 +159,9 @@
     });
 
     backButton.addEventListener('click', function(event) {
-      console.log("test");
+      // console.log("test");
       var changeThis = document.querySelector('.users-grid');
-      console.log(originalHTML);
+      // console.log(originalHTML);
       changeThis.innerHTML = originalHTML;
       backButton.style.display = "none";
       renderUsersAndTravel();
