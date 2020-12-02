@@ -3,27 +3,29 @@
   <div class = "my_midways_container p-2 mt-3 mb-4" style="background: white; ">
     <h2 class="p-3" style="text-align:center;">My Midways</h2>
 
+    <%# Below CSS in components/cards AND pages/midway %>
 
     <div class="card-wrapper ">
     <% @midways.each do |midway|%>
+      <%= link_to "/midways/#{midway.id}" do %>
+        <div class="card-product my_midway_card mt-1 mb-2 ">
 
-      <div class="card-product mt-1 mb-2 ">
+          <%= image_tag midway.venue.photo_url, style: "height:100px"%>
 
-        <%= image_tag midway.venue.photo_url, style: "height:100px"%>
+          <div class="card-product-infos">
 
-        <div class="card-product-infos">
+            <h3><%= midway.venue.name%></h3>
+            <p><%= midway.venue.address%></p>
+            <% midway.midway_participants.each do |participants| %>
+            <%= image_tag User.find(participants.user_id).photo, class: "avatar", style: "height: 40px; width: 40px;"%>
+            <%= User.find(participants.user_id).first_name %>
+            <% end %>
 
-          <h3><%= midway.venue.name%></h3>
-          <p><%= midway.venue.address%></p>
-          <% midway.midway_participants.each do |participants| %>
-          <%= image_tag User.find(participants.user_id).photo, class: "avatar", style: "height: 40px; width: 40px;"%>
-          <%= User.find(participants.user_id).first_name %>
-          <% end %>
+          </div>
 
         </div>
-
-      </div>
       <% end %>
+    <% end %>
 
     </div>
   </div>

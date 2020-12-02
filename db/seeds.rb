@@ -71,16 +71,27 @@ venue1 = Venue.create!(name: "Spring", address: "Lancaster Pl, London WC2R 1LA",
 
 
 30.times do
-  users = [user1, user2, user3, user4, user5, user6, user7, user8, user9, user10]
-  mcreator = users.sample
+  creators = [user1, user2, user3, user4, user5, user6, user7, user8, user9, user10]
+  mcreator = creators.sample
+  # users wil be an array of the users friends
+  users = []
+
+  friends_array = mcreator.friends
+  friends_array.each do |friend|
+    # Since user can be under either friend or user ID, check which id is holding the creators ID
+    if friend.user_id == mcreator.id
+      users << User.find(friend.friend_id)
+    else
+      users << User.find(friend.user_id)
+    end
+  end
+
   m = Midway.new( midpoint: "51.509865,-0.118092", user: mcreator)
   m.venue = venue1
   m.save!
   MidwayParticipant.create!( midway:m ,user:mcreator )
-  users.delete(mcreator)
-  3.times do
-    u = users.sample
-    MidwayParticipant.create!( midway: m, user: u )
-    users.delete(u)
+
+  users.each do |user|
+    MidwayParticipant.create!( midway: m, user: user )
   end
 end
