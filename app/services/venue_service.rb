@@ -16,7 +16,7 @@ class VenueService
         address_query = address_query + iaq
       end
 
-      url = "https://api.distancematrix.ai/maps/api/distancematrix/json?units=imperial&origins=#{address_query}&destinations=#{@venue_lat},#{@venue_lng}&transit_mode=subway&mode=transit&#{url_time}&key=MaFhxiW105Z4AkS6w8q3oRyjvMIhU"
+      url = "https://api.distancematrix.ai/maps/api/distancematrix/json?units=imperial&origins=#{address_query}&destinations=#{@venue_lat},#{@venue_lng}&transit_mode=subway&mode=transit&#{url_time}&key=#{ENV["DISTANCE_MATRIX_KEY"]}"
       @matrix = JSON.parse(open(url).read, symbolize_names: true)
 
       @addresses.each_with_index do |address, index|
@@ -34,7 +34,7 @@ class VenueService
         address_query = address_query + iaq
       end
 
-      url = "https://api.distancematrix.ai/maps/api/distancematrix/json?units=imperial&origins=#{address_query}&destinations=#{@venue_lat},#{@venue_lng}&mode=walking&#{url_time}&key=MaFhxiW105Z4AkS6w8q3oRyjvMIhU"
+      url = "https://api.distancematrix.ai/maps/api/distancematrix/json?units=imperial&origins=#{address_query}&destinations=#{@venue_lat},#{@venue_lng}&mode=walking&#{url_time}&key=#{ENV["DISTANCE_MATRIX_KEY"]}"
       @matrix = JSON.parse(open(url).read, symbolize_names: true)
 
       @addresses.each_with_index do |address, index|
@@ -52,7 +52,7 @@ class VenueService
         address_query = address_query + iaq
       end
 
-      url = "https://api.distancematrix.ai/maps/api/distancematrix/json?units=imperial&origins=#{address_query}&destinations=#{@venue_lat},#{@venue_lng}&#{url_time}&key=MaFhxiW105Z4AkS6w8q3oRyjvMIhU"
+      url = "https://api.distancematrix.ai/maps/api/distancematrix/json?units=imperial&origins=#{address_query}&destinations=#{@venue_lat},#{@venue_lng}&#{url_time}&key=#{ENV["DISTANCE_MATRIX_KEY"]}"
       @matrix = JSON.parse(open(url).read, symbolize_names: true)
 
       @addresses.each_with_index do |address, index|
