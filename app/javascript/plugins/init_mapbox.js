@@ -34,6 +34,7 @@ const initMapbox = () => {
 
       const popup = new mapboxgl.Popup().setHTML(marker.infoWindow);
 
+      // Markers styling
       const marker_element = document.createElement('div');
 
         marker_element.className = `'marker_element link-${marker.place_id}'`;
@@ -49,6 +50,7 @@ const initMapbox = () => {
     });
     const midpoint = JSON.parse(mapElement.dataset.midpoint);
 
+    // Midpoint marker Styling
     const midpoint_marker = document.createElement('div');
       midpoint_marker.className = 'midpoint_marker';
       midpoint_marker.style.backgroundImage = `url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTTqgTjUQdutxymPxna3podsnrbxBe5HYpNA&usqp=CAU')`;
@@ -64,7 +66,7 @@ const initMapbox = () => {
 
 
 
-// map for show page below
+// MAP FOR SHOW PAGE
 
 
 
@@ -86,28 +88,46 @@ const initMapbox = () => {
     });
     const markers = JSON.parse(mapElementShow.dataset.markers);
     markers.forEach((marker) => {
-      new mapboxgl.Marker()
+
+      // Markers for PEOPLE
+      const marker_element = document.createElement('div');
+        marker_element.className = 'marker_element avatar';
+        marker_element.style.backgroundImage = `url('${marker.image_url}')`;
+        marker_element.style.backgroundSize = 'cover';
+        marker_element.style.width = '52px';
+        marker_element.style.height = '52px';
+
+      new mapboxgl.Marker(marker_element)
         .setLngLat([ marker.lng, marker.lat ])
         .addTo(map);
     });
     const midpoint = JSON.parse(mapElementShow.dataset.midpoint);
 
-      // var el = document.createElement("div");
-      // el.className = 'marker';
-      // we are trying to style the midpoint marker
+    // Midpoint marker styling
+    const midpoint_marker = document.createElement('div');
+      midpoint_marker.className = 'midpoint_marker';
+      midpoint_marker.style.backgroundImage = `url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTTqgTjUQdutxymPxna3podsnrbxBe5HYpNA&usqp=CAU')`;
+      midpoint_marker.style.backgroundSize = 'contain';
+      midpoint_marker.style.width = '25px';
+      midpoint_marker.style.height = '25px';
 
-    new mapboxgl.Marker()
+    new mapboxgl.Marker(midpoint_marker)
         .setLngLat([ midpoint.lng, midpoint.lat ])
         .addTo(map);
     fitMapToMarkers(map, markers);
 
+    // VENUE MARKER
     const venue = JSON.parse(mapElementShow.dataset.venue);
 
-      // var el = document.createElement("div");
-      // el.className = 'marker';
-      // we are trying to style the venue marker
+    const venue_marker = document.createElement('div');
+    // if statement to determine class
+      venue_marker.className = 'venue_marker';
+      venue_marker.style.backgroundImage = `url(${venue.pin})`;
+      venue_marker.style.backgroundSize = 'contain';
+      venue_marker.style.width = '25px';
+      venue_marker.style.height = '25px';
 
-    new mapboxgl.Marker()
+    new mapboxgl.Marker(venue_marker)
         .setLngLat([ venue.lng, venue.lat ])
         .addTo(map);
     fitMapToMarkers(map, markers);
