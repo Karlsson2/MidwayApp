@@ -14,6 +14,7 @@ import { menuToggle } from '../components/navbar';
 import { initSweetalert } from '../plugins/init_sweetalert';
 import {typewrite} from '../components/typewriter';
 import flatpickr from "flatpickr";
+// import { showTab, nextPrev, validateForm, fixStepIndicator } from "../components/form";
 
 document.addEventListener('turbolinks:load', () => {
   initMapbox();
@@ -26,6 +27,10 @@ document.addEventListener('turbolinks:load', () => {
   flatpickr(".timepicker", { enableTime: true, defaultDate: date, noCalendar: true, dateFormat: "H:i", time_24hr: true});
 
   loader();
+  // showTab();
+  // nextPrev();
+  // validateForm();
+  // fixStepIndicator();
 
 });
 
