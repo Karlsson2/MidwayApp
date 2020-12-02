@@ -21,3 +21,22 @@
     justify-content: space-between;
   }
 }
+
+// my midways 
+
+.card-wrapper > a:hover{
+  text-decoration: none;
+}
+
+.card-product{
+  color: black;
+}
+
+.my_midway_card{
+  transition: 0.2s;
+}
+
+.my_midway_card:hover{
+  transform: translate3D(0,-1px,0) scale(1.01);
+  background-color: #ffffffe0;
+}
