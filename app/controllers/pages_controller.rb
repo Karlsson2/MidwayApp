@@ -18,7 +18,6 @@ class PagesController < ApplicationController
         @participant_string << "#{participant.user.first_name}, "
       end
   end
-
-
 end
+
 end

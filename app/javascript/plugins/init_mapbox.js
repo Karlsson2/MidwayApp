@@ -19,10 +19,24 @@ const initMapbox = () => {
     const markers = JSON.parse(mapElement.dataset.markers);
     markers.forEach((marker) => {
 
+
+      var card = document.getElementById(`card-${marker.place_id}`);
+      card.addEventListener("mouseover", function( event ) {
+        marker_element.style.width = '52px';
+        marker_element.style.height = '52px';
+      })
+
+
+      card.addEventListener("mouseout", function( event ) {
+        marker_element.style.width = '32px';
+        marker_element.style.height = '32px';
+      })
+
       const popup = new mapboxgl.Popup().setHTML(marker.infoWindow);
 
       const marker_element = document.createElement('div');
-        marker_element.className = 'marker_element';
+
+        marker_element.className = `'marker_element link-${marker.place_id}'`;
         marker_element.style.backgroundImage = `url('${marker.image_url}')`;
         marker_element.style.backgroundSize = 'contain';
         marker_element.style.width = '32px';

@@ -7,7 +7,7 @@
       <% @venue_hash.each do |venue| %>
 
         <% counter += 1 %>
-        <div class="card" data-toggle="modal" data-target="#exampleModalCenter<%= counter %>">
+        <div class="card" data-toggle="modal" data-target="#exampleModalCenter<%= counter %>" id="card-<%= venue[:place_id] %>">
 
           <%= image_tag venue[:photo], alt: "Card image cap", class: "card-img-top" %>
 
@@ -58,9 +58,5 @@
      data-midpoint="<%= @midpoint_hash.to_json %>"
      data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"></div>
 </div>
-
-
-
-
 
 
