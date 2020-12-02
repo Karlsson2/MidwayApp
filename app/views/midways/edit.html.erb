@@ -7,7 +7,8 @@
       <% @venue_hash.each do |venue| %>
 
         <% counter += 1 %>
-        <div class="card" data-toggle="modal" data-target="#exampleModalCenter<%= counter %>" data-div="#exampleTextInfo<%= counter %>" data-button="#exampleVisitButton<%= counter %>" data-id="<%= venue[:place_id] %>" data-day="<%= @midway.future_date.strftime("%A") %>" data-address="<%= venue[:address] %>" data-price="<%= venue[:price] %>" data-time="<%= @midway.future_time.strftime("%H%M") %>" >
+      
+        <div class="card" id="card-<%= venue[:place_id] %>" data-toggle="modal" data-target="#exampleModalCenter<%= counter %>" data-div="#exampleTextInfo<%= counter %>" data-button="#exampleVisitButton<%= counter %>" data-id="<%= venue[:place_id] %>" data-day="<%= @midway.future_date.strftime("%A") %>" data-address="<%= venue[:address] %>" data-price="<%= venue[:price] %>" data-time="<%= @midway.future_time.strftime("%H%M") %>" >
 
           <%= image_tag venue[:photo], alt: "Card image cap", class: "card-img-top" %>
 
@@ -211,7 +212,3 @@
   });
 
 </script>
-
-
-
-

@@ -106,9 +106,12 @@ class MidwaysController < ApplicationController
         lat: venue[:lat],
         lng: venue[:lng],
         infoWindow: render_to_string(partial: "info_window", locals: { venue: venue }),
-        image_url: helpers.asset_url('normal_pin.png')
+        image_url: helpers.asset_url('normal_pin.png'),
+        place_id: venue[:place_id]
       }
+
     end
+
   end
 
   def update
