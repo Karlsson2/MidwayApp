@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   end
 
   def friends
-    @friends = current_user.friends
+    @friends = friends_of_user_contr
     @not_friends = current_user.not_friends_of_user
     @search = params["search"]
     if params["search"].present?
@@ -14,5 +14,42 @@ class UsersController < ApplicationController
     else
       @not_friends = current_user.not_friends_of_user
     end
+    @recieved_requests = recieved_requests
+    @sent_requests = sent_requests
   end
+
+  private
+
+  def sent_requests
+    pending = []
+    current_user.friends.each do |friendship|
+      if current_user.id == friendship.user_id && friendship.confirmed.nil?
+        pending << User.find(friendship.friend_id)
+    end
+  end
+  pending
+end
+
+  def recieved_requests
+    pending = []
+    current_user.friends.each do |friendship|
+      if current_user.id == friendship.friend_id && friendship.confirmed.nil?
+        pending << User.find(friendship.user_id)
+    end
+  end
+  pending
+end
+
+  def friends_of_user_contr
+    friends = []
+
+    current_user.friends.each do |friendship|
+      if current_user.id == friendship.user_id && friendship.confirmed == true;
+        friends << User.find(friendship.friend_id)
+      elsif current_user.id == friendship.friend_id && friendship.confirmed == true;
+        friends << User.find(friendship.user_id)
+      end
+  end
+  friends
+end
 end

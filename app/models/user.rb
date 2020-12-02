@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   after_commit :add_default_photo, on: [:create, :update]
-  
+
   has_one_attached :photo
   has_many :midway_participants
   has_many :midways
@@ -31,26 +31,6 @@ class User < ApplicationRecord
     friends_ids = (self.friends.map(&:user_id) + self.friends.map(&:friend_id)).uniq
     User.where.not(id: friends_ids)
   end
-
-  # Users who have yet to confirme friend requests
-   def pending_friends
-     friendships.map{|friendship| friendship.friend if !friendship.confirmed}.compact
-   end
-
-   # Users who have requested to be friends
-   def friend_requests
-     inverse_friendships.map{|friendship| friendship.user if !friendship.confirmed}.compact
-   end
-
-   def confirm_friend(user)
-     friendship = inverse_friendships.find{|friendship| friendship.user == user}
-     friendship.confirmed = true
-     friendship.save
-   end
-
-   def friend?(user)
-     friends.include?(user)
-   end
 
    private def add_default_photo
 

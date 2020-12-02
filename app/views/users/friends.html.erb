@@ -4,28 +4,16 @@
     <div class="current-friends">
       <h2 class="border-bottom"><%= current_user.first_name %>'s friends </h2>
 
-      <% @friends.each do |friendship| %>
-        <% if friendship.user_id == current_user.id %>
+      <% @friends.each do |friend| %>
+
           <div class="friend border-bottom">
-
-            <div><%= image_tag friendship.friend.photo, gravity: :face, class: "avatar mr-3" %></div>
+            <div><%= image_tag friend.photo, gravity: :face, class: "avatar mr-3" %></div>
             <div>
-              <p> <strong><%= friendship.friend.username %></strong> </p>
-              <p> <em><%= friendship.friend.first_name %> <%= friendship.friend.last_name %></em> </p>
+              <p> <strong><%= friend.username %></strong> </p>
+              <p> <em><%= friend.first_name %> <%= friend.last_name %></em> </p>
+
             </div>
-
           </div>
-        <% else friendship.friend_id == current_user.id %>
-          <div class="friend border-bottom">
-
-            <div><%= image_tag friendship.user.photo, gravity: :face, class: "avatar mr-3" %></div>
-            <div>
-              <p> <strong><%= friendship.user.username %></strong> </p>
-              <p> <em><%= friendship.user.first_name %> <%= friendship.user.last_name %></em> </p>
-            </div>
-
-          </div>
-        <% end %>
       <% end %>
       </div>
 
@@ -54,11 +42,54 @@
                 <i class="fas fa-user-plus"></i>
               <% end %>
             </div>
-
           </div>
-
-
       <% end %>
     </div>
+
+        <div class="pending-friend-requests">
+      <h2 class="border-bottom">Pending requests </h2>
+
+      <% @sent_requests.each do |friend| %>
+
+          <div class="friend border-bottom">
+            <div><%= image_tag friend.photo, gravity: :face, class: "avatar mr-3" %></div>
+            <div>
+              <p> <strong><%= friend.username %></strong> </p>
+              <p> <em><%= friend.first_name %> <%= friend.last_name %></em> </p>
+
+              <div class="pending">
+                <i class="fas fa-user-clock"></i>
+            </div>
+
+            </div>
+          </div>
+      <% end %>
+      </div>
+    <!-- Incoming friend request div  -->
+      <div class="recieved-friend-requests">
+      <h2 class="border-bottom">Recieved requests </h2>
+
+      <% @recieved_requests.each do |friend| %>
+
+          <div class="friend border-bottom">
+            <div><%= image_tag friend.photo, gravity: :face, class: "avatar mr-3" %></div>
+            <div>
+              <p> <strong><%= friend.username %></strong> </p>
+              <p> <em><%= friend.first_name %> <%= friend.last_name %></em> </p>
+
+              <div class="accept-decline">
+              <%= link_to accept_path(friend.id), method: :patch  do%>
+                <i class="fas fa-check-circle"></i>
+              <% end %>
+              <%= link_to decline_path(friend.id), method: :patch  do%>
+                <i class="fas fa-times-circle"></i>
+              <% end %>
+            </div>
+
+            </div>
+          </div>
+      <% end %>
+      </div>
+
   </div>
 </div>
