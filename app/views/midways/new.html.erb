@@ -1,6 +1,5 @@
 <% @title="Create a new Midway" %>
-<div class="main-container" style="height: 100vh;">
-  <div class="midway-container-new">
+<div class="form-container">
   <!--   <form id="regForm" action=""> -->
     <%= simple_form_for :midway, url: midways_path, id: "regForm" do |f| %>
 
@@ -35,8 +34,8 @@
 
   <!-- Only if restaurant is selected -->
     <div class="tab">
-      <%= f.input :keyword, label: "Any other requests?", as: :string, disabled: "disabled" %>
-      <%= f.submit "Find our Midway", class: "btn submit-button hidden", id: "submit-two"  %>
+      <%= f.input :keyword, label: "Any other requests?", as: :string %>
+      <%= f.submit "Find our Midway", class: "btn submit-button", id: "submit-two"  %>
   <!--     <p><input placeholder="Username..." oninput="this.className = ''"></p>
       <p><input placeholder="Password..." oninput="this.className = ''"></p> -->
     </div>
@@ -53,14 +52,13 @@
       <span class="step"></span>
       <span class="step"></span>
       <span class="step"></span>
-      <span class="step" id="last-tab"></span>
+      <span class="step hidden" id="last-tab"></span>
     </div>
 
     <% end %>
   <!--   </form> -->
-  </div>
 
-  </div>
+</div>
 
 
 
@@ -87,10 +85,12 @@
 
       if (venueType !== "restaurant") {
         submitOne.classList.remove("hidden");
-        lastTab.disabled = true;
+        document.getElementById("nextBtn").style.display = "none";
+        lastTab.classList.add("hidden");
       } else {
         submitOne.classList.add("hidden");
-        lastTab.disabled = false;
+        document.getElementById("nextBtn").style.display = "inline-block";
+        lastTab.classList.remove("hidden");
         // submitTwo.classList.remove("hidden");
       }
     };
@@ -109,7 +109,7 @@
       document.getElementById("prevBtn").style.display = "inline";
     }
     if (n == (x.length - 1)) {
-      document.getElementById("nextBtn").innerHTML = "Submit";
+      document.getElementById("nextBtn").style.display = "none";
     } else {
       document.getElementById("nextBtn").innerHTML = "Next";
     }
@@ -131,6 +131,10 @@
       //...the form gets submitted:
       document.getElementById("regForm").submit();
       return false;
+    } else if (n === -1) {
+      document.getElementById("nextBtn").style.display = "inline-block";
+    } else if (currentTab === x.length - 2) {
+      document.getElementById("nextBtn").style.display = "none";
     }
     // Otherwise, display the correct tab:
     showTab(currentTab);
