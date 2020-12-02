@@ -172,7 +172,8 @@ class MidwaysController < ApplicationController
     @markers = addresses_coordinates.map do |participant|
       {
         lat: participant[:lat],
-        lng: participant[:lng]
+        lng: participant[:lng],
+        image_url: helpers.asset_url('normal_pin.png')
       }
     end
   end
