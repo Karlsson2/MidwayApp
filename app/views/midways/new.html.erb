@@ -14,9 +14,13 @@
 
       <%= f.input :time_option, label: "When do you want to travel/meet up?", as: :radio_buttons, collection: [['0', 'Departure time'], ['1', 'Arrival time']], label_method: :second, value_method: :first %>
 
-      <%= f.input :future_time, label: "Please select the time:", as: :datetime, html5: true %>
+      <%= f.input :future_date, label: "Please select the date:", as: :string, required: false, input_html: {class: "datepicker"}  %>
 
-      <%= f.input :venue_type, label: "What kind of venue do you want to meet at?", as: :radio_buttons, collection: ["Restaurant", "Pub", "Nightclub", "Cinema"] %>
+      <%= f.input :future_time, label: "Please select the time:", as: :string, required: false, input_html: {class: "timepicker"}  %>
+
+      <%= f.input :venue_type, label: "What kind of venue do you want to meet at?", as: :radio_buttons, collection: [['restaurant', 'Restaurant'], ['bar', 'Pub'], ['movie_theater', 'Cinema' ], ['park', 'Park'], ['art_gallery', 'Art Gallery'], ['museum', 'Museum'], ['night_club', 'Nightclub'] ], label_method: :second, value_method: :first %>
+
+      <%= f.input :keyword, label: "Any other requests?", as: :string %>
 
       <%= f.submit "Find our Midway", class: "btn btn-home submit-button"  %>
     <% end %>

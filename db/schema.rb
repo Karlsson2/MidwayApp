@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_150345) do
+ActiveRecord::Schema.define(version: 2020_12_01_225108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,9 +64,12 @@ ActiveRecord::Schema.define(version: 2020_12_01_150345) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "time_option"
-    t.datetime "future_time"
     t.string "venue_type"
     t.bigint "venue_id"
+    t.string "keyword"
+    t.time "future_time"
+    t.date "future_date"
+    t.datetime "future_datetime"
     t.index ["user_id"], name: "index_midways_on_user_id"
     t.index ["venue_id"], name: "index_midways_on_venue_id"
   end

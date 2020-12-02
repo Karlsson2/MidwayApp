@@ -4,11 +4,11 @@ class VenueService
     @venue_lat = attributes[:venue_lat]
     @venue_lng = attributes[:venue_lng]
     @time_option = attributes[:time_option]
-    @future_time = attributes[:future_time]
+    @future_datetime = attributes[:future_datetime]
   end
 
     def calculate_transit
-      url_time = @time_option == 1 ? "arrival_time=#{@future_time}" : "departure_time=#{@future_time}"
+      url_time = @time_option == 1 ? "arrival_time=#{@future_datetime}" : "departure_time=#{@future_datetime}"
 
       address_query=""
       @addresses.each do |address|
@@ -26,7 +26,7 @@ class VenueService
     end
 
     def calculate_walk
-      url_time = @time_option == 1 ? "arrival_time=#{@future_time}" : "departure_time=#{@future_time}"
+      url_time = @time_option == 1 ? "arrival_time=#{@future_datetime}" : "departure_time=#{@future_datetime}"
 
       address_query=""
       @addresses.each do |address|
@@ -44,7 +44,7 @@ class VenueService
     end
 
     def calculate_drive
-      url_time = @time_option == 1 ? "arrival_time=#{@future_time}" : "departure_time=#{@future_time}"
+      url_time = @time_option == 1 ? "arrival_time=#{@future_datetime}" : "departure_time=#{@future_datetime}"
 
       address_query=""
       @addresses.each do |address|
