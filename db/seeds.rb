@@ -69,6 +69,8 @@ friendship10 = Friendship.create!(user: user8, friend: user7)
 venue1 = Venue.create!(name: "Spring", address: "Lancaster Pl, London WC2R 1LA", photo_url: "https://lh5.googleusercontent.com/p/AF1QipPHXnPGDClY5RY8PXXq4xpOSN6hBPqPo6jR97wB=w203-h152-k-no", lat:"51.509865",lng:"-0.118092")
 
 
+dates = ["Thu, 01 Dec 2020 12:44:00 UTC +00:00", "Wed, 25 Nov 2020 09:35:00 UTC +00:00", "Mon 23 Nov 2020 15:45:00 UTC +00:00", "Thu, 15 Oct 2020 18:10:00 UTC +00:00"]
+
 
 30.times do
   creators = [user1, user2, user3, user4, user5, user6, user7, user8, user9, user10]
@@ -88,6 +90,7 @@ venue1 = Venue.create!(name: "Spring", address: "Lancaster Pl, London WC2R 1LA",
 
   m = Midway.new( midpoint: "51.509865,-0.118092", user: mcreator)
   m.venue = venue1
+  m.future_datetime = dates.sample
   m.save!
   MidwayParticipant.create!( midway:m ,user:mcreator )
 
