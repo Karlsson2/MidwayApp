@@ -6,7 +6,9 @@ class PagesController < ApplicationController
 
   def dashboard
 
-    participants = current_user.midways.last.midway_participants
+    participants = current_user.midways.last.midway_participants.where.not(user: current_user)
+
+
     @participant_string = ""
     participants.each_with_index do |participant, index|
 
