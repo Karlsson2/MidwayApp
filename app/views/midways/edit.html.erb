@@ -7,7 +7,7 @@
       <% @venue_hash.each do |venue| %>
 
         <% counter += 1 %>
-        <div class="card" data-toggle="modal" data-target="#exampleModalCenter<%= counter %>">
+        <div class="card" data-toggle="modal" data-target="#exampleModalCenter<%= counter %>" data-div="#exampleTextInfo<%= counter %>" data-button="#exampleVisitButton<%= counter %>" data-id="<%= venue[:place_id] %>" data-day="<%= @midway.future_date.strftime("%A") %>" data-address="<%= venue[:address] %>" data-price="<%= venue[:price] %>" data-time="<%= @midway.future_time.strftime("%H%M") %>" >
 
           <%= image_tag venue[:photo], alt: "Card image cap", class: "card-img-top" %>
 
@@ -37,11 +37,13 @@
               </div>
               <div class="modal-body">
                 <%= image_tag venue[:photo], alt: "Card image cap", class: "card-img-top" %>
-                <div class="address"><p> <%= venue[:address] %></p></div>
-                <p style="color: <%= venue_color(venue[:open_boolean]) %>"><%= venue[:open_boolean] %></p>
-                <p> Pricing: <strong><%= venue[:price] %></strong> </p>
+                <div class="address"><p> <%= venue[:address] %> </p></div>
+                <div id="#exampleTextInfo<%= counter %>">
+                </div>
               </div>
-              <div class="modal-footer">
+              <div class="modal-footer d-flex justify-content-space-around">
+                <div id="#exampleVisitButton<%= counter %>">
+                </div>
                 <%= link_to "Confirm", midway_path(@midway.id, address: venue[:address], name: venue[:name], photo_url: venue[:photo], categories: venue[:categories], lat: venue[:lat], lng: venue[:lng] ), method: :patch, class: "btn" %>
               </div>
             </div>
@@ -59,7 +61,156 @@
      data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"></div>
 </div>
 
+<script type="text/javascript">
 
+  function apiCall(placeID) {
+    const baseURL =  "https://maps.googleapis.com/maps/api/place/details/json?"
+    const proxyurl = "https://thingproxy.freeboard.io/fetch/";
+    const url = baseURL + `place_id=${placeID}&fields=name,rating,formatted_phone_number,photos,opening_hours,website&key=AIzaSyDFvyNLsoIQsADW5U0uePwiuLjbHg9CnBs`
+    console.log(url)
+    return new Promise((resolve, reject) => {
+      fetch(proxyurl + url)
+      .then(response => response.json())
+      .then((data) => {
+        let results = data;
+        resolve(results);
+      });
+    })
+  };
+
+  var cardArray = document.querySelectorAll('.card');
+  cardArray.forEach(function(card) {
+    card.addEventListener('click', function(event) {
+      var placeID = card.dataset.id;
+      var address = card.dataset.address;
+      var price = card.dataset.price;
+      var chosenDay = card.dataset.day;
+      var chosenTime = parseInt(card.dataset.time);
+      let output = "";
+      var textInfoText = card.dataset.div;
+      var textInfoDiv = document.getElementById(textInfoText);
+      var buttonText = card.dataset.button;
+      var buttonDiv = document.getElementById(buttonText);
+
+
+      apiCall(placeID).then(data => {
+
+        // checks for day in the text array and saves this to openingHoursOnDay string
+        var openingHours = data.result.opening_hours;
+        if(openingHours != null) {
+          var weekdayArrayText = data.result.opening_hours.weekday_text;
+          var openingHoursOnDay = "";
+          weekdayArrayText.forEach(function(string) {
+            if(string.split(' ')[0] == `${chosenDay}:`) {
+              openingHoursOnDay = `(${string})`
+            }
+          });
+
+          // checks for day in the text array and saves this to openingHoursOnDay string
+          var weekdayArrayPeriods = data.result.opening_hours.periods;
+          if(weekdayArrayPeriods.length == 7) {
+            var index = null;
+            if(chosenDay == "Monday") {
+              index = 0;
+            } else if(chosenDay == "Tuesday") {
+              index = 1;
+            } else if(chosenDay == "Wednesday") {
+              index = 2;
+            } else if(chosenDay == "Thursday") {
+              index = 3;
+            } else if(chosenDay == "Friday") {
+              index = 4;
+            } else if(chosenDay == "Saturday") {
+              index = 5;
+            } else if(chosenDay == "Sunday") {
+              index = 6;
+            };
+            var weekdayPeriodHash = weekdayArrayPeriods[index];
+            var openingTime = parseInt(weekdayPeriodHash.open.time)
+            if(parseInt(weekdayPeriodHash.close.time) >= 0 ) {
+              var closingTime = parseInt(weekdayPeriodHash.close.time) + 2400
+            }
+            else {
+              var closingTime = parseInt(weekdayPeriodHash.close.time)
+            }
+            var openBoolean = null;
+
+            if(chosenTime > openingTime && chosenTime < closingTime) {
+              openBoolean = "Open at this time"
+            }
+            else {
+              openBoolean = "Closed"
+            }
+          } else if(weekdayArrayPeriods.length == 1) {
+            openBoolean = "Open at this time"
+          };
+
+          var color = "";
+          if (openBoolean == "Open at this time") {
+            color = "green";
+          }
+          else {
+            color = "red";
+          }
+        } else {
+          openBoolean = "";
+          openingHoursOnDay = "";
+          color = "white";
+        };
+
+        // checks if there is phone number
+        var phoneNumberCheck = data.result.formatted_phone_number;
+        if(phoneNumberCheck != null) {
+          phoneNumber = `Phone Number: ${data.result.formatted_phone_number}`
+        } else {
+          phoneNumber = "";
+        };
+
+        console.log(chosenDay)
+        console.log(chosenTime)
+        console.log(openingTime)
+        console.log(closingTime)
+        console.log(openBoolean)
+        console.log(color)
+
+        var openShow = "";
+        if(openBoolean == "" || openingHoursOnDay == "" || color == "") {
+          openShow = "none !important";
+        } else {
+          openShow = "block";
+        };
+
+        var phoneShow = "";
+        console.log(phoneNumber)
+        if(phoneNumber == "") {
+          phoneShow = "none !important";
+        } else {
+          phoneShow = "block"
+        };
+
+        var priceShow = "";
+        if(price == "Not available") {
+          priceShow = "none !important";
+        } else {
+          priceShow = "block";
+        };
+
+        textInfoDiv.innerHTML =
+        `<div style="display: ${openShow}" class="d-flex justify-content-start">
+            <p style="color: ${color} ">${openBoolean}</p>
+            <p> &nbsp; ${openingHoursOnDay} </p>
+          </div>
+          <div style="display: ${priceShow}"><p> Pricing: <strong>${price}</strong> </p></div>
+          <div style="display: ${phoneShow}"><p> ${phoneNumber} </p></div>
+        `
+
+        buttonDiv.innerHTML =
+        `<a href="${data.result.website}" class="btn btn-primary" target="_blank">Visit the website</a>`
+      });
+    });
+  });
+
+</script>
 
 
 
