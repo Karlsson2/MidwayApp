@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   end
 
 
+
   resources :midways, only: [:index, :new, :create, :edit, :update, :show]
 
   get 'dashboard', to: 'pages#dashboard', as: 'dashboard'
@@ -17,4 +18,6 @@ Rails.application.routes.draw do
   get 'friends', to: 'users#friends', as: 'friends'
   get 'choose_venue', to: 'midways#choose_venue', as: 'choose_venue'
   get 'my_midways', to: 'midways#my_midways', as: 'my_midways'
+  patch 'accept_request/:id', to: 'friendships#friendship_confirm', as: 'accept'
+  patch 'decline_request/:id', to: 'friendships#friendship_decline', as: 'decline'
 end

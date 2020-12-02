@@ -3,6 +3,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 10px;
+  row-gap: 10px;
 }
 
 .current-friends {
@@ -23,6 +24,19 @@
   margin: 0 auto ;
   width: 800px;
 }
+.recieved-friend-requests {
+  padding: 20px;
+  background: #F2F2F2;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+.pending-friend-requests {
+  padding: 20px;
+  background: #F2F2F2;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
 
 //comment
 .friend {
@@ -34,7 +48,16 @@
 }
 
 .add {
-  color: #03C5B8;
+  position: absolute;
+  top: 25px;
+  right: 25px;
+}
+.pending {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+}
+.accept-decline {
   position: absolute;
   top: 25px;
   right: 25px;
@@ -48,6 +71,32 @@
 
 .fa-user-plus:hover {
   opacity: 1;
+}
+
+.fa-check-circle {
+  color: #03C5B8;
+  font-size: 25px;
+  opacity: 0.8;
+}
+
+.fa-check-circle:hover {
+  opacity: 1;
+}
+
+.fa-times-circle {
+  color: #FF5E13;
+  font-size: 25px;
+  opacity: 0.8;
+}
+
+.fa-times-circle:hover {
+  opacity: 1;
+}
+
+.fa-user-clock {
+  color: #ffa500;
+  font-size: 25px;
+  opacity: 0.8;
 }
 
 .search-friend {
