@@ -27,7 +27,15 @@
     </div>
 
     <div class="tab">
-      <%= f.input :venue_type, label: "What kind of venue do you want to meet at?", as: :radio_buttons, collection: [['restaurant', 'Restaurant'], ['bar', 'Pub'], ['movie_theater', 'Cinema' ], ['park', 'Park'], ['art_gallery', 'Art Gallery'], ['museum', 'Museum'], ['night_club', 'Nightclub'] ], label_method: :second, value_method: :first, input_html: { class: "midway-venue" } %>
+      <%= f.input :venue_type,
+                  label: "What kind of venue do you want to meet at?",
+                  as: :radio_buttons,
+                  collection_wrapper_tag: 'div',
+                  collection_wrapper_class: 'category-wrapper',
+                  item_wrapper_class: 'category-item',
+                  input_html: {class: 'category-selector midway-venue'},
+                  collection: Midway::CATEGORY,
+                  inline_label: "Hello" %>
       <%= f.submit "Find our Midway", class: "btn submit-button hidden", id: "submit-one"  %>
   <!--     <p><input placeholder="Username..." oninput="this.className = ''"></p>
       <p><input placeholder="Password..." oninput="this.className = ''"></p> -->
