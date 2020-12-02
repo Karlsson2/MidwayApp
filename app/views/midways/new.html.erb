@@ -1,5 +1,6 @@
 <% @title="Create a new Midway" %>
-<div class="form-container">
+<div class="form-container" style="height: 100vh;">
+  <div class="midway-container-new">
   <!--   <form id="regForm" action=""> -->
     <%= simple_form_for :midway, url: midways_path, id: "regForm" do |f| %>
 
@@ -42,8 +43,8 @@
 
     <div style="overflow:auto;">
       <div style="float:right;">
-        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-        <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+        <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn">Previous</button>
+        <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn">Next</button>
       </div>
     </div>
 
@@ -57,8 +58,9 @@
 
     <% end %>
   <!--   </form> -->
+  </div>
 
-</div>
+  </div>
 
 
 
