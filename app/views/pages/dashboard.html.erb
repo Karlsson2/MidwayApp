@@ -6,7 +6,11 @@
   <span style="font-size: 46px; color: white;"
      class="txt-rotate"
      data-period="2000"
-     data-rotate='[ "So far, you have been on <%= current_user.midways.count %> Midways... ", "Your last midway was at <%= current_user.midways.first.venue.name %>", "Your last Midway was with <%= @participant_string %>", "Where do you want to go today?" ]'></span>
+     <% if current_user.midways.count == 0 %>
+      data-rotate='["You have not been on a midway yet, ready?","Bring your friends along for a new adventure.."]'></span>
+     <% else %>
+      data-rotate='[ "So far, you have been on <%= current_user.midways.count %> Midways... ", "Your last midway was at <%= current_user.midways.first.venue.name %>", "Your last Midway was with <%= @participant_string %>", "Where do you want to go today?" ]'></span>
+     <% end %>
 </h1>
 
     <%= link_to "New Midway", new_midway_path, class: "btn-home align-items-center" %>
