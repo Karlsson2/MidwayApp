@@ -131,6 +131,7 @@ class MidwaysController < ApplicationController
     @venue_hash[:photo] = @venue.photo_url
     @venue_hash[:lat] = @venue.lat
     @venue_hash[:lng] = @venue.lng
+    @venue_hash[:pin] = helpers.asset_url("normal_pin.png")
 
     addresses_coordinates = []
 
@@ -169,11 +170,11 @@ class MidwaysController < ApplicationController
     @midpoint_hash[:lat] = midpoint.split(",")[0]
     @midpoint_hash[:lng] = midpoint.split(",")[1]
 
-    @markers = addresses_coordinates.map do |participant|
+    @markers = @participants.map do |participant|
       {
-        lat: participant[:lat],
-        lng: participant[:lng],
-        image_url: helpers.asset_url('normal_pin.png')
+        lat: participant.user.lat,
+        lng: participant.user.lng,
+        image_url: url_for(participant.user.photo)
       }
     end
   end

@@ -52,7 +52,7 @@ const initMapbox = () => {
 
 
 
-// map for show page below
+// MAP FOR SHOW PAGE
 
 
 
@@ -75,12 +75,13 @@ const initMapbox = () => {
     const markers = JSON.parse(mapElementShow.dataset.markers);
     markers.forEach((marker) => {
 
+      // Markers for PEOPLE
       const marker_element = document.createElement('div');
-        marker_element.className = 'marker_element';
+        marker_element.className = 'marker_element avatar';
         marker_element.style.backgroundImage = `url('${marker.image_url}')`;
-        marker_element.style.backgroundSize = 'contain';
-        marker_element.style.width = '32px';
-        marker_element.style.height = '32px';
+        marker_element.style.backgroundSize = 'cover';
+        marker_element.style.width = '52px';
+        marker_element.style.height = '52px';
 
       new mapboxgl.Marker(marker_element)
         .setLngLat([ marker.lng, marker.lat ])
@@ -98,6 +99,22 @@ const initMapbox = () => {
 
     new mapboxgl.Marker(midpoint_marker)
         .setLngLat([ midpoint.lng, midpoint.lat ])
+        .addTo(map);
+    fitMapToMarkers(map, markers);
+
+    // VENUE MARKER
+    const venue = JSON.parse(mapElementShow.dataset.venue);
+
+    const venue_marker = document.createElement('div');
+    // if statement to determine class
+      venue_marker.className = 'venue_marker';
+      venue_marker.style.backgroundImage = `url(${venue.pin})`;
+      venue_marker.style.backgroundSize = 'contain';
+      venue_marker.style.width = '25px';
+      venue_marker.style.height = '25px';
+
+    new mapboxgl.Marker(venue_marker)
+        .setLngLat([ venue.lng, venue.lat ])
         .addTo(map);
     fitMapToMarkers(map, markers);
   }
