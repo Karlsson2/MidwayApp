@@ -1,8 +1,6 @@
 <% @title="Midway Confirmation" %>
 <div class="main-container" style="width:100% !important;">
 
-  <%# show styling in pages/show.css %>
-
   <div class="show-container mb-3">
 
       <div id="map-show"
@@ -15,25 +13,32 @@
   <div class="right-container">
 
     <!-- This is the title div -->
-
-    <div class="title">
+  <div class="title">
     <h2>
-      Midway <span style="color:white;">between</span>
-      <% if @midway.midway_participants.count == 2 %>
-        <%= User.find(@midway.midway_participants.first.user_id).first_name %> <span style="color:white;">&</span>
-        <%= User.find(@midway.midway_participants.last.user_id).first_name %>
-      <% elsif @midway.midway_participants.count > 2 %>
-        <%= User.find(@midway.midway_participants.first.user_id).first_name %>,
-        <% @midway.midway_participants[1..-3].each do |participant| %>
-          <%= User.find(participant.user_id).first_name%>,
-        <% end %>
-        <%= User.find(@midway.midway_participants[-2].user_id).first_name %>
-        <span style="color:white;">&</span> <%= User.find(@midway.midway_participants.last.user_id).first_name %>
+    Midway <span style="color:white;">between</span>
+    <% @participants = @midway.midway_participants %>
+    <% participant_names = [] %>
+    <% @participants.each do |participant| %>
+      <% participant_names.push(participant.user.first_name) if participant.user %>
+      <% participant_names.push(participant.guest.name) if participant.guest %>
+    <% end %>
+
+    <% if participant_names.count == 2 %>
+      <%= participant_names[0] %> <span style="color:white;">&</span>
+      <%= participant_names[1] %>
+    <% elsif participant_names.count > 2 %>
+      <%= participant_names[0] %>,
+      <% participant_names[1..-3].each do |name| %>
+        <%= name %>,
       <% end %>
-        <span style="color:white;">is</span>
-        </h2>
-        <h1><%= @midway.venue.name %>.</h1>
+      <%= participant_names[-2] %>
+      <span style="color:white;">&</span> <%= participant_names[-1] %>
+    <% end %>
+      <span style="color:white;">is</span> 
+    </h2>
+    <h1><%= @midway.venue.name %></h1>
   </div>
+
 
 
   <!-- This is the card showing the venue -->
@@ -62,10 +67,17 @@
       <div class="card-content">
         <div class="users-grid">
           <% @participants.each do |participant| %>
-            <div class="users-item user-button" data-duration="<%= participant.duration_to_midpoint %>" data-walk="<%= participant.walk_to_midpoint %>" data-drive="<%= participant.drive_to_midpoint %>" data-lat="<%= participant.user.lat %>" data-lng="<%= participant.user.lng %>" data-venuelat="<%= @midway.venue.lat %>" data-venuelng="<%= @midway.venue.lng %>" data-location="<%= u participant.user.location %>">
-              <%= image_tag participant.user.photo, gravity: :face, class: "avatar-navbar" %>
-              <p> <%= participant.user.first_name %></p>
-            </div>
+          <% if participant.user %>
+              <div class="users-item user-button" data-duration="<%= participant.duration_to_midpoint %>" data-walk="<%= participant.walk_to_midpoint %>" data-drive="<%= participant.drive_to_midpoint %>" data-lat="<%= participant.user.lat %>" data-lng="<%= participant.user.lng %>" data-venuelat="<%= @midway.venue.lat %>" data-venuelng="<%= @midway.venue.lng %>" data-location="<%= u participant.user.location %>">
+                  <%= image_tag participant.user.photo, gravity: :face, class: "avatar-navbar" %>
+                  <p> <%= participant.user.first_name %></p>
+              </div>
+            <% else %>
+              <div class="users-item user-button" data-duration="<%= participant.duration_to_midpoint %>" data-walk="<%= participant.walk_to_midpoint %>" data-drive="<%= participant.drive_to_midpoint %>" data-lat="<%= participant.guest.lat %>" data-lng="<%= participant.guest.lng %>" data-venuelat="<%= @midway.venue.lat %>" data-venuelng="<%= @midway.venue.lng %>" data-location="<%= u participant.guest.location %>">
+                  <%= image_tag "user.png", gravity: :face, class: "avatar-navbar" %>
+                  <p> <%= participant.guest.name %></p>
+              </div>
+            <% end %>
           <% end %>
         </div>
 
@@ -93,7 +105,9 @@
             <%#= this creates a string of all the emails separated by a comma %>
             <% @emails = "" %>
             <% @participants.each do |participant| %>
-              <% @emails = @emails + ", " + participant.user.email %>
+              <% if participant.user %>
+                <% @emails = @emails + ", " + participant.user.email %>
+              <% end %>
             <% end %>
             <div class="social-element">
               <%= mail_to @emails, subject: "Join our Midway", body: "Hey it's #{@midway.user.first_name}, join us at https://www.mid-way.co.uk/midways/#{@midway.id}. See you there!" do %>

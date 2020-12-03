@@ -26,24 +26,27 @@
     <header>
       <div class="menu">
           <div class="menu-inner">
-              <span class="menu-control-close" id="menuControlClose">Close</span>
-              <nav>
-                  <%= link_to new_midway_path, class: "dropdown-item" do %>
-                    <i class="fas fa-plus-square pr-2"></i> New Midway
-                  <% end %>
-                  <%= link_to user_profile_path(current_user.id), class: "dropdown-item" do %>
-                    <i class="fas fa-cog pr-2"></i> My Profile
-                  <% end %>
-                  <%= link_to friends_path, class: "dropdown-item" do %>
-                    <i class="fas fa-users pr-2"></i> My Friends
-                  <% end %>
-                  <%= link_to my_midways_path, class: "dropdown-item" do %>
-                    <i class="fas fa-road pr-2"></i> My Midways
-                  <% end %>
-                  <%= link_to destroy_user_session_path, method: :delete, class: "dropdown-item" do %>
-                    <i class="fas fa-sign-out-alt pr-2"></i> Logout
-                  <% end %>
-              </nav>
+              <span class="menu-control-close" id="menuControlClose"><i class="fas fa-times"></i></span>
+              <div class="menu-text">
+                <h3>MIDWAY</h3>
+                <nav>
+                    <%= link_to new_midway_path, class: "dropdown-item" do %>
+                      <p><i class="fas fa-plus-square pr-2"></i> New Midway</p>
+                    <% end %>
+                    <%= link_to user_profile_path(current_user.id), class: "dropdown-item" do %>
+                      <p><i class="fas fa-cog pr-2"></i> My Profile</p>
+                    <% end %>
+                    <%= link_to friends_path, class: "dropdown-item" do %>
+                    <p> <i class="fas fa-users pr-2"></i> My Friends </p>
+                    <% end %>
+                    <%= link_to my_midways_path, class: "dropdown-item" do %>
+                    <p> <i class="fas fa-road pr-2"></i> My Midways </p>
+                    <% end %>
+                    <%= link_to destroy_user_session_path, method: :delete, class: "dropdown-item" do %>
+                    <p> <i class="fas fa-sign-out-alt pr-2"></i> Logout </p>
+                    <% end %>
+                </nav>
+              </div>
           </div>
       </div>
     </header>

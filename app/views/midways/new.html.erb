@@ -1,74 +1,154 @@
 <% @title="Create a new Midway" %>
+
 <div class="form-container" style="height: 100vh;">
   <div class="midway-container-new">
   <!--   <form id="regForm" action=""> -->
-    <%= simple_form_for :midway, url: midways_path, id: "regForm" do |f| %>
+    <form novalidate="novalidate" class="simple_form midway" action="/midways" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
     <h1>Customize your Midway</h1>
 
     <!-- One "tab" for each step in the form: -->
-    <div class="tab">
-      <%= f.fields_for :friends do |r| %>
-      <%= r.input :participants, label: "Choose your friends", as: :check_boxes, collection: @friends.map { |friend| ["#{friend.first_name} #{friend.last_name} ", friend.id] } %>
-      <% end %>
+    <div class="tab" style="display: block;">
+
+      <fieldset class="form-group check_boxes required midway_friends_participants">
+        <legend class="col-form-label pt-0">Choose your friends <abbr title="required">*</abbr></legend>
+        <div class="category-wrapper">
+          <input type="hidden" name="midway[friends][participants][]" value="">
+
+          <% @friends.each do |friend| %>
+          <div class="category-item">
+            <input class="form-check-input check_boxes required category-selector" type="checkbox" data-style="ruby" value="<%= friend.id %>" name="midway[friends][participants][]" id="midway_friends_participants_<%= friend.id %>">
+            <label class="form-check-label collection_check_boxes" for="midway_friends_participants_<%= friend.id %>"> <%= image_tag friend.photo, gravity: :face, class: "avatar-navbar" %> <%= friend.first_name %> <%= friend.last_name %> </label>
+          </div>
+          <% end %>
+
+          <div class="category-item">
+            <a href="#" id="guest-button">Add a guest</a>
+          </div>
+
+        </div>
+      </fieldset>
       <!-- <p><input placeholder="First name..." oninput="this.className = ''"></p> -->
       <!-- <p><input placeholder="Last name..." oninput="this.className = ''"></p> -->
     </div>
 
-    <div class="tab">When do you want to travel/meet up?
-      <%= f.input :time_option, label: "When do you want to travel/meet up?", as: :radio_buttons, collection: [['0', 'Departure time'], ['1', 'Arrival time']], label_method: :second, value_method: :first %>
+    <div class="hidden" id="optional-tab">
 
-      <%= f.input :future_date, label: "Please select the date:", as: :string, required: false, input_html: { class: "datepicker" }   %>
+      <div class="form-group string required guest_info">
+        <label class="string required" for="guest_name">What's their name? <abbr title="required">*</abbr></label>
+        <input class="form-control string required" type="text" name="guest[name]" id="guest_name">
+      </div>
 
-      <%= f.input :future_time, label: "Please select the time:", as: :string, required: false, input_html: { class: "timepicker" }  %>
+      <div class="form-group string required guest_info">
+        <label class="string required" for="guest_location">What's their location? <abbr title="required">*</abbr></label>
+        <input class="form-control string required" type="text" name="guest[location]" id="guest_location">
+      </div>
+
+      <a href="#"></a>
+
+    </div>
+
+    <div class="tab">
+      <fieldset class="form-group radio_buttons required midway_time_option"><legend class="col-form-label pt-0">When are you going? <abbr title="required">*</abbr></legend><input type="hidden" name="midway[time_option]" value=""><div class="form-check"><input class="form-check-input radio_buttons required" type="radio" value="0" name="midway[time_option]" id="midway_time_option_0"><label class="form-check-label collection_radio_buttons" for="midway_time_option_0">Departure time</label></div><div class="form-check"><input class="form-check-input radio_buttons required" type="radio" value="1" name="midway[time_option]" id="midway_time_option_1"><label class="form-check-label collection_radio_buttons" for="midway_time_option_1">Arrival time</label></div></fieldset>
+
+      <div class="form-group string optional midway_future_date"><label class="string optional" for="midway_future_date">Please select the date:</label><input class="form-control string optional datepicker flatpickr-input" type="text" name="midway[future_date]" id="midway_future_date" readonly="readonly"></div>
+
+      <div class="form-group string optional midway_future_time"><label class="string optional" for="midway_future_time">Please select the time:</label><input class="form-control string optional timepicker flatpickr-input" type="text" name="midway[future_time]" id="midway_future_time" readonly="readonly"></div>
 
   <!--     <p><input placeholder="E-mail..." oninput="this.className = ''"></p>
       <p><input placeholder="Phone..." oninput="this.className = ''"></p> -->
     </div>
 
     <div class="tab">
-      <%= f.input :venue_type,
-                  label: "What kind of venue do you want to meet at?",
-                  as: :radio_buttons,
-                  collection_wrapper_tag: 'div',
-                  collection_wrapper_class: 'category-wrapper',
-                  item_wrapper_class: 'category-item',
-                  input_html: {class: 'category-selector midway-venue'},
-                  collection: Midway::CATEGORY,
-                  inline_label: "Hello" %>
-      <%= f.submit "Find our Midway", class: "btn submit-button hidden", id: "submit-one"  %>
+      <fieldset class="form-group radio_buttons required midway_venue_type">
+        <legend class="col-form-label pt-0">What do you want to do? <abbr title="required">*</abbr></legend>
+        <div class="venue-category-wrapper">
+          <input type="hidden" name="midway[venue_type]" value="">
+
+          <div class="venue-category-item">
+            <input class="form-check-input radio_buttons required venue-category-selector midway-venue" type="radio" value="restaurant" name="midway[venue_type]" id="midway_venue_type_restaurant">
+            <label class="form-check-label collection_radio_buttons" for="midway_venue_type_restaurant"><div class="div-image-restaurant"></div>Restaurant</label>
+          </div>
+
+          <div class="venue-category-item">
+            <input class="form-check-input radio_buttons required venue-category-selector midway-venue" type="radio" value="bar" name="midway[venue_type]" id="midway_venue_type_bar">
+            <label class="form-check-label collection_radio_buttons" for="midway_venue_type_bar"><div class="div-image-beer"></div>Pub</label>
+          </div>
+
+          <div class="venue-category-item">
+            <input class="form-check-input radio_buttons required venue-category-selector midway-venue" type="radio" value="movie_theater" name="midway[venue_type]" id="midway_venue_type_movie_theater">
+            <label class="form-check-label collection_radio_buttons" for="midway_venue_type_movie_theater"><div class="div-image-cinema"></div>Cinema</label>
+          </div>
+
+          <div class="venue-category-item">
+            <input class="form-check-input radio_buttons required venue-category-selector midway-venue" type="radio" value="park" name="midway[venue_type]" id="midway_venue_type_park">
+            <label class="form-check-label collection_radio_buttons" for="midway_venue_type_park"><div class="div-image-park"></div>Park</label>
+          </div>
+
+          <div class="venue-category-item">
+            <input class="form-check-input radio_buttons required venue-category-selector midway-venue" type="radio" value="art_gallery" name="midway[venue_type]" id="midway_venue_type_art_gallery">
+            <label class="form-check-label collection_radio_buttons" for="midway_venue_type_art_gallery"><div class="div-image-artgallery"></div>Art Gallery</label>
+          </div>
+
+          <div class="venue-category-item">
+            <input class="form-check-input radio_buttons required venue-category-selector midway-venue" type="radio" value="museum" name="midway[venue_type]" id="midway_venue_type_museum">
+            <label class="form-check-label collection_radio_buttons" for="midway_venue_type_museum"><div class="div-image-museum"></div>Museum</label>
+          </div>
+
+          <div class="venue-category-item">
+            <input class="form-check-input radio_buttons required venue-category-selector midway-venue" type="radio" value="night_club" name="midway[venue_type]" id="midway_venue_type_night_club">
+            <label class="form-check-label collection_radio_buttons" for="midway_venue_type_night_club"><div class="div-image-nightclub"></div>Nightclub</label>
+          </div>
+
+          <div class="venue-category-item">
+            <input class="form-check-input radio_buttons required venue-category-selector midway-venue" type="radio" value="cafe" name="midway[venue_type]" id="midway_venue_type_cafe">
+            <label class="form-check-label collection_radio_buttons" for="midway_venue_type_cafe"><div class="div-image-cafe"></div>Cafe</label>
+          </div>
+
+          <div class="venue-category-item">
+            <input class="form-check-input radio_buttons required venue-category-selector midway-venue" type="radio" value="bowling_alley" name="midway[venue_type]" id="midway_venue_type_bowling_alley">
+            <label class="form-check-label collection_radio_buttons" for="midway_venue_type_bowling_alley"><div class="div-image-bowling"></div>Bowling</label>
+          </div>
+
+          <div class="venue-category-item">
+            <input class="form-check-input radio_buttons required venue-category-selector-shopping midway-venue" type="radio" value="shopping_mall" name="midway[venue_type]" id="midway_venue_type_shopping_mall">
+            <label class="form-check-label collection_radio_buttons" for="midway_venue_type_shopping_mall"><div class="div-image-shopping"></div>Shopping Centre</label>
+          </div>
+        </div>
+      </fieldset>
+      <input type="submit" name="commit" value="Find our Midway" class="btn submit-button hidden" id="submit-one" data-disable-with="Find our Midway">
   <!--     <p><input placeholder="Username..." oninput="this.className = ''"></p>
       <p><input placeholder="Password..." oninput="this.className = ''"></p> -->
     </div>
 
   <!-- Only if restaurant is selected -->
     <div class="tab">
-      <%= f.input :keyword, label: "Any other requests?", as: :string %>
-      <%= f.submit "Find our Midway", class: "btn submit-button", id: "submit-two"  %>
+      <div class="form-group string required midway_keyword"><label class="string required" for="midway_keyword">What cuisine do you fancy? <abbr title="required">*</abbr></label><input class="form-control string required" type="text" name="midway[keyword]" id="midway_keyword"></div>
+      <input type="submit" name="commit" value="Find our Midway" class="btn submit-button" id="submit-two" data-disable-with="Find our Midway">
   <!--     <p><input placeholder="Username..." oninput="this.className = ''"></p>
       <p><input placeholder="Password..." oninput="this.className = ''"></p> -->
     </div>
 
     <div style="overflow:auto;">
       <div style="float:right;">
-        <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn">Previous</button>
+        <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn" style="display: none;">Previous</button>
         <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn">Next</button>
       </div>
     </div>
 
     <!-- Circles which indicates the steps of the form: -->
     <div style="text-align:center;margin-top:40px;">
+      <span class="step active"></span>
       <span class="step"></span>
+      <span class="hidden" id="optional-span"></span>
       <span class="step"></span>
-      <span class="step"></span>
-      <span class="step hidden" id="last-tab"></span>
+      <span class="hidden" id="last-span"></span>
     </div>
 
-    <% end %>
-  <!--   </form> -->
+</form>  <!--   </form> -->
   </div>
 
-  </div>
+</div>
 
 
 
@@ -76,7 +156,7 @@
   var currentTab = 0; // Current tab is set to be the first tab (0)
   showTab(currentTab); // Display the current tab
 
-  const midwayVenues = document.querySelectorAll(".midway-venue");
+  let midwayVenues = document.querySelectorAll(".midway-venue");
   let venueType = "";
   midwayVenues.forEach(venue => {
     // console.log(venue);
@@ -86,21 +166,35 @@
     });
   });
 
+  const guestButton = document.getElementById('guest-button');
+  const optionalTab = document.getElementById('optional-tab');
+  const optionalSpan = document.getElementById('optional-span');
+  if(guestButton && optionalTab) {
+    guestButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      optionalTab.classList.toggle("tab");
+      optionalSpan.classList.toggle("hidden");
+      optionalSpan.classList.toggle("step");
+    })
+  };
+
   function displayTab() {
     if (venueType) {
       console.log(venueType);
       const submitOne = document.getElementById("submit-one");
       const submitTwo = document.getElementById("submit-two");
-      const lastTab = document.getElementById("last-tab");
+      const lastSpan = document.getElementById("last-span");
 
       if (venueType !== "restaurant") {
         submitOne.classList.remove("hidden");
         document.getElementById("nextBtn").style.display = "none";
-        lastTab.classList.add("hidden");
+        lastSpan.classList.add("hidden");
+        lastSpan.classList.remove("step");
       } else {
         submitOne.classList.add("hidden");
         document.getElementById("nextBtn").style.display = "inline-block";
-        lastTab.classList.remove("hidden");
+        lastSpan.classList.remove("hidden");
+        lastSpan.classList.add("step");
         // submitTwo.classList.remove("hidden");
       }
     };
@@ -165,10 +259,10 @@
         valid = false;
       }
     }
-    // If the valid status is true, mark the step as finished and valid:
-    if (valid) {
-      document.getElementsByClassName("step")[currentTab].className += " finish";
-    }
+    // // If the valid status is true, mark the step as finished and valid:
+    // if (valid) {
+    //   document.getElementsByClassName("step")[currentTab].className += " finish";
+    // }
     return true; // return the valid status
   }
 

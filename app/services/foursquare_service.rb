@@ -33,6 +33,7 @@ class FoursquareService
 
     # v for version, current date works
     url = base_url + "location=#{longitude},#{latitude}&radius=#{radius}&type=#{venue_type}#{keyword_query}&key=AIzaSyDFvyNLsoIQsADW5U0uePwiuLjbHg9CnBs"
+    p url
     json = JSON.parse(open(url).read)
     venues = []
     json["results"].each do |result|

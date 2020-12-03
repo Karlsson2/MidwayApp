@@ -19,14 +19,13 @@ class MidwaysController < ApplicationController
     @friendships = current_user.friends
     total_users = []
     @friendships.each do |friendship|
-      total_users.push(friendship.user)
-      total_users.push(friendship.friend)
+      total_users.push(friendship.user) if friendship.confirmed
+      total_users.push(friendship.friend) if friendship.confirmed
     end
     @friends = []
     total_users.each do |every_user|
       @friends.push every_user if every_user.id != current_user.id
     end
-    @options = ["restaurant", "pub", "bar"]
   end
 
   def create
@@ -39,16 +38,42 @@ class MidwaysController < ApplicationController
     @midway.venue = @venue
     @midway.save!
 
+    #create the instance of guest
+    guests = []
+    guest_params = params.require(:guest).permit(:name, :location)
+    if params[:guest].present? && params[:guest].is_a?(Array) && params[:guest][:name] != ""
+      guest_params.each do |single_guest_params|
+        guest = Guest.new(single_guest_params)
+        guest.save!
+        guests.push(guest)
+      end
+    elsif params[:guest].present? && params[:guest][:name] != ""
+      guest = Guest.new(guest_params)
+      guest.save!
+      guests.push(guest)
+    end
+
     #access the friend IDs from the form and create array of their locations
     friends = params[:midway][:friends][:participants].reject(&:blank?)
     friends.each do |id|
       MidwayParticipant.create!(user_id: id.to_i, midway_id: @midway.id)
     end
     MidwayParticipant.create!(user_id: current_user.id, midway_id: @midway.id)
+
+    unless guests.empty?
+      guests.each do |guest|
+        MidwayParticipant.create!(guest_id: guest.id, midway_id: @midway.id)
+      end
+    end
+
     participants = MidwayParticipant.where(midway_id: @midway.id)
     participants_locations = []
     participants.each do |participant|
-      participants_locations.push(participant.user.location)
+      if participant.user
+        participants_locations.push(participant.user.location)
+      else
+        participants_locations.push(participant.guest.location)
+      end
     end
 
     #accesses the time_option and the future_time
@@ -134,17 +159,26 @@ class MidwaysController < ApplicationController
     @venue_hash[:photo] = @venue.photo_url
     @venue_hash[:lat] = @venue.lat
     @venue_hash[:lng] = @venue.lng
-    @venue_hash[:pin] = helpers.asset_url("normal_pin.png")
+    # @venue_hash[:pin] = helpers.asset_url("normal_pin.png")
+    @venue_hash[:venue_type] = @midway.venue_type
 
     addresses_coordinates = []
 
     @participants = MidwayParticipant.where(midway_id: @midway.id)
     @participants.each do |participant|
-      coords = convert_to_geocode(participant.user.location)
-      participant.user.lat = coords[0]
-      participant.user.lng = coords[1]
+      if participant.user
+        coords = convert_to_geocode(participant.user.location)
+        participant.user.lat = coords[0]
+        participant.user.lng = coords[1]
+        participant.save!
+        addresses_coordinates.push({ lat: participant.user.lat, lng: participant.user.lng })
+      else
+      coords = convert_to_geocode(participant.guest.location)
+      participant.guest.lat = coords[0]
+      participant.guest.lng = coords[1]
       participant.save!
-      addresses_coordinates.push({ lat: participant.user.lat, lng: participant.user.lng })
+      addresses_coordinates.push({ lat: participant.guest.lat, lng: participant.guest.lng })
+      end
     end
 
     #updates a duration (transit, walk and drive) to each Midway Participant
@@ -174,11 +208,19 @@ class MidwaysController < ApplicationController
     @midpoint_hash[:lng] = midpoint.split(",")[1]
 
     @markers = @participants.map do |participant|
-      {
-        lat: participant.user.lat,
-        lng: participant.user.lng,
-        image_url: url_for(participant.user.photo)
-      }
+      if participant.user
+        {
+          lat: participant.user.lat,
+          lng: participant.user.lng,
+          image_url: url_for(participant.user.photo)
+        }
+      else
+        {
+          lat: participant.guest.lat,
+          lng: participant.guest.lng,
+          image_url: helpers.asset_url("user.png")
+        }
+      end
     end
   end
 
