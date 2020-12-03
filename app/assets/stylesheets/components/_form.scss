@@ -183,7 +183,7 @@ input.invalid {
 }
 
 
-// STYLING FOR VENUE TYPES
+// STYLING FOR FRIENDS
 
 .category-wrapper {
   display: grid;
@@ -222,6 +222,42 @@ input.invalid {
   background-color: grey;
   transition: .2s linear;
 }
+
+.category-selector-guest + label {
+  display: block;
+  cursor: pointer;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 20px;
+  text-align: left;
+  padding: 10px 10px 10px 10px;
+  border: 1px solid #EAEAEA;
+  border-radius: 5px;
+  background-color: white;
+  font-family: 'Raleway', sans-serif;
+  color: #646561;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.category-selector-guest:checked + label {
+  color: white !important;
+  background-color: grey;
+  transition: .2s linear;
+}
+
+// .form-check-input{
+//   visibility: hidden;
+// }
+
+// OPTIONAL GUEST PAGE
+
+#optional-tab label {
+  color: #646561;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 35px;
+}
+
+// VENUE TYPES
 
 .venue-category-wrapper {
   display: grid;

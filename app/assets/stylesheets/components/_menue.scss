@@ -122,11 +122,11 @@ header {
     font-size: 25px;
   }
 
-  h3{
+  .image-menu {
     margin-bottom: 40px;
-    font-size: 42px;
-    border-bottom: 1px solid;
-    width: 173px;
+    // font-size: 42px;
+    border-bottom: 1px solid #03C5B8;
+    width: 200px;
   }
 
   .menu-inner {
@@ -136,7 +136,7 @@ header {
     padding: 1.5rem;
   }
 
-  
+
 }
 
 .menu--active {
