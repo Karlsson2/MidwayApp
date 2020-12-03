@@ -80,7 +80,8 @@
             </div>
           <% else %>
 
-            <div class="friends_scroll" style="height: 185px;
+            <div class="friends_scroll" style="height: 185px;">
+              <% @sent_requests.each do |friend| %>
                 <div class="friend border-bottom">
                   <div>
                     <%= image_tag friend.photo, gravity: :face, class: "avatar mr-3" %>
