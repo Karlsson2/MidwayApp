@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_225108) do
+ActiveRecord::Schema.define(version: 2020_12_03_130053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,14 +46,25 @@ ActiveRecord::Schema.define(version: 2020_12_01_225108) do
     t.index ["user_id"], name: "index_friendships_on_user_id"
   end
 
+  create_table "guests", force: :cascade do |t|
+    t.string "name"
+    t.string "location"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "lat"
+    t.string "lng"
+  end
+
   create_table "midway_participants", force: :cascade do |t|
     t.bigint "midway_id", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "duration_to_midpoint"
     t.string "walk_to_midpoint"
     t.string "drive_to_midpoint"
+    t.bigint "guest_id"
+    t.index ["guest_id"], name: "index_midway_participants_on_guest_id"
     t.index ["midway_id"], name: "index_midway_participants_on_midway_id"
     t.index ["user_id"], name: "index_midway_participants_on_user_id"
   end
@@ -105,6 +116,7 @@ ActiveRecord::Schema.define(version: 2020_12_01_225108) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "friendships", "users"
   add_foreign_key "friendships", "users", column: "friend_id"
+  add_foreign_key "midway_participants", "guests"
   add_foreign_key "midway_participants", "midways"
   add_foreign_key "midway_participants", "users"
   add_foreign_key "midways", "users"

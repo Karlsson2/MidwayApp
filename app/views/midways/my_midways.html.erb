@@ -2,7 +2,7 @@
 <div class="main-container">
   <div class = "my_midways_container p-2 mt-3 mb-4" style="background: white; ">
 
-  
+
     <h2 class="p-3" style="text-align:center;">My Upcoming Midways</h2>
 
     <%# Below CSS in components/cards AND pages/midway %>
@@ -20,11 +20,15 @@
                 <h3><%= midway.venue.name%></h3>
                 <p><%= midway.venue.address%></p>
                 <p> <%= (midway.future_datetime).strftime("%A %d %b, %Y") %> </p>
-                <% midway.midway_participants.each do |participants| %>
-                <%= image_tag User.find(participants.user_id).photo, class: "avatar", style: "height: 40px; width: 40px;"%>
-                <%= User.find(participants.user_id).first_name %>
+                <% midway.midway_participants.each do |participant| %>
+                  <% if participant.user %>
+                    <%= image_tag User.find(participant.user_id).photo, class: "avatar", style: "height: 40px; width: 40px;"%>
+                    <%= User.find(participant.user_id).first_name %>
+                  <% else %>
+                    <%= image_tag "user.png", class: "avatar", style: "height: 40px; width: 40px;"%>
+                    <%= Guest.find(participant.guest_id).name %>
+                  <% end %>
                 <% end %>
-
               </div>
 
             </div>
@@ -59,9 +63,14 @@
                 <h3><%= midway.venue.name%></h3>
                 <p><%= midway.venue.address%></p>
                 <p> <%= (midway.future_datetime).strftime("%A %d %b, %Y") %> </p>
-                <% midway.midway_participants.each do |participants| %>
-                <%= image_tag User.find(participants.user_id).photo, class: "avatar", style: "height: 40px; width: 40px;"%>
-                <%= User.find(participants.user_id).first_name %>
+                <% midway.midway_participants.each do |participant| %>
+                  <% if participant.user %>
+                    <%= image_tag User.find(participant.user_id).photo, class: "avatar", style: "height: 40px; width: 40px;"%>
+                    <%= User.find(participant.user_id).first_name %>
+                  <% else %>
+                    <%= image_tag "user.png", class: "avatar", style: "height: 40px; width: 40px;"%>
+                    <%= Guest.find(participant.guest_id).name %>
+                  <% end %>
                 <% end %>
 
               </div>
