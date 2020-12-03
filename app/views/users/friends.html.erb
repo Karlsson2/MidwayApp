@@ -1,9 +1,14 @@
 <% @title="My Friends" %>
-<div class="main-container pb-4">
+<div class="main-container-friends pb-4">
   <div class="grid-friends">
     <div class="current-friends">
       <h2 class="border-bottom"><%= current_user.first_name %>'s friends </h2>
 
+      <% if @friends.count < 1 %>
+        <div class="friend border-bottom">
+          <p>You haven't got any accepted friend requests yet, check out our search function to find more!</p>
+          <div>
+      <% else %>
       <% @friends.each do |friend| %>
 
           <div class="friend border-bottom">
@@ -16,13 +21,14 @@
           </div>
       <% end %>
       </div>
+      <% end %>
 
     <div class="not-friends">
       <h2 class="border-bottom">Add a friend</h2>
 
       <div class="search-friend">
         <%= simple_form_for :search, url: friends_path, method: "GET", html: { class: 'search-form-control form-inline' } do |f| %>
-          <%= f.input :name, label: false, required: false, input_html: {value: "", class: 'input mr-2', placeholder: "Look for username / name" }  %>
+          <%= f.input :name, label: false, required: false, input_html: {value: "", class: 'input', placeholder: "Look for username / name" }  %>
           <%= f.submit "Search", class: "btn btn-sm my-2 my-sm-0" %>
         <% end %>
       </div>
@@ -45,10 +51,14 @@
           </div>
       <% end %>
     </div>
-
+    <div class="requests" style="display: flex; flex-direction:column;">
         <div class="pending-friend-requests">
       <h2 class="border-bottom">Pending requests </h2>
-
+      <% if @sent_requests.count < 1 %>
+        <div class="friend border-bottom">
+          <p>You haven't sent any requests!</p>
+        </div>
+      <% else %>
       <% @sent_requests.each do |friend| %>
 
           <div class="friend border-bottom">
@@ -65,10 +75,16 @@
           </div>
       <% end %>
       </div>
+      <% end %>
     <!-- Incoming friend request div  -->
       <div class="recieved-friend-requests">
       <h2 class="border-bottom">Recieved requests </h2>
 
+      <% if @recieved_requests.count < 1 %>
+      <div class="friend border-bottom">
+       <p> No requests yet!</p>
+      </div>
+      <% else %>
       <% @recieved_requests.each do |friend| %>
 
           <div class="friend border-bottom">
@@ -89,6 +105,8 @@
             </div>
           </div>
       <% end %>
+      <% end %>
+      </div>
       </div>
 
   </div>
