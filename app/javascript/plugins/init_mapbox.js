@@ -121,8 +121,29 @@ const initMapbox = () => {
 
     const venue_marker = document.createElement('div');
     // if statement to determine class
-      venue_marker.className = 'venue_marker';
-      venue_marker.style.backgroundImage = `url(${venue.pin})`;
+    if (venue.venue_type == 'bar'){
+      venue_marker.className = 'venue_marker_pub';
+    } else if (venue.venue_type == 'restaurant'){
+      venue_marker.className = 'venue_marker_restaurant'
+    }else if (venue.venue_type == 'movie_theater'){
+      venue_marker.className = 'venue_marker_movie_theater'
+    }else if (venue.venue_type == 'park'){
+      venue_marker.className = 'venue_marker_park'
+    }else if (venue.venue_type == 'art_gallery'){
+      venue_marker.className = 'venue_marker_art_gallery'
+    }else if (venue.venue_type == 'museum'){
+      venue_marker.className = 'venue_marker_museum'
+    }else if (venue.venue_type == 'night_club'){
+      venue_marker.className = 'venue_marker_night_club'
+    }else if (venue.venue_type == 'cafe'){
+      venue_marker.className = 'venue_marker_cafe'
+    }else if (venue.venue_type == 'bowling_alley'){
+      venue_marker.className = 'venue_marker_bowling_alley'
+    }else if (venue.venue_type == 'shopping_mall'){
+      venue_marker.className = 'venue_marker_shopping_mall'
+    }
+      // old pin
+      // venue_marker.style.backgroundImage = `url(${venue.pin})`;
       venue_marker.style.backgroundSize = 'contain';
       venue_marker.style.width = '25px';
       venue_marker.style.height = '25px';
