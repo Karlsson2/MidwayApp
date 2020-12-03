@@ -12,6 +12,7 @@
           <p>You haven't got any accepted friend requests yet, check out our search function to find more!</p>
         </div>
       <% else %>
+
         <div class="friends_scroll">
           <% @friends.each do |friend| %>
 
@@ -30,6 +31,7 @@
 
           <% end %>
         </div>
+    
       <% end %>
     </div>
 
@@ -46,13 +48,15 @@
       <div class="friends_scroll">
         <% @not_friends.each do |stranger| %>
 
-            <div class="friend border-bottom">
+          <div class="friend border-bottom">
+            <div>
+              <%= image_tag stranger.photo, gravity: :face, class: "avatar mr-3" %>
+            </div>
+            <div>
+              <p> <strong><%= stranger.username %></strong> </p>
+              <p> <em><%= stranger.first_name %> <%= stranger.last_name %></em> </p>
+            </div>
 
-              <div><%= image_tag stranger.photo, gravity: :face, class: "avatar mr-3" %></div>
-              <div>
-                <p> <strong><%= stranger.username %></strong> </p>
-                <p> <em><%= stranger.first_name %> <%= stranger.last_name %></em> </p>
-              </div>
 
               <div class="add">
                 <%= link_to user_friendships_path(stranger.id), method: :post  do%>
@@ -76,9 +80,7 @@
             </div>
           <% else %>
 
-            <div class="friends_scroll" style="height: 185px;">
-              <% @sent_requests.each do |friend| %>
-
+            <div class="friends_scroll" style="height: 185px;
                 <div class="friend border-bottom">
                   <div>
                     <%= image_tag friend.photo, gravity: :face, class: "avatar mr-3" %>
