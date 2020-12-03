@@ -4,18 +4,20 @@
     <div class="current-friends">
       <h2 class="border-bottom"><%= current_user.first_name %>'s friends </h2>
 
-      <% @friends.each do |friend| %>
+      <div class="friends_scroll">
+        <% @friends.each do |friend| %>
 
-          <div class="friend border-bottom">
-            <div><%= image_tag friend.photo, gravity: :face, class: "avatar mr-3" %></div>
-            <div>
-              <p> <strong><%= friend.username %></strong> </p>
-              <p> <em><%= friend.first_name %> <%= friend.last_name %></em> </p>
+            <div class="friend border-bottom">
+              <div><%= image_tag friend.photo, gravity: :face, class: "avatar mr-3" %></div>
+              <div>
+                <p> <strong><%= friend.username %></strong> </p>
+                <p> <em><%= friend.first_name %> <%= friend.last_name %></em> </p>
 
+              </div>
             </div>
-          </div>
-      <% end %>
+        <% end %>
       </div>
+    </div>
 
     <div class="not-friends">
       <h2 class="border-bottom">Add a friend</h2>
@@ -27,68 +29,75 @@
         <% end %>
       </div>
 
-      <% @not_friends.each do |stranger| %>
+      <div class="friends_scroll">
+        <% @not_friends.each do |stranger| %>
 
-          <div class="friend border-bottom">
+            <div class="friend border-bottom">
 
-            <div><%= image_tag stranger.photo, gravity: :face, class: "avatar mr-3" %></div>
-            <div>
-              <p> <strong><%= stranger.username %></strong> </p>
-              <p> <em><%= stranger.first_name %> <%= stranger.last_name %></em> </p>
+              <div><%= image_tag stranger.photo, gravity: :face, class: "avatar mr-3" %></div>
+              <div>
+                <p> <strong><%= stranger.username %></strong> </p>
+                <p> <em><%= stranger.first_name %> <%= stranger.last_name %></em> </p>
+              </div>
+
+              <div class="add">
+                <%= link_to user_friendships_path(stranger.id), method: :post  do%>
+                  <i class="fas fa-user-plus"></i>
+                <% end %>
+              </div>
             </div>
+        <% end %>
+      </div>
 
-            <div class="add">
-              <%= link_to user_friendships_path(stranger.id), method: :post  do%>
-                <i class="fas fa-user-plus"></i>
-              <% end %>
-            </div>
-          </div>
-      <% end %>
     </div>
 
         <div class="pending-friend-requests">
       <h2 class="border-bottom">Pending requests </h2>
 
-      <% @sent_requests.each do |friend| %>
+      <div class="friends_scroll">
+        <% @sent_requests.each do |friend| %>
 
-          <div class="friend border-bottom">
-            <div><%= image_tag friend.photo, gravity: :face, class: "avatar mr-3" %></div>
-            <div>
-              <p> <strong><%= friend.username %></strong> </p>
-              <p> <em><%= friend.first_name %> <%= friend.last_name %></em> </p>
+            <div class="friend border-bottom">
+              <div><%= image_tag friend.photo, gravity: :face, class: "avatar mr-3" %></div>
+              <div>
+                <p> <strong><%= friend.username %></strong> </p>
+                <p> <em><%= friend.first_name %> <%= friend.last_name %></em> </p>
 
-              <div class="pending">
-                <i class="fas fa-user-clock"></i>
+                <div class="pending">
+                  <i class="fas fa-user-clock"></i>
+              </div>
+
+              </div>
             </div>
-
-            </div>
-          </div>
-      <% end %>
+        <% end %>
+      </div>
       </div>
     <!-- Incoming friend request div  -->
       <div class="recieved-friend-requests">
-      <h2 class="border-bottom">Recieved requests </h2>
+        <h2 class="border-bottom">Recieved requests </h2>
 
-      <% @recieved_requests.each do |friend| %>
+        <div class="friends_scroll">
+          <% @recieved_requests.each do |friend| %>
 
-          <div class="friend border-bottom">
-            <div><%= image_tag friend.photo, gravity: :face, class: "avatar mr-3" %></div>
-            <div>
-              <p> <strong><%= friend.username %></strong> </p>
-              <p> <em><%= friend.first_name %> <%= friend.last_name %></em> </p>
+            <div class="friend border-bottom">
+              <div><%= image_tag friend.photo, gravity: :face, class: "avatar mr-3" %></div>
+              <div>
+                <p> <strong><%= friend.username %></strong> </p>
+                <p> <em><%= friend.first_name %> <%= friend.last_name %></em> </p>
 
-              <div class="accept-decline">
-              <%= link_to accept_path(friend.id), method: :patch  do%>
-                <i class="fas fa-check-circle"></i>
-              <% end %>
-              <%= link_to decline_path(friend.id), method: :patch  do%>
-                <i class="fas fa-times-circle"></i>
-              <% end %>
+                <div class="accept-decline">
+                <%= link_to accept_path(friend.id), method: :patch  do%>
+                  <i class="fas fa-check-circle"></i>
+                <% end %>
+                <%= link_to decline_path(friend.id), method: :patch  do%>
+                  <i class="fas fa-times-circle"></i>
+                <% end %>
+              </div>
+
+              </div>
             </div>
-
-            </div>
-          </div>
-      <% end %>
+          <% end %>
+        </div>
       </div>
 
   </div>
