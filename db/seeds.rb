@@ -24,7 +24,7 @@ user2 = User.create!(first_name: 'Jane', last_name: 'Smith', email: 'jane@gmail.
 user2.photo.attach(io: userphoto2, filename: 'user2.png',content_type: 'image/png')
 
 userphoto3 = URI.open('https://images.pexels.com/photos/2078265/pexels-photo-2078265.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
-user3 = User.create!(first_name: 'Nicolas', last_name: 'Schmitt', email: 'nicolas@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '66 Pembroke Road, London UK', username: 'nschmitt')
+user3 = User.create!(first_name: 'Nick', last_name: 'Schmitt', email: 'nicolas@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '66 Pembroke Road, London UK', username: 'nschmitt')
 user3.photo.attach(io: userphoto3, filename: 'user3.png',content_type: 'image/png')
 
 userphoto4 = URI.open('https://images.pexels.com/photos/1071812/pexels-photo-1071812.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
@@ -32,11 +32,11 @@ user4 = User.create!(first_name: 'Will', last_name: 'Handling', email: 'will@gma
 user4.photo.attach(io: userphoto4, filename: 'user4.png',content_type: 'image/png')
 
 userphoto5 = URI.open('https://images.pexels.com/photos/937453/pexels-photo-937453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
-user5 = User.create!(first_name: 'Ines', last_name: 'Rivera', email: 'ines@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '4 Laurel Rd, SW13 0EE, London UK', username: 'irivera')
+user5 = User.create!(first_name: 'Alice', last_name: 'Rivera', email: 'alice@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '4 Laurel Rd, SW13 0EE, London UK', username: 'arivera')
 user5.photo.attach(io: userphoto5, filename: 'user5.png',content_type: 'image/png')
 
 userphoto6 = URI.open('https://images.pexels.com/photos/1771383/pexels-photo-1771383.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
-user6 = User.create!(first_name: 'Lesley', last_name: 'Lopez', email: 'lesley@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '171 Queen Street, London UK', username: 'llopez')
+user6 = User.create!(first_name: 'Juan', last_name: 'Lopez', email: 'juan@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '171 Queen Street, London UK', username: 'jlopez')
 user6.photo.attach(io: userphoto6, filename: 'user6.png',content_type: 'image/png')
 
 userphoto7 = URI.open('https://images.pexels.com/photos/3970083/pexels-photo-3970083.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
@@ -48,11 +48,11 @@ user8 = User.create!(first_name: 'Mitch', last_name: 'Jones', email: 'mitch@gmai
 user8.photo.attach(io: userphoto8, filename: 'user8.png',content_type: 'image/png')
 
 userphoto9 = URI.open('https://images.pexels.com/photos/2709388/pexels-photo-2709388.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
-user9 = User.create!(first_name: 'Savannah', last_name: 'Walters', email: 'savannah@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '69 Grange Road, London UK', username: 'swalters')
+user9 = User.create!(first_name: 'Sara', last_name: 'Walters', email: 'sara@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '69 Grange Road, London UK', username: 'swalters')
 user9.photo.attach(io: userphoto9, filename: 'user9.png',content_type: 'image/png')
 
-userphoto10 = URI.open('https://images.pexels.com/photos/1133742/pexels-photo-1133742.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500')
-user10 = User.create!(first_name: 'Chloe', last_name: 'Thornton', email: 'chloe@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '73 Greatdown Rd, W7 1JR, London UK', username: 'cthornton')
+userphoto10 = URI.open('https://images.pexels.com/photos/1212984/pexels-photo-1212984.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260')
+user10 = User.create!(first_name: 'Harry', last_name: 'Williams', email: 'harry@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '73 Greatdown Rd, W7 1JR, London UK', username: 'hwilliams')
 user10.photo.attach(io: userphoto10, filename: 'user10.png',content_type: 'image/png')
 
 friendship1 = Friendship.create!(user: user1, friend: user2)
@@ -61,10 +61,14 @@ friendship3 = Friendship.create!(user: user3, friend: user6)
 friendship4 = Friendship.create!(user: user5, friend: user10)
 friendship5 = Friendship.create!(user: user9, friend: user8)
 friendship6 = Friendship.create!(user: user6, friend: user2)
-friendship7 = Friendship.create!(user: user10, friend: user7)
+friendship7 = Friendship.create!(user: user10, friend: user7, confirmed: true)
 friendship8 = Friendship.create!(user: user5, friend: user4)
 friendship9 = Friendship.create!(user: user4, friend: user9)
 friendship10 = Friendship.create!(user: user8, friend: user7)
+friendship11 = Friendship.create!(user: user10, friend: user9, confirmed: true)
+friendship12 = Friendship.create!(user: user10, friend: user3, confirmed: true)
+friendship12 = Friendship.create!(user: user10, friend: user1, confirmed: true)
+friendship12 = Friendship.create!(user: user10, friend: user2, confirmed: true)
 
 venue1 = Venue.create!(name: "Spring", address: "Lancaster Pl, London WC2R 1LA", photo_url: "https://lh5.googleusercontent.com/p/AF1QipPHXnPGDClY5RY8PXXq4xpOSN6hBPqPo6jR97wB=w203-h152-k-no", lat:"51.509865",lng:"-0.118092")
 

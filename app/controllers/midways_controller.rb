@@ -265,13 +265,13 @@ class MidwaysController < ApplicationController
                 "Not available"
               else
                 if venue["price_level"] == 1
-                  "$"
+                  "£"
                 elsif venue["price_level"] == 2
-                  "$$"
+                  "££"
                 elsif venue["price_level"] == 3
-                  "$$$"
+                  "£££"
                 else venue["price_level"] == 4
-                  "$$$$"
+                  "££££"
                 end
               end
 
