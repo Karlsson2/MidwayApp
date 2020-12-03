@@ -75,7 +75,6 @@ venue1 = Venue.create!(name: "Spring", address: "Lancaster Pl, London WC2R 1LA",
 
 dates = ["Thu, 01 Dec 2020 12:44:00 UTC +00:00", "Wed, 25 Nov 2020 09:35:00 UTC +00:00", "Mon 23 Nov 2020 15:45:00 UTC +00:00", "Thu, 15 Oct 2020 18:10:00 UTC +00:00"]
 
-
 30.times do
   creators = [user1, user2, user3, user4, user5, user6, user7, user8, user9, user10]
   mcreator = creators.sample
@@ -98,7 +97,9 @@ dates = ["Thu, 01 Dec 2020 12:44:00 UTC +00:00", "Wed, 25 Nov 2020 09:35:00 UTC 
   m.save!
   MidwayParticipant.create!( midway:m ,user:mcreator )
 
-  users.each do |user|
+  selected_users = users.sample(rand(1..4))
+
+  selected_users.each do |user|
     MidwayParticipant.create!( midway: m, user: user )
   end
 end
