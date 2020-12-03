@@ -10,6 +10,13 @@
   position: relative;
 }
 
+.banner p {
+  font-size: 30px;
+  // font-weight: bold;
+  letter-spacing: 4px;
+  color: #F2F2F2;
+}
+
 // Video styling
 
 .home_video {
@@ -38,7 +45,7 @@
   top: 0; right: 0; left: 0; bottom: 0;
   justify-content: center;
   text-align: center;
-  top: 40%;
+  top: 37%;
 }
 
 .content > h1 {

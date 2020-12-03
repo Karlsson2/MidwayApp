@@ -1,9 +1,10 @@
 <% @title="Midway" %>
 <div class="banner">
   <%= video_tag 'intersection_video_cut3.mp4', autoplay: :autoplay, loop: :loop, muted: :muted, class: "home_video" %>
-  <div id="overlay" style="background: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3))"></div>
+  <div id="overlay" style="background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5))"></div>
   <div class="content justify-content-center align-items-center">
-    <h1>MIDWAY</h1>
+    <%= image_tag "logo_teal.png", style: "height: 120px; margin-bottom: 10px;"%> <br>
+    <p> <em>Meet in the middle</em></p> <br>
     <%= link_to "Start here", new_user_session_path, class: "btn-home btn-lg" %>
   </div>
 

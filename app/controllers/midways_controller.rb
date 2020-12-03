@@ -120,6 +120,7 @@ class MidwaysController < ApplicationController
     @midpoint_hash = Hash.new
     @midpoint_hash[:lat] = midpoint.split(",")[0]
     @midpoint_hash[:lng] = midpoint.split(",")[1]
+    @midpoint_hash[:image] = helpers.asset_url('pin1.png')
 
     # this queries the foursquare api and saves an ARRAY of venues in @venues
     foursquare_service = FoursquareService.new(location: midpoint, radius: 1000, venue_type: venue_type, keyword: keyword)
@@ -206,6 +207,7 @@ class MidwaysController < ApplicationController
     @midpoint_hash = Hash.new
     @midpoint_hash[:lat] = midpoint.split(",")[0]
     @midpoint_hash[:lng] = midpoint.split(",")[1]
+    @midpoint_hash[:image] = helpers.asset_url('pin1.png')
 
     @markers = @participants.map do |participant|
       if participant.user
