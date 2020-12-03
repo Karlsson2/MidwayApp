@@ -8,6 +8,42 @@
   cursor: pointer;
 }
 
-// .venue_marker{
-//   background-image: url("https://static.thenounproject.com/png/10962-200.png") !important;
-// }
+.venue_marker_pub{
+  background-image: image-url("black-beer.png")
+}
+
+.venue_marker_restaurant{
+  background-image: image-url("black-restaurant.png")
+}
+
+.venue_marker_movie_theater{
+  background-image: image-url("black-cinema.png")
+}
+
+.venue_marker_park{
+  background-image: image-url("black-park.png")
+}
+
+.venue_marker_art_gallery{
+  background-image: image-url("black-artgallery.png")
+}
+
+.venue_marker_museum{
+  background-image: image-url("black-museum.png")
+}
+
+.venue_marker_night_club{
+  background-image: image-url("black-nightclub.png")
+}
+
+.venue_marker_cafe{
+  background-image: image-url("black-cafe.png")
+}
+
+.venue_marker_bowling_alley{
+  background-image: image-url("black-bowling.png")
+}
+
+.venue_marker_shopping_mall{
+  background-image: image-url("black-shopping.png")
+}

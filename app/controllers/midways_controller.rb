@@ -133,7 +133,8 @@ class MidwaysController < ApplicationController
     @venue_hash[:photo] = @venue.photo_url
     @venue_hash[:lat] = @venue.lat
     @venue_hash[:lng] = @venue.lng
-    @venue_hash[:pin] = helpers.asset_url("normal_pin.png")
+    # @venue_hash[:pin] = helpers.asset_url("normal_pin.png")
+    @venue_hash[:venue_type] = @midway.venue_type
 
     addresses_coordinates = []
 
