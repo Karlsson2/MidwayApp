@@ -36,7 +36,7 @@ user5 = User.create!(first_name: 'Alice', last_name: 'Rivera', email: 'alice@gma
 user5.photo.attach(io: userphoto5, filename: 'user5.png',content_type: 'image/png')
 
 userphoto6 = URI.open('https://images.pexels.com/photos/1771383/pexels-photo-1771383.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
-user6 = User.create!(first_name: 'Juan', last_name: 'Lopez', email: 'juan@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '171 Queen Street, London UK', username: 'jlopez')
+user6 = User.create!(first_name: 'Jana', last_name: 'Lopez', email: 'juan@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '171 Queen Street, London UK', username: 'jlopez')
 user6.photo.attach(io: userphoto6, filename: 'user6.png',content_type: 'image/png')
 
 userphoto7 = URI.open('https://images.pexels.com/photos/3970083/pexels-photo-3970083.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
@@ -55,6 +55,34 @@ userphoto10 = URI.open('https://images.pexels.com/photos/1212984/pexels-photo-12
 user10 = User.create!(first_name: 'Harry', last_name: 'Williams', email: 'harry@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '73 Greatdown Rd, W7 1JR, London UK', username: 'hwilliams')
 user10.photo.attach(io: userphoto10, filename: 'user10.png',content_type: 'image/png')
 
+userphoto11 = URI.open('https://images.pexels.com/photos/936119/pexels-photo-936119.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500')
+user11 = User.create!(first_name: 'Jean', last_name: 'Blanc', email: 'jean@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '34 Litchfield Avenue, SM4 5QS London UK', username: 'jblanc')
+user11.photo.attach(io: userphoto11, filename: 'user11.png',content_type: 'image/png')
+
+userphoto12 = URI.open('https://images.pexels.com/photos/1042140/pexels-photo-1042140.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500')
+user12 = User.create!(first_name: 'Rahul', last_name: 'Shah', email: 'rahul@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '84 Ockendon Road, N1 3NW, London UK', username: 'dpatel')
+user12.photo.attach(io: userphoto12, filename: 'user12.png',content_type: 'image/png')
+
+userphoto13 = URI.open('https://images.pexels.com/photos/2701660/pexels-photo-2701660.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500')
+user13 = User.create!(first_name: 'Kat', last_name: 'Randall', email: 'kat@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '34 Finsen Rd, SE5 9AX, London UK', username: 'krandall')
+user13.photo.attach(io: userphoto13, filename: 'user13.png',content_type: 'image/png')
+
+userphoto14 = URI.open('https://images.pexels.com/photos/3680316/pexels-photo-3680316.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500')
+user14 = User.create!(first_name: 'Joy', last_name: 'Brown', email: 'joy@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '30 Barrington Rd, SW9 7JE, London UK', username: 'jbrown')
+user14.photo.attach(io: userphoto14, filename: 'user14.png',content_type: 'image/png')
+
+userphoto15 = URI.open('https://images.pexels.com/photos/5225308/pexels-photo-5225308.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500')
+user15 = User.create!(first_name: 'Sam', last_name: 'Park', email: 'sam@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '6 Hayles St, SE11 4SS, London UK', username: 'spark')
+user15.photo.attach(io: userphoto15, filename: 'user15.png',content_type: 'image/png')
+
+userphoto16 = URI.open('https://images.pexels.com/photos/3747147/pexels-photo-3747147.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500')
+user16 = User.create!(first_name: 'Will', last_name: 'Peters', email: 'willp@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '106 Cloudesley Rd, N1 0EB, London UK', username: 'wpeters')
+user16.photo.attach(io: userphoto16, filename: 'user16.png',content_type: 'image/png')
+
+userphoto17 = URI.open('https://images.pexels.com/photos/1462630/pexels-photo-1462630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500')
+user17 = User.create!(first_name: 'Niamh', last_name: 'Cox', email: 'niamh@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '27 Niton St, SW6 6NH, London UK', username: 'ncox')
+user17.photo.attach(io: userphoto17, filename: 'user17.png',content_type: 'image/png')
+
 friendship1 = Friendship.create!(user: user1, friend: user2)
 friendship2 = Friendship.create!(user: user3, friend: user1)
 friendship3 = Friendship.create!(user: user3, friend: user6)
@@ -69,16 +97,23 @@ friendship11 = Friendship.create!(user: user10, friend: user9, confirmed: true)
 friendship12 = Friendship.create!(user: user10, friend: user3, confirmed: true)
 friendship12 = Friendship.create!(user: user10, friend: user1, confirmed: true)
 friendship12 = Friendship.create!(user: user10, friend: user2, confirmed: true)
+friendship13 = Friendship.create!(user: user10, friend: user6, confirmed: true)
 
 venue1 = Venue.create!(name: "Spring", address: "Lancaster Pl, London WC2R 1LA", photo_url: "https://lh5.googleusercontent.com/p/AF1QipPHXnPGDClY5RY8PXXq4xpOSN6hBPqPo6jR97wB=w203-h152-k-no", lat:"51.509865",lng:"-0.118092")
-
+venue2 = Venue.create!(name: "The Golden Chippy", address: "62 Greenwich High Rd, Greenwich, London SE10 8LF", photo_url: "https://static.standard.co.uk/s3fs-public/thumbnails/image/2016/11/21/14/thegoldenchippy.jpg?w968")
+venue3 = Venue.create!(name: "The Dog and Fox", address: "24 High Street Wimbledon", photo_url: "https://static.designmynight.com/uploads/2016/04/Dog-Fox-5-optimised.jpg")
+venue4 = Venue.create!(name: "Nandos", address: "1-5 Bond St, Ealing, London W5 5AP", photo_url: "https://media-cdn.tripadvisor.com/media/photo-s/0f/ff/4e/c0/nando-s-ealing-chicken.jpg")
+venues = []
+venues.push(venue1)
+venues.push(venue2)
+venues.push(venue3)
+venues.push(venue4)
 
 dates = ["Thu, 01 Dec 2020 12:44:00 UTC +00:00", "Wed, 25 Nov 2020 09:35:00 UTC +00:00", "Mon 23 Nov 2020 15:45:00 UTC +00:00", "Thu, 15 Oct 2020 18:10:00 UTC +00:00"]
 
-
-30.times do
+4.times do
   creators = [user1, user2, user3, user4, user5, user6, user7, user8, user9, user10]
-  mcreator = creators.sample
+  mcreator = user10
   # users wil be an array of the users friends
   users = []
 
@@ -91,14 +126,21 @@ dates = ["Thu, 01 Dec 2020 12:44:00 UTC +00:00", "Wed, 25 Nov 2020 09:35:00 UTC 
       users << User.find(friend.user_id)
     end
   end
-
+  i = 0
   m = Midway.new( midpoint: "51.509865,-0.118092", user: mcreator)
-  m.venue = venue1
+  m.venue = venues[i]
   m.future_datetime = dates.sample
   m.save!
   MidwayParticipant.create!( midway:m ,user:mcreator )
+  i = i + 1
 
+  candidate_users = []
   users.each do |user|
+    candidate_users.push(user) unless user.id == 7 || user.id == 5
+  end
+  selected_users = candidate_users.sample(rand(1..4))
+
+  selected_users.each do |user|
     MidwayParticipant.create!( midway: m, user: user )
   end
 end
