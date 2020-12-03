@@ -66,30 +66,30 @@
           <% @sent_requests.each do |friend| %>
 
             <div class="friend border-bottom">
-             <div>
-              <%= image_tag friend.photo, gravity: :face, class: "avatar mr-3" %>
-             </div>
+              <div>
+                <%= image_tag friend.photo, gravity: :face, class: "avatar mr-3" %>
+              </div>
               <div>
                 <p> <strong><%= friend.username %></strong> </p>
                 <p> <em><%= friend.first_name %> <%= friend.last_name %></em> </p>
 
-              <div class="pending">
-                <i class="fas fa-user-clock"></i>
-            </div>
+                <div class="pending">
+                  <i class="fas fa-user-clock"></i>
+                </div>
 
+              </div>
             </div>
-          </div>
-      <% end %>
-      </div>
-      <% end %>
+          <% end %>
+        <% end %>
+    </div>
     <!-- Incoming friend request div  -->
       <div class="recieved-friend-requests">
         <h2 class="border-bottom">Recieved requests </h2>
 
         <% if @recieved_requests.count < 1 %>
-        <div class="friend border-bottom">
-         <p> No requests yet!</p>
-        </div>
+          <div class="friend border-bottom">
+          <p> No requests yet!</p>
+          </div>
         <% else %>
           <% @recieved_requests.each do |friend| %>
 
