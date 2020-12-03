@@ -1,42 +1,87 @@
 .show-container {
   display: grid;
-  grid-template-columns: 2fr 2fr 1fr;
+  grid-template-columns: 2fr 2fr;
   column-gap: 10px;
+  margin: 0 auto;
 
+}
+
+.title {
+  padding: 30px 20px 20px 20px;
+  text-align:center;
+}
+
+.card-title {
+  padding: 30px 20px 20px 20px;
 }
 
 #map-show{
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  border: 1px solid rgb(235,235,235);
+  height: 100%
+}
+.right-container {
+  display: flex;
+  flex-direction: column;
 }
 
+.travelvenue {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 15px;
+  padding: 15px;
+}
 
 .confirmed-midway {
 }
 
 .directions-container {
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .share-container {
+  padding: 20px;
 }
 
 .venue_photo {
-  width: 100%;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
-  border-radius: 10px 10px 0px 0px;
 }
 
-.venue_info {
-  background:white;
-  border-radius: 0 0 10px 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  border: 1px solid rgb(235,235,235);
-  border-top: 0;
-  padding: 10px;
+.venue-card {
+  display:grid;
+  grid-template-columns: 1fr 2fr;
+  background: #F2F2F2;
+  cursor: pointer;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 2px;
+}
+
+.venue-card:hover {
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  transition: 0.3s;
+}
+.venue-card-body {
+  padding:20px;
 
 }
+
+.venue-card-info {
+
+}
+
+
+#share-button{
+  background: none;
+  border: none;
+}
+.fa-copy {
+     color: #03C5B8;
+    text-decoration: none;
+    border: none;
+}
+
 .card-title {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -44,17 +89,28 @@
   margin-bottom: 0px !important;
 }
 .card-content {
-  background:white;
-  border-radius: 10px;
+  background:#F2F2F2;
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
   border: 1px solid rgb(235,235,235);
+  border-radius: 2px;
 
 }
 
 .social-container {
   display:grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  text-decoration: none;
+  background:#F2F2F2;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border: 1px solid rgb(235,235,235);
+  border-radius: 2px;
 
+}
+.social-container {
+  a {
+    color: #03C5B8;
+    text-decoration: none;
+  }
 }
 
 .social-element{
@@ -62,10 +118,10 @@
   text-align: center;
   font-size: 40px;
   color: #03C5B8;
-  opacity: 0.8;
+  text-decoration: none;
 }
 .social-element:hover {
-  opacity: 1;
+  opacity: 0.8;
 }
 
 .back-button-div {
@@ -86,8 +142,9 @@
   justify-content: space-between;
   align-items: center;
   background: #03C5B8;
-  border-radius: 10px;
+  border-radius: 2px;
   color: white;
+  cursor: pointer;
   padding: 5px;
 }
 
@@ -110,31 +167,38 @@
   a:hover{
   text-decoration: none;
   opacity: 0.8;
+  cursor: pointer;
 }
 }
 
 .users-grid {
   display:grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr ;
   column-gap: 10px;
   row-gap: 10px;
-  padding: 15px 10px;
+  padding: 5px 5px;
 
 }
 .users-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #03C5B8;
-  border-radius: 10px;
-  color: white;
+  border-right: 5px solid #03C5B8;
+  color: #646561;
   padding: 5px;
+  cursor: pointer;
+}
+
+.users-item:hover{
+  opacity: 0.8;
 }
 
 .users-item{
   p{
-    padding-right: 10px;
-    color: white;
+    padding-right: 30px;
+    color: #646561;
+    font-size: 25px;
+    font-weight: bold;
   }
 }
 .users-item{

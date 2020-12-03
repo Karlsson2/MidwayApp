@@ -1,54 +1,68 @@
 <% @title="Midway Confirmation" %>
-<div class="main-container mt-3">
-
-  <div class="title">
-    <h2>
-    Midway between
-    <% if @midway.midway_participants.count == 2 %>
-      <%= User.find(@midway.midway_participants.first.user_id).first_name %> &
-      <%= User.find(@midway.midway_participants.last.user_id).first_name %>
-    <% elsif @midway.midway_participants.count > 2 %>
-      <%= User.find(@midway.midway_participants.first.user_id).first_name %>,
-      <% @midway.midway_participants[1..-3].each do |participant| %>
-        <%= User.find(participant.user_id).first_name%>,
-      <% end %>
-      <%= User.find(@midway.midway_participants[-2].user_id).first_name %>
-      & <%= User.find(@midway.midway_participants.last.user_id).first_name %>
-    <% end %>
-      is <%= @midway.venue.name %>
-    </h2>
-  </div>
-
-  <div id="map-show"
-       style="width: 100%; height: 350px;"
-       data-markers="<%= @markers.to_json %>"
-       data-midpoint="<%= @midpoint_hash.to_json %>"
-       data-venue="<%= @venue_hash.to_json %>"
-       data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"></div>
+<div class="main-container" style="width:100% !important;">
 
   <%# show styling in pages/show.css %>
 
   <div class="show-container mb-3">
 
-    <div class="card-container" >
-      <h2 class="card-title">Your midway venue:</h2>
+      <div id="map-show"
+       style="width: 100%; height: 100vh;"
+       data-markers="<%= @markers.to_json %>"
+       data-midpoint="<%= @midpoint_hash.to_json %>"
+       data-venue="<%= @venue_hash.to_json %>"
+       data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"></div>
 
+  <div class="right-container">
+
+    <!-- This is the title div -->
+
+    <div class="title">
+    <h2>
+      Midway <span style="color:white;">between</span>
+      <% if @midway.midway_participants.count == 2 %>
+        <%= User.find(@midway.midway_participants.first.user_id).first_name %> <span style="color:white;">&</span>
+        <%= User.find(@midway.midway_participants.last.user_id).first_name %>
+      <% elsif @midway.midway_participants.count > 2 %>
+        <%= User.find(@midway.midway_participants.first.user_id).first_name %>,
+        <% @midway.midway_participants[1..-3].each do |participant| %>
+          <%= User.find(participant.user_id).first_name%>,
+        <% end %>
+        <%= User.find(@midway.midway_participants[-2].user_id).first_name %>
+        <span style="color:white;">&</span> <%= User.find(@midway.midway_participants.last.user_id).first_name %>
+      <% end %>
+        <span style="color:white;">is</span>
+        </h2>
+        <h1><%= @midway.venue.name %>.</h1>
+  </div>
+
+
+  <!-- This is the card showing the venue -->
+
+    <div class="div" style=" padding-left: 20px; padding-right: 20px;" >
+
+      <div class="venue-card">
+        <div class="venue-image">
         <%= image_tag @midway.venue.photo_url, class: "venue_photo" %>
-      <div class="venue_info">
+        </div>
+      <div class="venue-card-body">
         <%# wait for card styling %>
-
-        <h4><%= @midway.venue.name %></h4>
+        <h5><%= @midway.venue.name %></h5>
+        <div class="venue-card-info">
+        <p><%= @midway.venue.address %></p>
+        <p><%= @midway.venue_type.capitalize %></p>
+        </div>
       </div>
-
+      </div>
     </div>
 
+    <!-- This is the div for the traveltimes for each user -->
     <div class="directions-container">
-      <h2 class="card-title">Travel to midway:</h2>
+      <h2 class="card-title" style=" padding: 30px 20px 20px 20px;">Travel <span style="color:white;">there</span>:</h2>
 
       <div class="card-content">
         <div class="users-grid">
           <% @participants.each do |participant| %>
-            <div class="travel-item user-button" data-duration="<%= participant.duration_to_midpoint %>" data-walk="<%= participant.walk_to_midpoint %>" data-drive="<%= participant.drive_to_midpoint %>" data-lat="<%= participant.user.lat %>" data-lng="<%= participant.user.lng %>" data-venuelat="<%= @midway.venue.lat %>" data-venuelng="<%= @midway.venue.lng %>" data-location="<%= u participant.user.location %>">
+            <div class="users-item user-button" data-duration="<%= participant.duration_to_midpoint %>" data-walk="<%= participant.walk_to_midpoint %>" data-drive="<%= participant.drive_to_midpoint %>" data-lat="<%= participant.user.lat %>" data-lng="<%= participant.user.lng %>" data-venuelat="<%= @midway.venue.lat %>" data-venuelng="<%= @midway.venue.lng %>" data-location="<%= u participant.user.location %>">
               <%= image_tag participant.user.photo, gravity: :face, class: "avatar-navbar" %>
               <p> <%= participant.user.first_name %></p>
             </div>
@@ -59,42 +73,34 @@
           <button type="button" class="btn btn-sm" id="back-button" style="display: none;" >Back</button>
         </div>
       </div>
-
-      <%#= participants.each do |participant| %>
-<!--         <a href="googleURL#{participant.lat/lng}" class="avatar">
-          <img src="participant.photo" alt="">
-        </a> -->
-      <%# end %>
-
     </div>
 
-    <div class="share-container">
-      <h2 class="card-title">Share:</h2>
-        <div class="card-content">
+    <!-- share container -->
+
+    <div class="share-container ">
+       <h2 class="card-title" style=" padding: 30px 20px 20px 20px;">Share <span style="color:white;">your</span> Midway:</h2>
           <div class="social-container">
-            <div class="social-element">
+            <div class="social-element border-right">
               <%= link_to "https://wa.me/?text=Join%20our%20midway%20at%20https://www.mid-way.co.uk/midways/#{@midway.id}", target: "_blank", rel: "nofollow" do %>
                 <i class="fab fa-whatsapp"></i>
               <% end %>
             </div>
-            <div class="social-element">
+            <div class="social-element border-right">
               <%= link_to "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.mid-way.co.uk%2Fmidways%2F#{@midway.id}%2F&display=popup&ref=plugin&src=like&kid_directed_site=0&app_id=113869198637480", target: "_blank", rel: "nofollow" do %>
                 <i class="fab fa-facebook-messenger"></i>
               <% end %>
             </div>
-
             <%#= this creates a string of all the emails separated by a comma %>
             <% @emails = "" %>
             <% @participants.each do |participant| %>
               <% @emails = @emails + ", " + participant.user.email %>
             <% end %>
-
             <div class="social-element">
               <%= mail_to @emails, subject: "Join our Midway", body: "Hey it's #{@midway.user.first_name}, join us at https://www.mid-way.co.uk/midways/#{@midway.id}. See you there!" do %>
               <i class="fas fa-envelope" id="mail-icon"></i>
               <% end %>
             </div>
-            <div class="social-element">
+            <div class="social-element border-left">
               <button id="share-button">
                 <i class="fas fa-copy"></i>
               </button>
@@ -102,9 +108,7 @@
           </div>
       </div>
     </div>
-
   </div>
-
 </div>
 
 <script type="text/javascript">
