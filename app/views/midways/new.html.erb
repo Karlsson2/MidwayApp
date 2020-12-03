@@ -1,11 +1,10 @@
 <% @title="Create a new Midway" %>
 
 <div class="form-container" style="height: 100vh;">
+  <h2>Customize your Midway</h2>
   <div class="midway-container-new">
   <!--   <form id="regForm" action=""> -->
     <form novalidate="novalidate" class="simple_form midway" action="/midways" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="8U4eE4D0UkL8ANHVdRKEVwGKIZi7hToI6cHW+KEH7+67w8AmdHzqM2tSLtwjlpMQUEl7aECtKL6krnfxG2lKfA==">
-
-    <h1>Customize your Midway</h1>
 
     <!-- One "tab" for each step in the form: -->
     <div class="tab" style="display: block;">
@@ -28,7 +27,26 @@
     </div>
 
     <div class="tab">
-      <fieldset class="form-group radio_buttons required midway_time_option"><legend class="col-form-label pt-0">When are you going? <abbr title="required">*</abbr></legend><input type="hidden" name="midway[time_option]" value=""><div class="form-check"><input class="form-check-input radio_buttons required" type="radio" value="0" name="midway[time_option]" id="midway_time_option_0"><label class="form-check-label collection_radio_buttons" for="midway_time_option_0">Departure time</label></div><div class="form-check"><input class="form-check-input radio_buttons required" type="radio" value="1" name="midway[time_option]" id="midway_time_option_1"><label class="form-check-label collection_radio_buttons" for="midway_time_option_1">Arrival time</label></div></fieldset>
+      <fieldset class="form-group radio_buttons required midway_time_option">
+        <legend class="col-form-label pt-0">When are you going? <abbr title="required">*</abbr></legend>
+        <input type="hidden" name="midway[time_option]" value="">
+        <ul>
+          <li>
+            <div class="form-check time-check">
+              <input class="form-check-input radio_buttons required" type="radio" value="0" name="midway[time_option]" id="midway_time_option_0">
+              <label class="form-check-label collection_radio_buttons" for="midway_time_option_0">Departure time</label>
+            </div>
+          </li>
+          <li>
+            <div class="form-check time-check">
+              <input class="form-check-input radio_buttons required" type="radio" value="1" name="midway[time_option]" id="midway_time_option_1">
+              <label class="form-check-label collection_radio_buttons" for="midway_time_option_1">Arrival time</label>
+            </div>
+          </li>
+
+        </ul>
+
+      </fieldset>
 
       <div class="form-group string optional midway_future_date"><label class="string optional" for="midway_future_date">Please select the date:</label><input class="form-control string optional datepicker flatpickr-input" type="text" name="midway[future_date]" id="midway_future_date" readonly="readonly"></div>
 
