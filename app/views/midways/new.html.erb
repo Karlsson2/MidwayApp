@@ -1,11 +1,10 @@
 <% @title="Create a new Midway - Start your journey" %>
 
 <div class="form-container" style="height: 100vh;">
+  <h2>Customize your Midway</h2>
   <div class="midway-container-new">
   <!--   <form id="regForm" action=""> -->
     <form novalidate="novalidate" class="simple_form midway" action="/midways" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-
-    <h1>Customize your Midway</h1>
 
     <!-- One "tab" for each step in the form: -->
     <div class="tab" style="display: block;">
@@ -22,8 +21,11 @@
           </div>
           <% end %>
 
+<!--           <div class="category-item">
+            <a href="#" class="btn" id="guest-button">Add a guest</a>
+          </div> -->
           <div class="category-item">
-            <a href="#" class="btn btn-primary" id="guest-button">Add a guest</a>
+            <a href="#" class="btn" id="guest-button">Add a guest</a>
           </div>
 
         </div>
@@ -74,12 +76,12 @@
 
       <div class="select-time row">
         <div class="form-group string optional midway_future_date">
-          <label class="string optional" for="midway_future_date">Please select the date:</label>
+          <label class="string optional" for="midway_future_date"><i class="fas fa-calendar-alt mr-2"></i> Select a date:</label>
           <input class="form-control string optional datepicker flatpickr-input" type="text" name="midway[future_date]" id="midway_future_date" readonly="readonly">
         </div>
 
         <div class="form-group string optional midway_future_time">
-          <label class="string optional" for="midway_future_time">Please select the time:</label>
+          <label class="string optional" for="midway_future_time"><i class="fas fa-clock mr-2"></i> Select a time:</label>
           <input class="form-control string optional timepicker flatpickr-input" type="text" name="midway[future_time]" id="midway_future_time" readonly="readonly">
         </div>
       </div>
@@ -159,9 +161,10 @@
     </div>
 
     <div style="overflow:auto;">
-      <div style="float:right;">
-        <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn" style="display: none;">Previous</button>
-        <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn">Next</button>
+      <!-- <div style="float:right; margin-top: 5px;"> -->
+      <div style="margin-top: 5px;">
+        <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn" style="display: none; float: left;">Previous</button>
+        <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn" style="float: right;">Next</button>
       </div>
     </div>
 
