@@ -49,14 +49,14 @@ const initMapbox = () => {
         .addTo(map);
     });
     const midpoint = JSON.parse(mapElement.dataset.midpoint);
-
+    console.log(midpoint)
     // Midpoint marker Styling
     const midpoint_marker = document.createElement('div');
       midpoint_marker.className = 'midpoint_marker';
-      midpoint_marker.style.backgroundImage = `url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTTqgTjUQdutxymPxna3podsnrbxBe5HYpNA&usqp=CAU')`;
-      midpoint_marker.style.backgroundSize = 'contain';
-      midpoint_marker.style.width = '25px';
-      midpoint_marker.style.height = '25px';
+      midpoint_marker.style.backgroundImage = `url('${midpoint.image}')`;
+      midpoint_marker.style.backgroundSize = 'cover';
+      midpoint_marker.style.width = '38px';
+      midpoint_marker.style.height = '50px';
 
     new mapboxgl.Marker(midpoint_marker)
         .setLngLat([ midpoint.lng, midpoint.lat ])
@@ -106,10 +106,10 @@ const initMapbox = () => {
     // Midpoint marker styling
     const midpoint_marker = document.createElement('div');
       midpoint_marker.className = 'midpoint_marker';
-      midpoint_marker.style.backgroundImage = `url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTTqgTjUQdutxymPxna3podsnrbxBe5HYpNA&usqp=CAU')`;
+      midpoint_marker.style.backgroundImage = `url('${midpoint.image}')`;
       midpoint_marker.style.backgroundSize = 'contain';
-      midpoint_marker.style.width = '25px';
-      midpoint_marker.style.height = '25px';
+      midpoint_marker.style.width = '38px';
+      midpoint_marker.style.height = '50px';
 
     new mapboxgl.Marker(midpoint_marker)
         .setLngLat([ midpoint.lng, midpoint.lat ])
