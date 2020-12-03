@@ -26,7 +26,6 @@ class MidwaysController < ApplicationController
     total_users.each do |every_user|
       @friends.push every_user if every_user.id != current_user.id
     end
-    @options = ["restaurant", "pub", "bar"]
   end
 
   def create
