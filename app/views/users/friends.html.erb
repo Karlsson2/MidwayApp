@@ -56,20 +56,22 @@
       <% end %>
     </div>
     <div class="requests" style="display: flex; flex-direction:column;">
-        <div class="pending-friend-requests">
-      <h2 class="border-bottom">Pending requests </h2>
-      <% if @sent_requests.count < 1 %>
-        <div class="friend border-bottom">
-          <p>You haven't sent any requests!</p>
-        </div>
-      <% else %>
-      <% @sent_requests.each do |friend| %>
-
+      <div class="pending-friend-requests">
+        <h2 class="border-bottom">Pending requests </h2>
+        <% if @sent_requests.count < 1 %>
           <div class="friend border-bottom">
-            <div><%= image_tag friend.photo, gravity: :face, class: "avatar mr-3" %></div>
-            <div>
-              <p> <strong><%= friend.username %></strong> </p>
-              <p> <em><%= friend.first_name %> <%= friend.last_name %></em> </p>
+            <p>You haven't sent any requests!</p>
+          </div>
+        <% else %>
+          <% @sent_requests.each do |friend| %>
+
+            <div class="friend border-bottom">
+             <div>
+              <%= image_tag friend.photo, gravity: :face, class: "avatar mr-3" %>
+             </div>
+              <div>
+                <p> <strong><%= friend.username %></strong> </p>
+                <p> <em><%= friend.first_name %> <%= friend.last_name %></em> </p>
 
               <div class="pending">
                 <i class="fas fa-user-clock"></i>
