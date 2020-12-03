@@ -36,7 +36,7 @@ user5 = User.create!(first_name: 'Alice', last_name: 'Rivera', email: 'alice@gma
 user5.photo.attach(io: userphoto5, filename: 'user5.png',content_type: 'image/png')
 
 userphoto6 = URI.open('https://images.pexels.com/photos/1771383/pexels-photo-1771383.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
-user6 = User.create!(first_name: 'Juan', last_name: 'Lopez', email: 'juan@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '171 Queen Street, London UK', username: 'jlopez')
+user6 = User.create!(first_name: 'Jana', last_name: 'Lopez', email: 'juan@gmail.com', password: 'topsecret', password_confirmation: 'topsecret', location: '171 Queen Street, London UK', username: 'jlopez')
 user6.photo.attach(io: userphoto6, filename: 'user6.png',content_type: 'image/png')
 
 userphoto7 = URI.open('https://images.pexels.com/photos/3970083/pexels-photo-3970083.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
