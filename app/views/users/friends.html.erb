@@ -63,7 +63,7 @@
                   <i class="fas fa-user-plus"></i>
                 <% end %>
               </div>
-            </div>
+          </div>
         <% end %>
       </div>
     </div>
@@ -79,8 +79,8 @@
               <p>You haven't sent any requests!</p>
             </div>
           <% else %>
-
-            <div class="friends_scroll" style="height: 185px;
+            <div class="friends_scroll" style="height: 185px;">
+              <% @sent_requests.each do |friend| %>
                 <div class="friend border-bottom">
                   <div>
                     <%= image_tag friend.photo, gravity: :face, class: "avatar mr-3" %>
