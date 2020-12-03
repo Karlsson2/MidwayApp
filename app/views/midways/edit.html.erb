@@ -7,7 +7,7 @@
       <% @venue_hash.each do |venue| %>
 
         <% counter += 1 %>
-      
+
         <div class="card" id="card-<%= venue[:place_id] %>" data-toggle="modal" data-target="#exampleModalCenter<%= counter %>" data-div="#exampleTextInfo<%= counter %>" data-button="#exampleVisitButton<%= counter %>" data-id="<%= venue[:place_id] %>" data-day="<%= @midway.future_date.strftime("%A") %>" data-address="<%= venue[:address] %>" data-price="<%= venue[:price] %>" data-time="<%= @midway.future_time.strftime("%H%M") %>" >
 
           <%= image_tag venue[:photo], alt: "Card image cap", class: "card-img-top" %>
@@ -143,7 +143,46 @@
               openBoolean = "Closed"
             }
           } else if(weekdayArrayPeriods.length == 1) {
-            openBoolean = "Open at this time"
+              openBoolean = "Open at this time"
+          } else if(weekdayArrayPeriods.length == 14) {
+              var index = null;
+              if(chosenDay == "Monday") {
+                index = 0;
+              } else if(chosenDay == "Tuesday") {
+                index = 1;
+              } else if(chosenDay == "Wednesday") {
+                index = 2;
+              } else if(chosenDay == "Thursday") {
+                index = 3;
+              } else if(chosenDay == "Friday") {
+                index = 4;
+              } else if(chosenDay == "Saturday") {
+                index = 5;
+              } else if(chosenDay == "Sunday") {
+                index = 6;
+              };
+              var weekdayPeriodHashFirst = weekdayArrayPeriods[index];
+              var weekdayPeriodHashSecond = weekdayArrayPeriods[index + 7];
+              var openingTimeFirst = parseInt(weekdayPeriodHashFirst.open.time);
+              var closingTimeFirst = parseInt(weekdayPeriodHashFirst.close.time);
+              var openingTimeSecond = parseInt(weekdayPeriodHashSecond.open.time);
+
+              if(parseInt(weekdayPeriodHashSecond.close.time) >= 0 ) {
+                var closingTimeSecond = parseInt(weekdayPeriodHashSecond.close.time) + 2400
+              }
+              else {
+                var closingTimeSecond = parseInt(weekdayPeriodHashSecond.close.time)
+              }
+              var openBoolean = null;
+
+              if((chosenTime > openingTimeFirst && chosenTime < closingTimeFirst) && (chosenTime > openingTimeSecond && chosenTime < closingTimeSecond)) {
+                openBoolean = "Open at this time"
+              }
+              else {
+                openBoolean = "Closed"
+              }
+          } else {
+            openBoolean = ""
           };
 
           var color = "";
@@ -165,6 +204,13 @@
           phoneNumber = `Phone Number: ${data.result.formatted_phone_number}`
         } else {
           phoneNumber = "";
+        };
+
+        var websiteCheck = data.result.website;
+        if(websiteCheck != null) {
+          website = websiteCheck
+        } else {
+          website = "";
         };
 
         console.log(chosenDay)
@@ -196,6 +242,13 @@
           priceShow = "block";
         };
 
+        var websiteShow = "";
+        if(website == "") {
+          websiteShow = "none !important";
+        } else {
+          websiteShow = "block";
+        };
+
         textInfoDiv.innerHTML =
         `<div style="display: ${openShow}" class="d-flex justify-content-start">
             <p style="color: ${color} ">${openBoolean}</p>
@@ -206,7 +259,7 @@
         `
 
         buttonDiv.innerHTML =
-        `<a href="${data.result.website}" class="btn btn-primary" target="_blank">Visit the website</a>`
+        `<a style="display: ${websiteShow}" href="${data.result.website}" class="btn btn-primary" target="_blank">Visit the website</a>`
       });
     });
   });
