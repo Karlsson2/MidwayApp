@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 2020_12_03_130053) do
 
   create_table "midway_participants", force: :cascade do |t|
     t.bigint "midway_id", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "duration_to_midpoint"
