@@ -8,6 +8,182 @@
     <%= link_to "Start here", new_user_session_path, class: "btn-home btn-lg" %>
   </div>
 
+  <div class="arrow">
+  <i class="fas fa-angle-down"></i>
+  </div>
 </div>
 
+
 <%# link to user profile for later= link_to "current_user_show", user_profile_path(current_user.id) %>
+  <div class="about-us">
+      <div>
+        <h1 style="text-align: center; background: #F2F2F2; font-size: 62px; padding: 50px;">About us</h1>
+      </div>
+    <div class="margin-container">
+
+        <div>
+        <h2 style="text-align: center; padding-top: 50px;">How does it work?</h2>
+        </div>
+
+        <div class="home-grid-container">
+          <div class="card-1">
+
+              <div class="home-card-title">
+                <h5>Step 1:</h5>
+              </div>
+
+              <div class="card-image-home">
+                <%= image_tag 'neural.png', class: "home-card-img" %>
+              </div>
+              <div class="home-card-title">
+                <h5>Design your Midway...</h5>
+              </div>
+
+              <div class="home-card-description">
+                <p>
+                  Pick your group, activity and when you want to meet. <span style="color: #03C5B8; font-weight:bold;">Midway's unique algorithm </span>will find you a midpoint based on <span style="color: #03C5B8; font-weight: bold;">Common Journey Times</span> so that everyone travels equally!
+                </p>
+               </div>
+
+          </div>
+
+          <div class="card-1">
+              <div class="home-card-title">
+                <h5>Step 2:</h5>
+              </div>
+
+              <div class="card-image-home">
+                <%= image_tag 'city-map.png', class: "home-card-img2" %>
+              </div>
+
+              <div class="home-card-title">
+                <h5>Pick your venue...</h5>
+              </div>
+
+              <div class="home-card-description">
+                <p>
+                  Explore the venues around your <span style="color: #03C5B8; font-weight:bold;">Midpoint</span> - check out their website, ratings and location.
+                </p>
+              </div>
+
+          </div>
+
+          <div class="card-1">
+
+              <div class="home-card-title">
+                <h5>Step 3:</h5>
+              </div>
+
+              <div class="card-image-home">
+                <%= image_tag 'delivery.png', class: "home-card-img2" %>
+              </div>
+
+              <div class="home-card-title">
+                <h5>Travel to your Midway!</h5>
+              </div>
+
+              <div class="home-card-description">
+                <p>
+                 Share your <span style="color: #03C5B8; font-weight:bold;">Midway</span> via whatsApp, Facebook and email! Use our integration with Google Maps and Uber to get to your Midpoint Venue.
+                </p>
+              </div>
+
+          </div>
+
+        </div>
+
+        <div>
+          <h2 style="text-align: center; padding-top: 50px;">Who are we?</h2>
+        </div>
+
+        <div class="developer-grid-container">
+
+
+          <%= link_to "https://github.com/mdm1/", target: "_blank", rel:"nofollow" do %>
+            <div class="developer-card">
+
+              <div class="developer-image ">
+                  <%= image_tag 'matt.png', class: "avatar-developer" %>
+              </div>
+
+              <div class="developer-name">
+                <h5 class="border-top pt-1">Matt D'Aloisio-Montilla</h5>
+              </div>
+
+              <div class="developer-description">
+                  <p>
+                   Fullstack Engineer
+                  </p>
+              </div>
+            </div>
+          <% end %>
+
+
+
+          <%= link_to "https://github.com/Karlsson2/", target: "_blank", rel:"nofollow" do %>
+            <div class="developer-card">
+
+              <div class="developer-image">
+                  <%= image_tag 'fanny.png', class: "avatar-developer" %>
+              </div>
+
+              <div class="developer-name">
+                <h5 class="border-top pt-1">Fanny Karlsson</h5>
+              </div>
+
+                  <div class="developer-description">
+                  <p>
+                   Fullstack Engineer
+                  </p>
+              </div>
+
+            </div>
+          <% end %>
+
+
+            <%= link_to "https://github.com/sasskia/", target: "_blank", rel:"nofollow" do %>
+              <div class="developer-card">
+
+              <div class="developer-image">
+                  <%= image_tag 'saskia.png', class: "avatar-developer" %>
+              </div>
+
+              <div class="developer-name">
+                <h5 class="border-top pt-1">Saskia Knauf</h5>
+              </div>
+
+                <div class="developer-description">
+                  <p>
+                   Fullstack Engineer
+                  </p>
+              </div>
+
+              </div>
+          <% end %>
+
+          <%= link_to "https://github.com/HarDhillon/", target: "_blank", rel:"nofollow" do %>
+            <div class="developer-card">
+
+              <div class="developer-image">
+                  <%= image_tag 'Har.png', class: "avatar-developer" %>
+              </div>
+
+              <div class="developer-name" >
+                <h5 class="border-top pt-1">Har Dhillon</h5>
+              </div>
+
+              <div class="developer-description">
+                  <p>
+                   Fullstack Engineer
+                  </p>
+              </div>
+
+            </div>
+          <% end %>
+
+        </div>
+
+      </div>
+
+
+  </div>
