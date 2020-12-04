@@ -1,1 +1,114 @@
 // Specific CSS for your home-page
+
+
+
+.home-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 60px;
+  padding: 60px 0px;
+
+}
+
+.developer-grid-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-column-gap: 60px;
+  padding: 60px 0px;
+}
+
+.developer-card{
+  position: relative;
+  height: 180px;
+  padding: 20px;
+  background: #F2F2F2;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 2px;
+
+}
+
+
+.card-1 {
+  padding: 20px;
+  background: #F2F2F2;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 2px;
+
+}
+
+.home-card-title {
+  text-align: center;
+  padding: 32px 0px 0px 0px;
+
+}
+.home-card-title{
+  h5{
+    font-size: 22px;
+  }
+}
+
+.home-card-description {
+  padding: 15px;
+  text-align:center;
+}
+
+.margin-container {
+  width: 1050px;
+  margin: 0 auto;
+
+}
+
+.card-image-home{
+  display:flex;
+  justify-content: center;
+}
+.card-image-home {
+  img {
+    height: 200px;
+    width: 200px;
+  }
+}
+
+.avatar-developer {
+  border-radius:50%;
+  width: 125px;
+  height: 125px;
+  border: solid 2px #03C5B8;
+  object-fit: cover;
+}
+
+.developer-image{
+  position: absolute;
+      top: -68px;
+    right: 45px;
+    display:flex;
+  justify-content: center;
+}
+
+.developer-name {
+  padding-top: 50px !important;
+  text-align: center;
+  padding: 32px 0px 0px 0px;
+}
+
+
+  a:hover {
+    text-decoration: none;
+  }
+
+
+
+.developer-name{
+  h5{
+    padding-top: 10px !important;
+    font-size: 22px;
+  }
+}
+
+.developer-description {
+  text-align: center;
+}
+
+
