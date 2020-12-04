@@ -223,6 +223,11 @@ input.invalid {
   transition: .2s linear;
 }
 
+.category-selector-guest {
+  position: absolute;
+  transform: scale(0);
+}
+
 .category-selector-guest + label {
   display: block;
   cursor: pointer;
@@ -239,9 +244,9 @@ input.invalid {
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.category-selector-guest:checked + label {
+.guest-active {
   color: white !important;
-  background-color: grey;
+  background-color: grey !important;
   transition: .2s linear;
 }
 

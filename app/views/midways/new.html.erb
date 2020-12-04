@@ -26,8 +26,8 @@
           </div> -->
 
           <div class="category-item">
-            <input class="form-check-input check_boxes required category-selector-guest" type="checkbox" data-style="ruby" value="guest" name="guest">
-            <label class="form-check-label collection_check_boxes" id="guest-button" for="guest"> <%= image_tag "user.png", class: "avatar" %> Add a guest </label>
+            <input class="form-check-input check_boxes required category-selector-guest" id="guest-input" type="checkbox" data-style="ruby" value="guest" name="midway[guest]">
+            <label class="form-check-label collection_check_boxes" id="guest-button" for="guest-input"> <%= image_tag "user.png", class: "avatar" %> Add a guest </label>
           </div>
 
         </div>
@@ -157,7 +157,7 @@
   <!-- Only if restaurant is selected -->
     <div class="tab">
       <div class="form-group string required midway_keyword">
-        <label class="string required" for="midway_keyword">What cuisine do you fancy? <abbr title="required">*</abbr></label>
+        <label class="string" for="midway_keyword">What cuisine do you fancy? (Optional)</label>
         <input class="form-control string required" placeholder="Italian, Indian, French..." type="text" name="midway[keyword]" id="midway_keyword">
       </div>
       <input type="submit" name="commit" value="Find our Midway" class="btn submit-button" id="submit-two" data-disable-with="Find our Midway">
@@ -209,6 +209,7 @@
   if(guestButton && optionalTab) {
     guestButton.addEventListener("click", (event) => {
       event.preventDefault();
+      guestButton.classList.toggle("guest-active");
       optionalTab.classList.toggle("tab");
       optionalSpan.classList.toggle("hidden");
       optionalSpan.classList.toggle("step");
