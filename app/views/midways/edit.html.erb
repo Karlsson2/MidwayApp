@@ -13,7 +13,11 @@
           <%= image_tag venue[:photo], alt: "Card image cap", class: "card-img-top" %>
 
           <div class="card-body">
-            <h5><%= venue[:name] %></h5>
+            <% if venue[:name].size < 20 %>
+              <h5><%= venue[:name] %></h5>
+            <% else %>
+              <h5><%= venue[:name].slice(0..20) %>...</h5>
+            <% end %>
             <div class="card-info">
               <div>
                 <p><em><%= venue[:categories][0]&.humanize %></em></p>
