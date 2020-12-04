@@ -8,7 +8,7 @@
 
         <% counter += 1 %>
 
-        <div class="card" id="card-<%= venue[:place_id] %>" data-toggle="modal" data-target="#exampleModalCenter<%= counter %>" data-div="#exampleTextInfo<%= counter %>" data-button="#exampleVisitButton<%= counter %>" data-id="<%= venue[:place_id] %>" data-day="<%= @midway.future_date.strftime("%A") %>" data-address="<%= venue[:address] %>" data-price="<%= venue[:price] %>" data-time="<%= @midway.future_time.strftime("%H%M") %>" >
+        <div class="card" id="card-<%= venue[:place_id] %>" data-toggle="modal" data-target="#exampleModalCenter<%= counter %>" data-div="#exampleTextInfo<%= counter %>" data-button="#exampleVisitButton<%= counter %>" data-id="<%= venue[:place_id] %>" data-day="<%= @midway.future_date.strftime("%A") %>" data-address="<%= venue[:address] %>" data-price="<%= venue[:price] %>" data-time="<%= @midway.future_time.strftime("%H%M") %>", data-info = "<%= venue[:venue_info].to_json %>" >
 
           <%= image_tag venue[:photo], alt: "Card image cap", class: "card-img-top" %>
 
@@ -92,18 +92,19 @@
       var chosenDay = card.dataset.day;
       var chosenTime = parseInt(card.dataset.time);
       let output = "";
+      var venueInfo = JSON.parse(card.dataset.info);
       var textInfoText = card.dataset.div;
       var textInfoDiv = document.getElementById(textInfoText);
       var buttonText = card.dataset.button;
       var buttonDiv = document.getElementById(buttonText);
 
 
-      apiCall(placeID).then(data => {
-
+      // apiCall(placeID).then(data => {
+        
         // checks for day in the text array and saves this to openingHoursOnDay string
-        var openingHours = data.result.opening_hours;
+        var openingHours = venueInfo.result.opening_hours;
         if(openingHours != null) {
-          var weekdayArrayText = data.result.opening_hours.weekday_text;
+          var weekdayArrayText = venueInfo.result.opening_hours.weekday_text;
           var openingHoursOnDay = "";
           weekdayArrayText.forEach(function(string) {
             if(string.split(' ')[0] == `${chosenDay}:`) {
@@ -112,7 +113,7 @@
           });
 
           // checks for day in the text array and saves this to openingHoursOnDay string
-          var weekdayArrayPeriods = data.result.opening_hours.periods;
+          var weekdayArrayPeriods = venueInfo.result.opening_hours.periods;
           if(weekdayArrayPeriods.length == 7) {
             var index = null;
             if(chosenDay == "Monday") {
@@ -203,14 +204,14 @@
         };
 
         // checks if there is phone number
-        var phoneNumberCheck = data.result.formatted_phone_number;
+        var phoneNumberCheck = venueInfo.result.formatted_phone_number;
         if(phoneNumberCheck != null) {
-          phoneNumber = `Phone Number: ${data.result.formatted_phone_number}`
+          phoneNumber = `Phone Number: ${venueInfo.result.formatted_phone_number}`
         } else {
           phoneNumber = "";
         };
 
-        var websiteCheck = data.result.website;
+        var websiteCheck = venueInfo.result.website;
         if(websiteCheck != null) {
           website = websiteCheck
         } else {
@@ -260,11 +261,11 @@
           </div>
           <div style="display: ${priceShow}"><p> Pricing: <strong>${price}</strong> </p></div>
           <div style="display: ${phoneShow}"><p> ${phoneNumber} </p></div>
-        `
+          `
 
-        buttonDiv.innerHTML =
-        `<a style="display: ${websiteShow}" href="${data.result.website}" class="btn btn-primary" target="_blank">Visit the website</a>`
-      });
+          buttonDiv.innerHTML =
+        `<a style="display: ${websiteShow}" href="${venueInfo.result.website}" class="btn btn-primary" target="_blank">Visit the website</a>`
+    // });
     });
   });
 
