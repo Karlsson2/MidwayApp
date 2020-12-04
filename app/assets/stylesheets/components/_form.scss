@@ -183,7 +183,7 @@ input.invalid {
 }
 
 
-// STYLING FOR VENUE TYPES
+// STYLING FOR FRIENDS
 
 .category-wrapper {
   display: grid;
@@ -223,6 +223,47 @@ input.invalid {
   transition: .2s linear;
 }
 
+.category-selector-guest {
+  position: absolute;
+  transform: scale(0);
+}
+
+.category-selector-guest + label {
+  display: block;
+  cursor: pointer;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 20px;
+  text-align: left;
+  padding: 10px 10px 10px 10px;
+  border: 1px solid #EAEAEA;
+  border-radius: 5px;
+  background-color: white;
+  font-family: 'Raleway', sans-serif;
+  color: #646561;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.guest-active {
+  color: white !important;
+  background-color: grey !important;
+  transition: .2s linear;
+}
+
+// .form-check-input{
+//   visibility: hidden;
+// }
+
+// OPTIONAL GUEST PAGE
+
+#optional-tab label {
+  color: #646561;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 35px;
+}
+
+// VENUE TYPES
+
 .venue-category-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -233,6 +274,7 @@ input.invalid {
   flex: 0 0 25%;
   margin-bottom: 20px;
   font-family: 'Raleway', sans-serif;
+  color: #646561;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -257,25 +299,25 @@ input.invalid {
 .venue-category-item .div-image-restaurant {
   height: 70px;
   width: 70px;
-  background-image: image-url("black-restaurant.png");
+  background-image: image-url("grey-restaurant.png");
   background-size: cover;
   margin: 0 auto;
   margin-bottom: 5px;
 }
 
 .venue-category-selector:checked + label {
-  color: white !important;
+  color: #03C5B8 !important;
   background-color: grey;
   transition: .2s linear;
   .div-image-restaurant {
-    background-image: image-url("white-restaurant.png");
+    background-image: image-url("midway-restaurant.png");
   }
 }
 
 .venue-category-item .div-image-beer {
   height: 70px;
   width: 70px;
-  background-image: image-url("black-beer.png");
+  background-image: image-url("grey-beer.png");
   background-size: cover;
   margin: 0 auto;
   margin-bottom: 5px;
@@ -286,14 +328,14 @@ input.invalid {
   background-color: grey;
   transition: .2s linear;
   .div-image-beer {
-    background-image: image-url("white-beer.png");
+    background-image: image-url("midway-beer.png");
   }
 }
 
 .venue-category-item .div-image-artgallery {
   height: 70px;
   width: 70px;
-  background-image: image-url("black-artgallery.png");
+  background-image: image-url("grey-artgallery.png");
   background-size: cover;
   margin: 0 auto;
   margin-bottom: 5px;
@@ -304,115 +346,115 @@ input.invalid {
   background-color: grey;
   transition: .2s linear;
   .div-image-artgallery {
-    background-image: image-url("white-artgallery.png");
+    background-image: image-url("midway-artgallery.png");
   }
 }
 
 .venue-category-item .div-image-cinema {
   height: 70px;
   width: 70px;
-  background-image: image-url("black-cinema.png");
+  background-image: image-url("grey-cinema.png");
   background-size: cover;
   margin: 0 auto;
   margin-bottom: 5px;
 }
 
 .venue-category-selector:checked + label {
-  color: white !important;
+  color: #03C5B8 !important;
   background-color: grey;
   transition: .2s linear;
   .div-image-cinema {
-    background-image: image-url("white-cinema.png");
+    background-image: image-url("midway-cinema.png");
   }
 }
 
 .venue-category-item .div-image-museum {
   height: 70px;
   width: 70px;
-  background-image: image-url("black-museum.png");
+  background-image: image-url("grey-museum.png");
   background-size: cover;
   margin: 0 auto;
   margin-bottom: 5px;
 }
 
 .venue-category-selector:checked + label {
-  color: white !important;
+  color: #03C5B8 !important;
   background-color: grey;
   transition: .2s linear;
   .div-image-museum {
-    background-image: image-url("white-museum.png");
+    background-image: image-url("midway-museum.png");
   }
 }
 
 .venue-category-item .div-image-park {
   height: 70px;
   width: 70px;
-  background-image: image-url("black-park.png");
+  background-image: image-url("grey-park.png");
   background-size: cover;
   margin: 0 auto;
   margin-bottom: 5px;
 }
 
 .venue-category-selector:checked + label {
-  color: white !important;
+  color: #03C5B8 !important;
   background-color: grey;
   transition: .2s linear;
   .div-image-park {
-    background-image: image-url("white-park.png");
+    background-image: image-url("midway-park.png");
   }
 }
 
 .venue-category-item .div-image-nightclub {
   height: 70px;
   width: 70px;
-  background-image: image-url("black-nightclub.png");
+  background-image: image-url("grey-nightclub.png");
   background-size: cover;
   margin: 0 auto;
   margin-bottom: 5px;
 }
 
 .venue-category-selector:checked + label {
-  color: white !important;
+  color: #03C5B8 !important;
   background-color: grey;
   transition: .2s linear;
   .div-image-nightclub {
-    background-image: image-url("white-nightclub.png");
+    background-image: image-url("midway-nightclub.png");
   }
 }
 
 .venue-category-item .div-image-bowling {
   height: 70px;
   width: 70px;
-  background-image: image-url("black-bowling.png");
+  background-image: image-url("grey-bowling.png");
   background-size: cover;
   margin: 0 auto;
   margin-bottom: 5px;
 }
 
 .venue-category-selector:checked + label {
-  color: white !important;
+  color: #03C5B8 !important;
   background-color: grey;
   transition: .2s linear;
   .div-image-bowling {
-    background-image: image-url("white-bowling.png");
+    background-image: image-url("midway-bowling.png");
   }
 }
 
 .venue-category-item .div-image-cafe {
   height: 70px;
   width: 70px;
-  background-image: image-url("black-cafe.png");
+  background-image: image-url("grey-cafe.png");
   background-size: cover;
   margin: 0 auto;
   margin-bottom: 5px;
 }
 
 .venue-category-selector:checked + label {
-  color: white !important;
+  color: #03C5B8 !important;
   background-color: grey;
   transition: .2s linear;
   .div-image-cafe {
-    background-image: image-url("white-cafe.png");
+    background-image: image-url("midway-cafe.png");
   }
 }
 
@@ -438,18 +480,18 @@ input.invalid {
 .venue-category-item .div-image-shopping {
   height: 70px;
   width: 70px;
-  background-image: image-url("black-shopping.png");
+  background-image: image-url("grey-shopping.png");
   background-size: cover;
   margin: 0 auto;
   margin-bottom: 10px;
 }
 
 .venue-category-selector-shopping:checked + label {
-  color: white !important;
+  color: #03C5B8 !important;
   background-color: grey;
   transition: .2s linear;
   .div-image-shopping {
-    background-image: image-url("white-shopping.png");
+    background-image: image-url("midway-shopping.png");
   }
 }
 
