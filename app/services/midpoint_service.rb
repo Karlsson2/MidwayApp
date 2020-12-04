@@ -93,7 +93,7 @@ class MidpointService
     @addresses.map! do |address|
       results = Geocoder.search(address)
       if results.nil?
-        convert_to_geocode
+        results = Geocoder.search(address)
       end
       { lat: results.first.coordinates[0], lng: results.first.coordinates[1], duration: 0 }
     end
