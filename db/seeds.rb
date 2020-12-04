@@ -111,13 +111,16 @@ venues.push(venue4)
 
 dates = ["Thu, 01 Dec 2020 12:44:00 UTC +00:00", "Wed, 25 Nov 2020 09:35:00 UTC +00:00", "Mon 23 Nov 2020 15:45:00 UTC +00:00", "Thu, 15 Oct 2020 18:10:00 UTC +00:00"]
 
+i = 0
 4.times do
   creators = [user1, user2, user3, user4, user5, user6, user7, user8, user9, user10]
   mcreator = user10
   # users wil be an array of the users friends
   users = []
 
+
   friends_array = mcreator.friends
+
   friends_array.each do |friend|
     # Since user can be under either friend or user ID, check which id is holding the creators ID
     if friend.user_id == mcreator.id
@@ -126,13 +129,14 @@ dates = ["Thu, 01 Dec 2020 12:44:00 UTC +00:00", "Wed, 25 Nov 2020 09:35:00 UTC 
       users << User.find(friend.user_id)
     end
   end
-  i = 0
+
   m = Midway.new( midpoint: "51.509865,-0.118092", user: mcreator)
+
   m.venue = venues[i]
   m.future_datetime = dates.sample
   m.save!
+  i +=1
   MidwayParticipant.create!( midway:m ,user:mcreator )
-  i = i + 1
 
   candidate_users = []
   users.each do |user|
@@ -143,4 +147,5 @@ dates = ["Thu, 01 Dec 2020 12:44:00 UTC +00:00", "Wed, 25 Nov 2020 09:35:00 UTC 
   selected_users.each do |user|
     MidwayParticipant.create!( midway: m, user: user )
   end
+
 end
