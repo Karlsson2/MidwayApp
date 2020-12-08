@@ -6,8 +6,14 @@
   position: fixed;
   height: 100vh;
   overflow: hidden;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 }
 
 .banner p {
