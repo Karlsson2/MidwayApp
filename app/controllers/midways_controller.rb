@@ -135,9 +135,12 @@ class MidwaysController < ApplicationController
         image_url: helpers.asset_url('normal_pin.png'),
         place_id: venue[:place_id]
       }
-
     end
 
+    @venue_hash.each_with_index do |venue, index|
+      venue_info = foursquare_service.get_venue_info(venue[:place_id])
+      @venue_hash[index][:venue_info] = venue_info
+    end
   end
 
   def update

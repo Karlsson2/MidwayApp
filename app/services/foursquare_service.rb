@@ -49,10 +49,11 @@ class FoursquareService
     return url
   end
 
-  def get_venue_info
-    base_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+  def get_venue_info(place_id)
+    base_url = "https://maps.googleapis.com/maps/api/place/details/json?"
     url = base_url + "place_id=#{place_id}&fields=name,rating,formatted_phone_number,photos,opening_hours,website&key=AIzaSyDFvyNLsoIQsADW5U0uePwiuLjbHg9CnBs"
     json = JSON.parse(open(url).read)
   end
+  
 
 end
