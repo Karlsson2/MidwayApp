@@ -88,16 +88,24 @@ class MidwaysController < ApplicationController
     #accesses the venue type and any keywords the user wants
     @midway.venue_type = params[:midway][:venue_type].downcase
     @midway.keyword = params[:midway][:keyword].downcase
+    @midway.choice = params[:midway][:choice].downcase
 
     #assigns the midpoint
     midpoint_service = MidpointService.new(addresses: participants_locations, time_option: time_option, future_datetime: future_datetime)
-    midpoint_coordinates = midpoint_service.calculate[0]
+    if @midway.choice == "efficient"
+      results = midpoint_service.calculate_efficient
+      midpoint_coordinates = results[0]
+      durations = results[1]
+    else
+      results = midpoint_service.calculate_equal
+      midpoint_coordinates = results[0]
+      durations = results[1]
+    end
     @midpoint = "#{midpoint_coordinates[:lat]},#{midpoint_coordinates[:lng]}"
     @midway.midpoint = @midpoint
     @midway.save!
 
     #assigns a duration to each Midway Participant
-    durations = midpoint_service.calculate[1]
     participants.each_with_index do |participant, index|
       participant.duration_to_midpoint = durations[index]
       participant.save!
@@ -229,7 +237,7 @@ class MidwaysController < ApplicationController
     private
 
   def midway_params
-    params.require(:midway).permit(:friends, :time_option, :future_time, :future_date, :future_datetime, :venue_type, :venue, :keyword)
+    params.require(:midway).permit(:friends, :time_option, :future_time, :future_date, :future_datetime, :venue_type, :venue, :keyword, :choice)
   end
 
   def venue_params
